@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec podman run --rm --interactive --volume .:/spec:ro "$@" pyromaniac

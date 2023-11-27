@@ -1,0 +1,27 @@
+# Ignition files
+*.ign
+
+# User-specific files
+*.user
+
+# Editor files
+[._]*.sw[a-p]
+.vscode
+.vs/
+
+# Temporary and system files
+*~
+.fuse_hidden*
+.directory
+.nfs*
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini

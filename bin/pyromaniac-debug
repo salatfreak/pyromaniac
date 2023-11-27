@@ -1,0 +1,8 @@
+#!/bin/sh
+
+readonly DIR="$(dirname "$(realpath "$0")")"
+
+exec podman run --rm --interactive \
+  --volume "$DIR"/../pyromaniac:/src/pyromaniac:ro \
+  --volume .:/spec:ro \
+  "$@" pyromaniac
