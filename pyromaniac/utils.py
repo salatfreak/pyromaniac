@@ -69,7 +69,10 @@ def render(config):
         input=yaml_dump({**BUTANE_DEFAULTS, **config}),
         capture_output=True, text=True
     )
-    if res.returncode == 0: return res.stdout
+    if res.returncode == 0:
+        warning = res.stderr.strip()
+        if warning != "": print(warning, file=sys.stderr)
+        return res.stdout
     else: raise RenderError(name, res.stderr.strip())
 
 class NamedDict(dict):
