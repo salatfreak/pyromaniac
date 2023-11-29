@@ -1,4 +1,9 @@
+from . import utils
+from .errors import RenderError
+
 def expand(original):
+    name = original.name if isinstance(original, utils.NamedDict) else 'object'
+
     # Expand everything to flat key-value pairs
     flat = []
     work = [(k, v) for k, v in original.items()]
@@ -24,13 +29,19 @@ def expand(original):
         for i, part in enumerate(key[:-1]):
             new = [] if isinstance(key[i+1], int) else {}
             if isinstance(current, list):
-                assert part <= len(current), 'List index skipped'
+                if not part <= len(current):
+                    key_str = '.'.join(str(k) for k in key[:i])
+                    msg = f"index {part} out of range in {key_str}"
+                    raise RenderError(name, msg)
                 if len(current) == part: current.append(new)
             else:
                 if not part in current: current[part] = new
             current = current[part]
         if isinstance(current, list):
-            assert key[-1] == len(current), 'List index skipped'
+            if key[-1] != len(current):
+                key_str = '.'.join(str(k) for k in key[:-1])
+                msg = f"index {key[-1]} out of range in {key_str}"
+                raise RenderError(name, msg)
             current.append(value)
         else:
             current[key[-1]] = value
