@@ -55,8 +55,8 @@ Components may execute arbitrary Python code and produce arbitrary data. They
 must, however, end with a standalone Python expression that will become the
 component's return value.
 
-A set of default components found in the *components* directory of this
-repository is always loaded:
+A set of default components that produce valid pyromaniac configs is always
+loaded and can be found in the *components* directory of this repository:
 
 - `merge(*configs)`
   - compiles each config to ignition format and creates a merge.
