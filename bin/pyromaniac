@@ -1,3 +1,21 @@
-#!/bin/sh
+#!/bin/bash
+set -eu
 
-exec podman run --rm --interactive --volume .:/spec:ro "$@" pyromaniac
+# Categorize arguments
+declare -a args_pod=() args_pyro=()
+while (( $# > 0 )); do
+  case "$1" in 
+    --                            ) break;;
+    -e  | --env   | --env-file    ) args_pod+=("$1" "$2"); shift;;
+    -e* | --env=* | --env-file=*  ) args_pod+=("$1");;
+    *                             ) args_pyro+=("$1");;
+  esac
+  shift
+done
+args_pyro+=("$@")
+
+# Run pyromaniac
+exec podman run --rm --interactive \
+  --volume .:/spec:ro \
+  "${args_pod[@]}" \
+  pyromaniac "${args_pyro[@]}"

@@ -14,11 +14,11 @@ be used for modular and DRY configuration of [Fedora CoreOS][fcos] deployments.
 ## Usage
 The usage is similar to the *quay.io/coreos/butane* image. Use `bin/pyromaniac`
 to conveniently run the image with the current directory mounted into the
-container. This allows loading additional components easily. Since pyromaniac
-doesn't accept command-line parameters, they will be passed to podman and can,
-for example, be used to configure the environment. Using `bin/pyromaniac-debug`
-will additionally mount the source code into the container, avoiding the need
-for constant rebuilds during development.
+container. This allows loading additional components easily. The `-e`, `--env`,
+and `--env-file` parameters are passed to podman and can be used to set
+environment variables. The rest of the parameters are passed to butane. Using
+`bin/pyromaniac-debug` will additionally mount the source code into the
+container, avoiding the need for constant rebuilds during development.
 
 The program reads a pyromaniac config from stdin and writes the compiled
 [Ignition][ignition] file to stdout.
