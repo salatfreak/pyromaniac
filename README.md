@@ -80,7 +80,8 @@ will receive the data passed as keyword arguments.
 
 Use `render(config)` to render a dictionary using Butane. The result will be a
 string containing the Ignition JSON data, which can, for example, be used with
-*ignition.config.merge.inline*.
+*ignition.config.merge.inline*. Fields starting with an underscore will be
+filtered out. You can use them to pass data between your components.
 
 To use file names relative to the current component, use `_/"file.txt"`.
 

@@ -11,6 +11,12 @@ def expand(original):
         else:
             flat.append((parse_key(key), value))
 
+    # Filter out keys starting with underscores
+    flat = [
+        (k, v) for k, v in flat
+        if not any(isinstance(p, str) and p.startswith('_') for p in k)
+    ]
+
     # Create expanded dictionary
     result = {}
     for key, value in sorted(flat, key=lambda k: k[0]):
