@@ -114,12 +114,12 @@ merge(
 fmt = args[0]
 
 {
-    'storage.filesystems[0]': {
-        'device': "/dev/disk/by-label/root",
-        'wipe_filesystem': True,
-        'format': fmt,
-        'label': 'root',
-    }
+  'storage.filesystems[0]': {
+    'device': "/dev/disk/by-label/root",
+    'wipe_filesystem': True,
+    'format': fmt,
+    'label': 'root',
+  }
 }
 ```
 
@@ -141,10 +141,10 @@ key = args[0]
 
 user = 'core'
 merge(
-    sshkey(user, key),
-    tree(f"/home/{user}/bin", _/"bin", user=user, mode=True),
-    linger(user),
-    _.service(user, desc='Special Service'),
+  sshkey(user, key),
+  tree(f"/home/{user}/bin", _/"bin", user=user, mode=True),
+  linger(user),
+  _.service(user, desc='Special Service'),
 )
 ```
 
