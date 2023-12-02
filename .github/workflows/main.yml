@@ -26,4 +26,5 @@ jobs:
         with:
           tags: ghcr.io/${{ github.repository }}:latest
           context: .
+          file: Containerfile
           push: true
