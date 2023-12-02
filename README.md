@@ -5,24 +5,40 @@ be used for modular and DRY configuration of [Fedora CoreOS][fcos] deployments.
 [butane]: https://coreos.github.io/butane/
 [fcos]: https://docs.fedoraproject.org/en-US/fedora-coreos/
 
-## Building
-1. Ensure [podman][podman] is installed.
-2. Use `podman build -t pyromaniac .` to build the image.
+## TL;DR
+1. Write your config file like this:
 
-[podman]: https://podman.io/
+*main.py*
+```py
+merge(
+  {'passwd.users[0]': {'name': "core", 'ssh_authorized_keys[0]': env['KEY']}},
+  tree("/home/core", Path("files"), user="core", mode=True),
+  unit("say-hello.service", jinja("say.service", word="hello"), user="core"),
+)
+```
+
+2. Build your ignition file like this:
+
+```bash
+bin/pyromaniac -e KEY="$(< ~/.ssh/id_rsa.pub)" < main.py > config.ign
+```
 
 ## Usage
-The usage is similar to the *quay.io/coreos/butane* image. Use `bin/pyromaniac`
-to conveniently run the image with the current directory mounted into the
-container. This allows loading additional components easily. The `-e`, `--env`,
-and `--env-file` parameters are passed to podman and can be used to set
-environment variables. The rest of the parameters are passed to butane. Using
-`bin/pyromaniac-debug` will additionally mount the source code into the
-container, avoiding the need for constant rebuilds during development.
+The usage is similar to the *quay.io/coreos/butane* image. Pull and run the
+image [ghcr.io/salatfreak/pyromaniac][container] or just run the
+[`bin/pyromaniac`][script] script to conveniently run the image with the
+current directory mounted into the container. This allows loading additional
+components easily. The `-e`, `--env`, and `--env-file` parameters are passed to
+podman and can be used to set environment variables. The rest of the parameters
+are passed to butane. Using `bin/pyromaniac-debug` will additionally mount the
+source code into the container, avoiding the need for constant rebuilds during
+development.
 
 The program reads a pyromaniac config from stdin and writes the compiled
 [Ignition][ignition] file to stdout.
 
+[container]: https://github.com/salatfreak/pyromaniac/pkgs/container/pyromaniac
+[script]: bin/pyromaniac
 [ignition]: https://coreos.github.io/ignition/
 
 ## Configuration format

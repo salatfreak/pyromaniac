@@ -18,4 +18,4 @@ args_pyro+=("$@")
 exec podman run --rm --interactive \
   --volume .:/spec:ro \
   "${args_pod[@]}" \
-  pyromaniac "${args_pyro[@]}"
+  ghcr.io/salatfreak/pyromaniac "${args_pyro[@]}"
