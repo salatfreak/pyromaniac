@@ -59,8 +59,9 @@ component's return value.
 A set of default components that produce valid pyromaniac configs is always
 loaded and can be found in the *components* directory of this repository:
 
-- `merge(*configs)`
-  - compiles each non-`None` config to ignition format and creates a merge.
+- `merge(*configs, **kwargs)`
+  - Compiles each non-`None` config to ignition format and creates a merge.
+  - Keyword arguments will be added to the root of the merge config.
 - `tree(path, local, user=, group=, mode=)`
   - Similar to *storage.trees* but with permission specification.
   - *user* and *group* are an optional id (integer) or name (string).
