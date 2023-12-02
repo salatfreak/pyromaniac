@@ -12,7 +12,7 @@ add_representer(PosixPath, lambda d, s: d.represent_scalar('!!str', str(s)))
 
 def load(root):
     root = PosixPath(root)
-    comps = Dict()
+    comps = ComponentDict()
     for path in root.glob('**/*.py'):
         comp = Component.from_path(root, path, comps)
         comps.insert(comp.place, comp)
@@ -83,14 +83,17 @@ class Underscore:
     def __truediv__(self, path):
         return self._path / path
 
-class Dict(dict):
+class ComponentDict(dict):
     __getattr__ = dict.__getitem__
+
+    def __call__(self, *args, **kwargs):
+        return self['main'](*args, **kwargs)
 
     def insert(self, place, item):
         if len(place) == 1:
             self[place[0]] = item
         else:
-            if not place[0] in self: self[place[0]] = Dict()
+            if not place[0] in self: self[place[0]] = ComponentDict()
             self[place[0]].insert(place[1:], item)
 
 CONTEXT = {

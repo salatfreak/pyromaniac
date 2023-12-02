@@ -42,8 +42,9 @@ configuration files and use the following additional features for convenience.
 ### Components
 `bin/pyromaniac` mounts the current working directory into the container,
 letting you load additional components. Reference them by their file system
-path, using dots as delimiters and omitting the *.py* file extension. To load
-and execute a component *foo/bar/baz.py*, call `foo.bar.baz(*args, **kwargs)`.
+path, using dots as delimiters and omitting the *.py* file extension. If the
+file is named *main.py*, you may omit the file name entirely. To load and
+execute a component *foo/bar/baz/main.py*, call `foo.bar.baz(*args, **kwargs)`.
 In nested component trees, siblings can be referenced under the underscore
 variable. Instead of calling `foo.bar.qux()` from inside *foo/corge.py*, you
 can also call `_.bar.qux()`.
