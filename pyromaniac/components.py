@@ -37,6 +37,10 @@ class Component:
         self.comps = comps
         self.code = None
 
+    @property
+    def name(self):
+        return ".".join(self.place)
+
     @classmethod
     def from_path(cls, root, path, comps):
         place = [*path.relative_to(root).parent.parts, path.stem]
@@ -51,9 +55,9 @@ class Component:
         self.ensure_loaded()
         try: exec(self.code, context)
         except PyromaniacError as e: raise e
-        except Exception as e: raise ComponentError(self.path.name, str(e))
+        except Exception as e: raise ComponentError(self.name, str(e))
         result = context['result']
-        if type(result) == dict: result = NamedDict(self.path.name, result)
+        if type(result) == dict: result = NamedDict(self.name, result)
         return result
 
     def local_comps(self):
@@ -64,13 +68,12 @@ class Component:
     
     def ensure_loaded(self):
         if self.code is not None: return
-        name = self.path.name
         try:
-            self.code = modify_code(name, self.path.read_text())
+            self.code = modify_code(self.name, self.path.read_text())
         except SyntaxError as e:
-            raise ComponentError(name, f"{e.msg}: line {e.lineno}")
+            raise ComponentError(self.name, f"{e.msg}: line {e.lineno}")
         except IOError as e:
-            raise LoadError('component', name, e.strerror)
+            raise LoadError('component', self.name, e.strerror)
 
 class Underscore:
     def __init__(self, path, comps):
