@@ -54,12 +54,14 @@ def jinja(src, **kwargs):
     try:
         tmpl = src.read_text()
         return JINJA_ENV.from_string(tmpl).render(kwargs)
+    except IOError as e:
+        raise LoadError('jinja', src.name, e.strerror)
     except jinja2.TemplateError as e:
         msg = e.message
         if hasattr(e, 'lineno'): msg += f": line {e.lineno}"
         raise LoadError('jinja', src.name, msg)
-    except IOError as e:
-        raise LoadError('jinja', src.name, e.strerror)
+    except Exception as e:
+        raise LoadError('jinja', src.name, str(e))
 
 def render(config):
     name = config.name if isinstance(config, NamedDict) else 'object'
