@@ -16,7 +16,7 @@ def user_unit(name, source, enabled, user):
 
     # Add directory path
     parts = ['.config', 'systemd', 'user']
-    owner = { 'user': { 'name': user } }
+    owner = { 'user.name': user, 'group.name': user }
     dirs = [
         { 'path': Path('/home', user, *parts[:i]), **owner }
         for i in range(1, len(parts) + 1)
