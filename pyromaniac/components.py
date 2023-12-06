@@ -106,5 +106,5 @@ class ComponentDict(dict):
 CONTEXT = {
     **{ f.__name__: f for f in [u.load, u.json, u.yaml, u.jinja, u.render] },
     **load(PosixPath(__file__).parent / 'components'),
-    'env': os.environ, 'Path': Path,
+    'env': os.environ, 'Path': Path, 'GLOBAL': {}
 }
