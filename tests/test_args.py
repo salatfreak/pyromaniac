@@ -4,6 +4,8 @@ from io import StringIO
 from pathlib import PosixPath as Path
 from pyromaniac.args import parse
 
+from . import temp
+
 
 class TestArgs(TestCase):
     def test_input(self):
@@ -28,16 +30,24 @@ class TestArgs(TestCase):
         ])
         self.assertEqual(args.iso_net, "192.168.0.2:::255.255.255.0::::::")
 
-    def test_address(self):
+    @temp.place("salt.hex")
+    def test_address(self, salt_file: Path):
         self.assertEqual(parse().address, ('http', '127.0.0.1', 8000))
-        args = parse(["--address", "https://example.com/"])
-        self.assertEqual(args.address, ("https", "example.com", 443))
-        args = parse(["--address", "https://example.com:9000/"])
-        self.assertEqual(args.address, ("https", "example.com", 9000))
 
-    def test_auth(self):
+        with patch('pyromaniac.server.auth.SALT_FILE', salt_file):
+            args = parse(["--address", "https://example.com/"])
+            self.assertEqual(args.address, ("https", "example.com", 443))
+            args = parse(["--address", "https://example.com:9000/"])
+            self.assertEqual(args.address, ("https", "example.com", 9000))
+        self.assertTrue(salt_file.exists())
+
+    @temp.place("salt.hex")
+    def test_auth(self, salt_file: Path):
         self.assertIsNone(parse().auth)
         self.assertEqual(parse(["--auth", "name:pass"]).auth, "name:pass")
+        with patch('pyromaniac.server.auth.SALT_FILE', salt_file):
+            args = parse(["--address", "https://example.com/"])
+            self.assertTrue(args.auth.startswith("pyromaniac:"))
 
     def test_error(self):
         stderr = StringIO()
