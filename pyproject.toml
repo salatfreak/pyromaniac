@@ -5,3 +5,7 @@ description = "Obsessed with creating Ignition"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "salatfreak" }]
+
+dependencies = [
+  "cryptography ~= 42.0.2",
+]

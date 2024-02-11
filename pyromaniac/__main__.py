@@ -1,5 +1,6 @@
 from .args import parse
 from .iso import customize
+from .server import serve
 from .__init__ import compile
 
 args = parse()
@@ -20,4 +21,4 @@ match args.mode:
     case 'iso':
         customize(ignition(), args.iso_arch, args.iso_net, args.iso_disk)
     case 'serve':
-        raise NotImplementedError()
+        serve(ignition, *args.address, args.auth)
