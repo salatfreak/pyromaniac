@@ -1,4 +1,5 @@
 from .args import parse
+from .iso import customize
 from .__init__ import compile
 
 args = parse()
@@ -17,6 +18,6 @@ match args.mode:
     case 'ign':
         print(ignition())
     case 'iso':
-        raise NotImplementedError()
+        customize(ignition(), args.iso_arch, args.iso_net, args.iso_disk)
     case 'serve':
         raise NotImplementedError()
