@@ -1,5 +1,7 @@
 import re
 
+from ..server.auth import auto_auth
+
 ADDRESS_RE = re.compile("".join([
     r'(?:(http(?:s)?)://)?',
     r'(\[[0-9a-f:]+\]|[0-9.]+|[a-z0-9-.]+)',
@@ -49,6 +51,6 @@ def auth(value: str, scheme: str, host: str, port: int) -> str | None:
     if value == 'none':
         return None
     elif value == 'auto':
-        return None  # TODO: generate default auth credentials
+        return auto_auth(scheme, host, port)
     else:
         return value
