@@ -5,7 +5,8 @@ order: 80
 
 # Development
 Pyromaniac is developed in python and like [Butane][butane] intended to be
-distributed and run as a container image.
+distributed and run as a container image. It can simple be built by running
+`podman build -t pyromaniac .` in repositories root directory.
 
 The project is non-commercial and contributions are very welcome.
 
@@ -57,5 +58,16 @@ providing tests for.
 
 There should be test cases covering all major features of the package. All
 tests must succeed before code is merged into the *main* branch.
+
+It is recommended to run the tests directly in the pyromaniac container.
+
+```sh
+podman run --rm \
+  --volume ./pyromaniac:/src/pyromaniac:ro \
+  --volume ./tests:/src/tests:ro \
+  --workdir /src \
+  --entrypoint "/usr/bin/python3" \
+  pyromaniac -m unittest
+```
 
 [unittest]: https://docs.python.org/3/library/unittest.html
