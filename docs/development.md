@@ -39,8 +39,9 @@ Commit messages follow a simple version of [Conventional
 Commits][conventional-commits]. They are not capitalized and shall be prefixed
 with "feat: " (for new features and general additions), "fix: " (for bug
 fixes), "refactor: " (for code refactoring), "test: " (for everything test case
-related), or "docs: " (for everything documentation related). Commit bodies are
-optional free-form descriptions and explanations of the changes.
+related), "docs: " (for everything documentation related), or "merge: " (for
+merge commits). Commit bodies are optional free-form descriptions and
+explanations of the changes.
 
 Commits that would contain changes from multiple of these categories shall be
 broken up to match this scheme. Individual commits may introduce temporary
