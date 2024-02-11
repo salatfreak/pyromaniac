@@ -53,6 +53,10 @@ main {
   flex-grow: 1;
 }
 
+a {
+  color: #2f81f7;
+}
+
 .highlight {
   background-color: #161b22 !important;
   padding: 0.2em 0.5em;
