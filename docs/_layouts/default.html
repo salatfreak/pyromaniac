@@ -1,4 +1,4 @@
-{% assign pages = site.html_pages | sort: "order" %}
+{% assign pages = site.html_pages | where_exp: "p", "p.order" | sort: "order" %}
 
 <!DOCTYPE html>
 <html lang="en-US">
