@@ -1,0 +1,24 @@
+name: dev branch tests
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: build image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          containerfiles: ./Containerfile
+          image: pyromaniac
+      - name: run tests
+        run: |
+          podman run --rm \
+            --volume ./tests:/src/tests:ro \
+            --workdir /src \
+            --entrypoint "/usr/bin/python3" \
+            pyromaniac -m unittest
