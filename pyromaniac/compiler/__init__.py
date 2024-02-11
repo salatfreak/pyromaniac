@@ -1,5 +1,8 @@
 from typing import Self
 from pathlib import PosixPath as Path
+import json
+
+from .butane import butane
 
 
 class Compiler:
@@ -25,4 +28,4 @@ class Compiler:
         :param auth: basic auth credentials for encryption secret reqeusts
         :returns: compiled ignition config
         """
-        return "{}"
+        return butane(json.loads(source))

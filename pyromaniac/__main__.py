@@ -1,9 +1,11 @@
 from .args import parse
+from .compiler.butane import configure
 from .iso import customize
 from .server import serve
 from .__init__ import compile
 
 args = parse()
+configure(args.butane)
 
 
 def ignition():
