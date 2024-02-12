@@ -23,4 +23,4 @@ match args.mode:
     case 'iso':
         customize(ignition(), args.iso_arch, args.iso_net, args.iso_disk)
     case 'serve':
-        serve(ignition, *args.address, args.auth)
+        serve(ignition, *args.address[:2], args.auth)
