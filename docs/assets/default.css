@@ -57,9 +57,10 @@ a {
   color: #2f81f7;
 }
 
-.highlight {
+div.highlighter-rouge {
   background-color: #2a2f37;
-  padding: 0.2em 0.5em;
+  padding: 0 0.6em;
+  overflow-x: scroll;
 }
 
 code.highlighter-rouge {
