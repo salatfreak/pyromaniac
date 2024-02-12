@@ -1,5 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock
+from pathlib import Path
 from pyromaniac.server.server import Server
 
 from . import temp
@@ -14,7 +15,7 @@ class TestServer(TestCase):
     @patch('http.server.HTTPServer.socket', Mock(), create=True)
     @patch('ssl.SSLContext', Mock())
     @temp.dir
-    def test_certs(self, secrets):
+    def test_certs(self, secrets: Path):
         root_key = secrets / "root.key"
         root_crt = secrets / "root.cert"
         with (

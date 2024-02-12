@@ -47,7 +47,7 @@ class TestIso(TestCase):
         self.assertNotIn("--dest-device", args[0])
 
     @patch('subprocess.run')
-    def test_customize_base_image_max(self, run):
+    def test_customize_base_image_max(self, run: Mock):
         run.return_value.returncode = 0
         customize_base_image(None, "{}", "client=192.168.0.2", "/dev/vda")
         args = run.call_args.args
