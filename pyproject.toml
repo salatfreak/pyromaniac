@@ -10,3 +10,6 @@ dependencies = [
   "PyYAML ~= 6.0.1",
   "cryptography ~= 42.0.2",
 ]
+
+[tool.setuptools]
+packages = ["pyromaniac"]
