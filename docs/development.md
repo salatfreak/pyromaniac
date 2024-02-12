@@ -31,7 +31,7 @@ Any python code should pass [pycodestyle][pycodestyle] without warnings.
 
 ## Version Control
 Commits and pull requests shall be performed against the [dev][dev] branch or
-dedicated feature branches named "feat-" followed by a brief description of the
+dedicated feature branches named "feat/" followed by a brief description of the
 feature in kebab-case. When a stable version is reached, the *dev* branch may
 be merged into the *main* branch.
 
