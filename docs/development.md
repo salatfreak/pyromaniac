@@ -72,3 +72,23 @@ podman run --rm \
 ```
 
 [unittest]: https://docs.python.org/3/library/unittest.html
+
+## Updating
+Whenever a new version of a used python package, *Butane*, or the *CoreOS
+Installer* is released, it should be bumped up in the *pyproject.toml* or
+*Containerfile* respectively, the unit tests should be executed and a new patch
+release of *pyromaniac* should be published.
+
+If an update to the *CoreOS Installer* modifies the command line flags to the
+`iso customize` subcommand, pyromaniacs argument parsing needs to be updated to
+be able to pass them on via the *--installer-\** flags. Assuming the format of
+the `iso customize --help` message doesn't change, the updated list of flags
+for the argument parser can be generated using the following command:
+
+```sh
+podman run --rm "quay.io/coreos/coreos-installer:v${VERSION}" \
+  iso customize --help \
+  | sed -n \
+    -e 's/^  \(-[a-z0-9],\|   \) --\([a-z0-9_-]\+\)$/  ("\2", 0),/p' \
+    -e 's/^  \(-[a-z0-9],\|   \) --\([a-z0-9_-]\+\) <.*>$/  ("\2", 1),/p'
+```
