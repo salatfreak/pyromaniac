@@ -22,8 +22,8 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     f" and {paths.secrets} respectively and should be persisted as volumes."
 ), epilog=(
     "Additionally, when generating an ISO you can specify flags to be passed "
-    'on to coreos-installer by prefixing them with "--installer-" (e.g. '
-    '"--installer-dest-karg-append quiet").'
+    "on to `coreos-installer iso customize` by prefixing them with "
+    '"--installer-" (e.g. "--installer-dest-karg-append quiet").'
     "\n\n"
     "Examples:"
     "\n\n"
