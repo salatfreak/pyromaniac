@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 from .. import paths
 from .formatter import Formatter
 from . import types
+from .installer import generate
 
 
 parser = ArgumentParser(prog="pyromaniac", description=(
@@ -20,6 +21,10 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     f"Downloaded ISO images and encryption keys are stored in {paths.cache}"
     f" and {paths.secrets} respectively and should be persisted as volumes."
 ), epilog=(
+    "Additionally, when generating an ISO you can specify flags to be passed "
+    'on to coreos-installer by prefixing them with "--installer-" (e.g. '
+    '"--installer-dest-karg-append quiet").'
+    "\n\n"
     "Examples:"
     "\n\n"
     'Create a pretty ignition config for placing a file "/foo.txt":\n'
@@ -110,3 +115,6 @@ parser.add_argument("--auth", default='default', help=(
 parser.add_argument("-h", "--help", action="help", help=(
     "Show this help message and exit."
 ))
+
+for args, kwargs in generate():
+    parser.add_argument(*args, **kwargs)

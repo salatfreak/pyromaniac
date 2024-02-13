@@ -6,7 +6,8 @@ from .errors import DownloadError, CustomizeError
 
 
 def customize(
-    ignition: str, arch: str, net: str | None = None, disk: str | None = None
+    ignition: str, arch: str, net: str | None, disk: str | None,
+    installer_args: list[tuple],
 ):
     """Write ISO image with embedded ignition config to stdout.
 
@@ -17,13 +18,14 @@ def customize(
     :param arch: processor architecture to create ISO image for
     :param net: optional value for adding "ip=" kernel argument
     :param disk: optional disk path for automatic installation
+    :param installer_args: arguments to pass on to CoreOS Installer
     """
 
     # get base image
     base = get_base_image(arch)
 
     # customize image
-    customize_base_image(base, ignition, net, disk)
+    customize_base_image(base, ignition, net, disk, installer_args)
 
 
 def get_base_image(arch: str) -> Path:
@@ -57,7 +59,8 @@ def get_base_image(arch: str) -> Path:
 
 
 def customize_base_image(
-    image: Path, ignition: str, net: str | None, disk: str | None
+    image: Path, ignition: str, net: str | None, disk: str | None,
+    installer_args: list[tuple],
 ):
     # collect arguments
     args = ["iso", "customize", image]
@@ -71,6 +74,8 @@ def customize_base_image(
     else:
         args += ["--dest-ignition", "/dev/stdin"]
         args += ["--dest-device", disk]
+
+    args.extend(a for t in installer_args for a in [f"--{t[0]}", *t[1:]])
 
     # customize image
     res = subprocess.run(
