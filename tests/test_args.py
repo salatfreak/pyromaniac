@@ -49,6 +49,21 @@ class TestArgs(TestCase):
             args = parse(["--address", "https://example.com/"])
             self.assertTrue(args.auth.startswith("pyromaniac:"))
 
+    def test_installer(self):
+        self.assertEqual(parse().installer, [])
+        self.assertEqual(parse(["--installer-force"]).installer, [("force",)])
+        self.assertEqual(
+            parse(["--installer-pre-install", "foo"]).installer,
+            [("pre-install", "foo")]
+        )
+        self.assertEqual(parse([
+            "--installer-ignition-ca", "bar",
+            "--installer-help",
+        ]).installer, [
+            ("ignition-ca", "bar"),
+            ("help",),
+        ])
+
     def test_error(self):
         stderr = StringIO()
         with self.assertRaises(SystemExit), patch('sys.stderr', stderr):

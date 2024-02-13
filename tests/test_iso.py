@@ -38,7 +38,7 @@ class TestIso(TestCase):
     @patch('subprocess.run')
     def test_customize_base_image_min(self, run: Mock):
         run.return_value.returncode = 0
-        customize_base_image(None, "{}", None, None)
+        customize_base_image(None, "{}", None, None, [])
         args = run.call_args.args[0]
         self.assertEqual(args[:3], [paths.installer, "iso", "customize"])
         self.assertIn("--live-ignition", args)
@@ -49,9 +49,13 @@ class TestIso(TestCase):
     @patch('subprocess.run')
     def test_customize_base_image_max(self, run: Mock):
         run.return_value.returncode = 0
-        customize_base_image(None, "{}", "client=192.168.0.2", "/dev/vda")
+        customize_base_image(None, "{}", "client=192.168.0.2", "/dev/vda", [
+            ("dest-karg-append", "quiet"), ("force",),
+        ])
         args = run.call_args.args[0]
         self.assertIn("--live-karg-append", args)
         self.assertIn("--dest-ignition", args)
         self.assertIn("--dest-device", args)
         self.assertNotIn("--live-ignition", args)
+        self.assertIn(("--dest-karg-append", "quiet"), zip(args, args[1:]))
+        self.assertIn("--force", args)
