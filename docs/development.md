@@ -65,6 +65,7 @@ It is recommended to run the tests directly in the pyromaniac container:
 ```sh
 podman run --rm \
   --volume ./pyromaniac:/src/pyromaniac:ro \
+  --volume ./stdlib:/usr/local/lib/pyromaniac:ro \
   --volume ./tests:/src/tests:ro \
   --workdir /src \
   --entrypoint "/usr/bin/python3" \
