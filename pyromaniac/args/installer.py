@@ -1,4 +1,5 @@
 from typing import Callable
+from collections.abc import Iterable
 from argparse import SUPPRESS
 
 
@@ -24,14 +25,14 @@ ARGS = [
 ]
 
 
-def generate():
+def generate() -> Iterable[tuple[list[str], dict[str, str]]]:
     """Generate arguments for coreos-installer.
 
     Generates tuples and dicts of values for add_argument() for passing through
     values to the coreos-installer.
     """
     for name, arg_count in ARGS:
-        args = (f"--installer-{name}",)
+        args = [f"--installer-{name}"]
         kwargs = {'dest': 'installer', 'default': [], 'help': SUPPRESS}
         match arg_count:
             case 0: kwargs.update({'action': 'append_const', 'const': (name,)})
