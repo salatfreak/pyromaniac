@@ -1,4 +1,5 @@
 from typing import Any
+from collections.abc import Iterable
 from unittest import TestCase
 from contextlib import contextmanager
 
@@ -92,7 +93,9 @@ class TestExpand(TestCase):
             expand({"foo": [{"bar": [42, 69]}], "foo[0].bar[3].baz": 69})
 
     @contextmanager
-    def assertKeyExpandError(self, type: KeyExpandError, key: str):
+    def assertKeyExpandError(
+        self, type: KeyExpandError, key: str
+    ) -> Iterable:
         with self.assertRaises(type) as ctx:
             yield ctx
         self.assertEqual(ctx.exception.key(), key)
