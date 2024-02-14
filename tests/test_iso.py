@@ -2,7 +2,7 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 from pathlib import PosixPath as Path
 from pyromaniac import paths
-from pyromaniac.iso import get_base_image, customize_base_image
+from pyromaniac.iso.customize import get_base_image, customize_base_image
 
 from . import temp
 

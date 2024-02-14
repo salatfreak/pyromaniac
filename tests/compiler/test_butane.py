@@ -2,7 +2,7 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 import json
 
-from pyromaniac.compiler.errors import RenderError
+from pyromaniac.compiler import RenderError
 from pyromaniac.compiler.butane import butane, configure
 
 

@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from pathlib import PosixPath as Path
 from itertools import chain
 from pyromaniac import paths
-from pyromaniac.compiler.errors import NotAComponentError
+from pyromaniac.compiler import NotAComponentError
 from pyromaniac.compiler.library import Library, View
 from pyromaniac.compiler.component import Component
 
