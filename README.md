@@ -5,9 +5,6 @@
   🔥 Obsessed with creating Ignition 🔥<br />
   <br />
   <a href="../../actions/workflows/tests.yml">
-    <img
-      src="../../actions/workflows/tests.yml/badge.svg"
-      alt="dev branch tests badge"
-    />
+    <img src="../../actions/workflows/tests.yml/badge.svg" alt="tests badge" />
   </a>
 </p>
