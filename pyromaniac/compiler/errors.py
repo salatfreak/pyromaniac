@@ -4,3 +4,7 @@ class CompilerError(Exception):
 
 class RenderError(CompilerError):
     pass
+
+
+class NotAComponentError(CompilerError):
+    pass
