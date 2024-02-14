@@ -6,7 +6,7 @@ from .errors import DuplicateKeyError, MixedKeysError, MissingIndexError
 from . import keys
 
 FCOS_DEFAULTS = {'variant': "fcos", 'version': "1.5.0"}
-FLAT_TYPE = list[tuple[list[str | int], Any]]
+FlatType = list[tuple[list[str | int], Any]]
 
 
 def expand(config: Any, clean: bool = False, fcos: bool = False) -> dict:
@@ -29,7 +29,7 @@ def expand(config: Any, clean: bool = False, fcos: bool = False) -> dict:
     return expanded
 
 
-def flatten(value: Any) -> FLAT_TYPE:
+def flatten(value: Any) -> FlatType:
     match value:
         case dict() if len(value) > 0:
             return [
@@ -47,14 +47,14 @@ def flatten(value: Any) -> FLAT_TYPE:
             return [([], value)]
 
 
-def clean_flat(flat: FLAT_TYPE) -> FLAT_TYPE:
+def clean_flat(flat: FlatType) -> FlatType:
     return [
         (ks, v) for ks, v in flat
         if not any(isinstance(k, str) and k.startswith("_") for k in ks)
     ]
 
 
-def collect(pairs: FLAT_TYPE) -> Any:
+def collect(pairs: FlatType) -> Any:
     # handle empty key
     if any(p[0] == [] for p in pairs):
         if len(pairs) == 1:
