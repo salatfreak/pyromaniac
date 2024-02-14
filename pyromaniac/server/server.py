@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 import ssl
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from base64 import b64encode
@@ -30,7 +30,7 @@ class Server(HTTPServer):
         self.auth = auth
         self.generator = generator
 
-    def handle(self, *args, **kwargs) -> 'Handler':
+    def handle(self, *args: Any, **kwargs: Any) -> 'Handler':
         return Handler(self.auth, self.generator, *args, **kwargs)
 
 
@@ -88,4 +88,4 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(content)
 
     # disable potentially insecure logging
-    def log_message(self, *args, **kwargs): pass
+    def log_message(self, *args: Any, **kwargs: Any): pass
