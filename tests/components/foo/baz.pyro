@@ -1,1 +1,17 @@
-{}
+"""doc string""" # this is the doc string
+
+# Now comes the signature
+(name: str, age: int, *args: str, **kwargs: float) # this is the signature
+
+---
+
+# here we use string interpolation to construct a message
+message = f"Hello {age} year old {name}!"
+
+---
+
+# here comes the yaml code
+storage.files[0]:
+  path: /greeting.txt
+  contents.inline: {{ message }} # here we insert the message with jinja syntax
+  "hello"

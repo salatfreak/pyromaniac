@@ -1,1 +1,5 @@
-{}
+(name: str, age: int
+
+---
+
+{"message": f"Hello {age} year old {name}!"}
