@@ -4,7 +4,7 @@ import inspect
 from pathlib import PosixPath as Path
 
 from .errors import InvalidSignatureError, InvalidArgumentError
-from .url import URL
+from ..url import URL
 from .type import Type
 
 

@@ -3,7 +3,7 @@ from types import NoneType, GenericAlias, UnionType
 from pathlib import PosixPath as Path
 
 from .errors import InvalidSignatureError, InvalidArgumentError
-from .url import URL
+from ..url import URL
 
 
 class Type:
