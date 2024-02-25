@@ -13,6 +13,12 @@ def glob(path: Path, *patterns: str) -> Iterable[str]:
     return chain(*(path.glob(p) for p in patterns))
 
 
+@classmethod
+def mock_create(cls: object, source: str) -> Component:
+    return Component(None, None, None, None)
+
+
+@patch('pyromaniac.compiler.component.Component.create', mock_create)
 class TestLibrary(TestCase):
     def setUp(self):
         self.comps = Path(__file__).parent.parent.joinpath("components")
@@ -80,6 +86,7 @@ class TestLibrary(TestCase):
         self.assertEqual(self.lib.resolve(name), expected_tuple)
 
 
+@patch('pyromaniac.compiler.component.Component.create', mock_create)
 class TestView(TestCase):
     def setUp(self):
         TestLibrary.setUp(self)
