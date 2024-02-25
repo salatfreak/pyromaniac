@@ -24,3 +24,11 @@ class InvalidArgumentError(CodeError):
     @classmethod
     def wrong_count(cls, value: Any, count: int) -> Self:
         return cls(f"argument {value} should have {count} elements")
+
+
+class PythonSyntaxError(CodeError):
+    pass
+
+
+class PythonRuntimeError(CodeError):
+    pass

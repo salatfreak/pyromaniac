@@ -32,7 +32,8 @@ class Component:
         """
         context.update(self.sig.parse(*args, **kwargs))
         if self.python is not None:
-            result = self.python.execute(context)
-        if self.yaml is not None:
-            result = self.yaml.execute(context)
-        return result
+            self.python.execute(context)
+        if self.yaml is None:
+            return context['result']
+        else:
+            return self.yaml.execute(context)
