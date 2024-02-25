@@ -4,7 +4,7 @@ from pathlib import Path
 from pyromaniac.compiler.code import (
     InvalidArgumentError, InvalidSignatureError,
 )
-from pyromaniac.compiler.code.url import URL
+from pyromaniac.compiler.url import URL
 from pyromaniac.compiler.code.signature import Signature
 
 
