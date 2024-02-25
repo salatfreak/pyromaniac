@@ -6,6 +6,10 @@ class CodeError(CompilerError):
     pass
 
 
+class InvalidDocstringError(CodeError):
+    pass
+
+
 class InvalidArgumentError(CodeError):
     @classmethod
     def wrong_type(cls, value: Any, type: str) -> Self:
