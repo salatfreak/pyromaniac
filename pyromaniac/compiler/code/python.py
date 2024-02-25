@@ -1,7 +1,4 @@
-from typing import Self, Any, TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from ..context import Context
+from typing import Self, Any
 
 
 class Python:
@@ -12,5 +9,5 @@ class Python:
     def create(cls, code: str, final: bool) -> Self:
         return cls(code)
 
-    def execute(self, context: 'Context') -> Any:
+    def execute(self, context: dict) -> Any:
         return {}
