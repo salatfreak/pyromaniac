@@ -1,9 +1,12 @@
+from typing import Any
 import sys
 import subprocess
+from pathlib import PosixPath as Path
 import yaml
 
 from .. import paths
 from .errors import RenderError
+from .url import URL
 
 config: list[str] = []
 
@@ -34,3 +37,12 @@ def butane(source: dict) -> str:
     warning == "" or print(warning, file=sys.stderr)
 
     return res.stdout.strip()
+
+
+# configure Path and URL serialization
+def representer(dumper: yaml.Dumper, data: Any):
+    return dumper.represent_scalar("tag:yaml.org,2002:str", str(data))
+
+
+yaml.add_representer(Path, representer)
+yaml.add_representer(URL, representer)
