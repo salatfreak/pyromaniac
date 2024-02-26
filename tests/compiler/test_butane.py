@@ -1,5 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock
+from pathlib import PosixPath as Path
 import json
 
 from pyromaniac.compiler import RenderError
@@ -20,3 +21,11 @@ class TestButane(TestCase):
     def test_butane(self):
         config = {'variant': "fcos", 'version': "1.5.0"}
         self.assertIn("version", json.loads(butane(config))["ignition"])
+
+    def test_path(self):
+        config = {
+            'variant': "fcos", 'version': "1.5.0",
+            'storage': {'files': [{'path': Path("/foo/bar")}]},
+        }
+        ignition = json.loads(butane(config))
+        self.assertEqual(ignition["storage"]["files"][0]["path"], "/foo/bar")
