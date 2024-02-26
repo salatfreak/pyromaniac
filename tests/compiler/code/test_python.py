@@ -47,7 +47,7 @@ class TestPython(TestCase):
             Python.create(code, pure)
 
     def assertRaisesPythonRuntime(
-        self, code: str, context: dict = None, pure: bool = False
+        self, code: str, context: dict = None, pure: bool = False,
     ) -> Exception:
         with self.assertRaises(PythonRuntimeError) as e:
             execute(code, context, pure)
