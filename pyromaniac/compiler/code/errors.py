@@ -36,3 +36,19 @@ class PythonSyntaxError(PythonError):
 
 class PythonRuntimeError(PythonError):
     pass
+
+
+class YamlError(CodeError):
+    pass
+
+
+class YamlTemplateError(YamlError):
+    pass
+
+
+class YamlExecutionError(YamlError):
+    pass
+
+
+class YamlParseError(YamlError):
+    pass
