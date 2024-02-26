@@ -66,7 +66,7 @@ class Yaml:
 class Raw:
     __match_args__ = ("content",)
 
-    def __init__(self, content: str):
+    def __init__(self, content: Any):
         self.content = content
 
 
