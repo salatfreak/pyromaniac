@@ -26,9 +26,13 @@ class InvalidArgumentError(CodeError):
         return cls(f"argument {value} should have {count} elements")
 
 
-class PythonSyntaxError(CodeError):
+class PythonError(CodeError):
     pass
 
 
-class PythonRuntimeError(CodeError):
+class PythonSyntaxError(PythonError):
+    pass
+
+
+class PythonRuntimeError(PythonError):
     pass
