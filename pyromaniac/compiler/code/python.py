@@ -39,7 +39,6 @@ class Python:
         stored in the contexts *result* field if no error occurs.
 
         :param context: context to execute code in
-        :returns: passed in context for convenience
         """
         try:
             exec(self.code, context)
