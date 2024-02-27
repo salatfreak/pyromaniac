@@ -3,7 +3,7 @@ from unittest.mock import patch, Mock
 from pathlib import PosixPath as Path
 import json
 
-from pyromaniac.compiler import RenderError
+from pyromaniac.compiler import ButaneError
 from pyromaniac.compiler.butane import butane, configure
 
 
@@ -15,7 +15,7 @@ class TestButane(TestCase):
         configure(["--pretty"])
         self.assertGreater(len(butane(config).splitlines()), 1)
         configure(["--strict"])
-        with self.assertRaises(RenderError):
+        with self.assertRaises(ButaneError):
             butane(config)
 
     def test_butane(self):
