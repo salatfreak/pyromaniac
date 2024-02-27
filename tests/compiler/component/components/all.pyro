@@ -1,0 +1,15 @@
+"""The most complex component.
+
+It contains all possible segments :O
+"""
+
+(name: str, age: int, job: str = None, *hobbies: str)
+
+---
+intro = " ".join(f"I like {h}." for h in hobbies)
+---
+
+name: {{ name | raw }} X
+job: {{ job or "making worlds" }}
+age: {{ age }}
+intro: {{ intro }}
