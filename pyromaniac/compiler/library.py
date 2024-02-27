@@ -1,9 +1,14 @@
 from typing import Self, Any
+from keyword import iskeyword
 from pathlib import PosixPath as Path
 
 from .errors import NotAComponentError
 from .context import Context
 from .component import Component
+
+
+def is_var_name(name: str):
+    return name.isidentifier() and not iskeyword(name)
 
 
 class Library:
@@ -38,7 +43,8 @@ class Library:
         return set(
             path.name if path.is_dir() else path.stem
             for path in self.root.iterdir()
-            if path.suffix == '.pyro' or path.is_dir()
+            if path.suffix == '.pyro' and is_var_name(path.stem)
+            or path.is_dir() and is_var_name(path.name)
         ).union(
             name for lib in self.libs for name in lib.dir()
         )
