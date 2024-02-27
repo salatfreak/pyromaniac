@@ -21,7 +21,7 @@ def mock_create(cls: object, source: str) -> Component:
 @patch('pyromaniac.compiler.component.Component.create', mock_create)
 class TestLibrary(TestCase):
     def setUp(self):
-        self.comps = Path(__file__).parent.parent.joinpath("components")
+        self.comps = Path(__file__).parent.joinpath("components")
         self.stdlib = Library(paths.stdlib)
         self.lib = Library(self.comps, [self.stdlib])
 
@@ -29,13 +29,13 @@ class TestLibrary(TestCase):
         for p in glob(self.comps, "**/*/", "**/*.pyro"):
             name = ".".join(p.relative_to(self.comps).with_suffix("").parts)
             self.assertIn(name, self.lib)
-        for p in glob(self.comps, "**/*.json", "**/*.yml", "**/*.toml"):
+        for p in glob(self.comps, "**/*.json", "**/*.yml"):
             name = ".".join(p.relative_to(self.comps).with_suffix("").parts)
             self.assertNotIn(name, self.lib)
         for p in glob(paths.stdlib, "**/*/", "**/*.pyro"):
             name = ".".join(p.relative_to(paths.stdlib).with_suffix("").parts)
             self.assertIn(name, self.lib)
-        self.assertNotIn("baz", self.lib)
+        self.assertNotIn("bananenbrot", self.lib)
 
     def test_dir(self):
         expected = set(
@@ -45,25 +45,24 @@ class TestLibrary(TestCase):
         self.assertEqual(self.lib.dir(), expected)
 
     def test_resolve(self):
-        self.assertResolvesTo("qux", "qux")
-        self.assertResolvesTo("foo.baz.grault", "foo.baz.grault")
-        self.assertResolvesTo("foo.baz", "foo.baz")
-        self.assertResolvesTo("bar", "bar.main")
+        self.assertResolvesTo("comp1", "comp1")
+        self.assertResolvesTo("dir1.dir11.comp111", "dir1.dir11.comp111")
+        self.assertResolvesTo("dir1.dir11", "dir1.dir11.main")
 
         self.assertResolvesTo("merge", "merge", self.stdlib)
 
         self.assertResolvesTo("", None)
         self.assertResolvesTo(".", None)
-        self.assertResolvesTo("foo", None)
+        self.assertResolvesTo("comp11", None)
         self.assertResolvesTo("bananenbrot", None)
 
     @patch('pyromaniac.compiler.component.Component.execute')
     def test_execute(self, execute: Mock):
         execute.return_value = "foo"
-        self.assertEqual(self.lib.execute("qux", "quux", corge="fred"), "foo")
+        self.assertEqual(self.lib.execute("comp1", "foo", bar="baz"), "foo")
         self.assertEqual(execute.call_args.args[0].path, self.comps)
-        self.assertEqual(execute.call_args.args[1:], ("quux",))
-        self.assertEqual(execute.call_args.kwargs, {"corge": "fred"})
+        self.assertEqual(execute.call_args.args[1:], ("foo",))
+        self.assertEqual(execute.call_args.kwargs, {"bar": "baz"})
 
         execute.return_value = "pi"
         self.assertEqual(self.stdlib.execute("merge"), "pi")
@@ -73,10 +72,10 @@ class TestLibrary(TestCase):
             self.lib.execute("bananenbrot")
 
     def test_get(self):
-        comp = self.lib.get('foo.baz.grault')
+        comp = self.lib.get('dir1.dir11.comp111')
         self.assertIsInstance(comp, Component)
-        self.assertEqual(comp, self.lib.get('foo.baz.grault'))
-        self.assertNotEqual(comp, self.lib.get('bar.main'))
+        self.assertEqual(comp, self.lib.get('dir1.dir11.comp111'))
+        self.assertNotEqual(comp, self.lib.get('dir1.dir11.main'))
 
     def assertResolvesTo(
         self, name: str, expected: str | None, lib: Library | None = None
@@ -93,36 +92,35 @@ class TestView(TestCase):
         self.view = self.lib.view()
 
     def test_getattr(self):
-        self.assertIsInstance(self.view.foo.baz, View)
-        self.assertIsInstance(self.view.foo.baz.waldo, View)
+        self.assertIsInstance(self.view.dir1.dir11, View)
+        self.assertIsInstance(self.view.dir1.dir11.comp111, View)
         self.assertIsInstance(self.view.merge, View)
-        self.assertIsInstance(self.view.foo.baz._._.bar.main, View)
-        self.assertIsInstance(self.view.foo.baz._._.merge, View)
+        self.assertIsInstance(self.view.dir1._.dir1.dir11.main, View)
+        self.assertIsInstance(self.view.dir1.dir11._._.merge, View)
 
         with self.assertRaises(AttributeError):
             self.view.bananenbrot
         with self.assertRaises(AttributeError):
-            self.view.foo.bananenbrot
+            self.view.dir1.bananenbrot
         with self.assertRaises(AttributeError):
-            self.view.foo._.bananenbrot
+            self.view.dir1._.bananenbrot
 
     def test_contains(self):
-        self.assertIn("foo", self.view)
-        self.assertIn("baz", self.view.bar._.foo)
-        self.assertIn("merge", self.view.foo._)
+        self.assertIn("dir1", self.view)
+        self.assertIn("comp111", self.view.dir1._.dir1.dir11)
+        self.assertIn("merge", self.view.dir1._)
 
-        self.assertNotIn("bar", self.view.foo)
-        self.assertNotIn("merge", self.view.foo)
+        self.assertNotIn("bananenbrot", self.view.dir1)
+        self.assertNotIn("merge", self.view.dir1)
 
     @patch('pyromaniac.compiler.component.Component.execute')
     def test_call(self, execute: Mock):
-        execute.return_value = "qux"
-        self.assertEqual(self.view.foo.baz.grault("foo", bar="baz"), "qux")
-        self.assertEqual(self.view.bar("foo", bar="baz"), "qux")
-        self.assertEqual(self.view.foo.baz("foo", bar="baz"), "qux")
+        execute.return_value = "foo"
+        self.assertEqual(self.view.dir1.dir11.comp111("bar", baz="qux"), "foo")
+        self.assertEqual(self.view.dir1.dir11("bar", baz="qux"), "foo")
 
-        self.assertEqual(execute.call_args.args[1:], ("foo",))
-        self.assertEqual(execute.call_args.kwargs, {"bar": "baz"})
+        self.assertEqual(execute.call_args.args[1:], ("bar",))
+        self.assertEqual(execute.call_args.kwargs, {"baz": "qux"})
 
         with self.assertRaises(NotAComponentError):
-            self.view.foo()
+            self.view.dir1()

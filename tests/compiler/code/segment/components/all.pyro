@@ -14,4 +14,3 @@ message = f"Hello {age} year old {name}!"
 storage.files[0]:
   path: /greeting.txt
   contents.inline: {{ message }} # here we insert the message with jinja syntax
-  "hello"

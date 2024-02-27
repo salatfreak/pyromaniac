@@ -7,7 +7,7 @@ from pyromaniac.compiler.compiler import Compiler
 
 class TestCompiler(TestCase):
     def setUp(self):
-        self.comps = Path(__file__).parent.parent.joinpath("components")
+        self.comps = Path(__file__).parent.joinpath("components")
         self.compiler = Compiler.create(self.comps)
 
     def test_minimal(self):
@@ -22,7 +22,7 @@ class TestCompiler(TestCase):
 
     def test_not_a_dict_error(self):
         with self.assertRaises(NotADictError) as e:
-            self.compile("errors/returns_string")
+            self.compile("returns_string")
         self.assertIsInstance(e.exception.result, str)
 
     def compile(

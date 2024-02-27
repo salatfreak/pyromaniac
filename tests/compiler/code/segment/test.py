@@ -9,20 +9,20 @@ from pyromaniac.compiler.code.segment import segment
 
 class TestSegment(TestCase):
     def setUp(self):
-        self.comps = Path(__file__).parent.parent.parent.joinpath("components")
+        self.comps = Path(__file__).parent.joinpath("components")
 
     def test_pure_yaml(self):
-        doc, sig, python, yaml = self.segment("qux")
+        doc, sig, python, yaml = self.segment("pure_yaml")
         self.assertIsNotNone(yaml)
         self.assertTupleEqual((doc, sig, python), (None, None, None))
 
     def test_pure_python(self):
-        doc, sig, python, yaml = self.segment("quux")
+        doc, sig, python, yaml = self.segment("pure_python")
         self.assertIsNotNone(python)
         self.assertTupleEqual((doc, sig, yaml), (None, None, None))
 
     def test_all(self):
-        doc, sig, python, yaml = self.segment("foo/baz")
+        doc, sig, python, yaml = self.segment("all")
         self.assertIsNotNone(doc)
         self.assertIsNotNone(sig)
         self.assertIsNotNone(python)
@@ -32,11 +32,11 @@ class TestSegment(TestCase):
 
     def test_invalid_signature(self):
         with self.assertRaises(InvalidSignatureError):
-            self.segment("bar/main")
+            self.segment("invalid_signature")
 
     def test_unexpected_token(self):
         with self.assertRaises(UnexpectedTokenError) as ctx:
-            self.segment("bar/fred")
+            self.segment("unexpected_token")
         self.assertEqual(ctx.exception.line, 1)
         self.assertEqual(ctx.exception.token.string, ')')
 
