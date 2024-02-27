@@ -1,7 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock
 from pathlib import PosixPath as Path
-from pyromaniac import paths
 from pyromaniac.compiler.context import Context, Underscore
 from pyromaniac.compiler.library import Library, View
 
@@ -9,7 +8,8 @@ from pyromaniac.compiler.library import Library, View
 class TestContext(TestCase):
     def setUp(self):
         self.comps = Path(__file__).parent.joinpath("components")
-        self.stdlib = Library(paths.stdlib)
+        stdlib = Path(__file__).parent.joinpath("stdlib")
+        self.stdlib = Library(stdlib)
         self.lib = Library(self.comps, [self.stdlib])
         self.root = Context(self.lib, self.lib.view(), self.comps)
         self.nested = Context(

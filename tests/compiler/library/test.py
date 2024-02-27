@@ -3,7 +3,6 @@ from unittest.mock import patch, Mock
 from collections.abc import Iterable
 from pathlib import PosixPath as Path
 from itertools import chain
-from pyromaniac import paths
 from pyromaniac.compiler import NotAComponentError
 from pyromaniac.compiler.library import Library, View
 from pyromaniac.compiler.component import Component
@@ -22,7 +21,8 @@ def mock_create(cls: object, source: str) -> Component:
 class TestLibrary(TestCase):
     def setUp(self):
         self.comps = Path(__file__).parent.joinpath("components")
-        self.stdlib = Library(paths.stdlib)
+        self.std = Path(__file__).parent.joinpath("stdlib")
+        self.stdlib = Library(self.std)
         self.lib = Library(self.comps, [self.stdlib])
 
     def test_contains(self):
@@ -32,15 +32,15 @@ class TestLibrary(TestCase):
         for p in glob(self.comps, "**/*.json", "**/*.yml"):
             name = ".".join(p.relative_to(self.comps).with_suffix("").parts)
             self.assertNotIn(name, self.lib)
-        for p in glob(paths.stdlib, "**/*/", "**/*.pyro"):
-            name = ".".join(p.relative_to(paths.stdlib).with_suffix("").parts)
+        for p in glob(self.std, "**/*/", "**/*.pyro"):
+            name = ".".join(p.relative_to(self.std).with_suffix("").parts)
             self.assertIn(name, self.lib)
         self.assertNotIn("bananenbrot", self.lib)
 
     def test_dir(self):
         expected = set(
             p.stem
-            for p in chain(*(p.glob("*") for p in [self.comps, paths.stdlib]))
+            for p in chain(*(p.glob("*") for p in [self.comps, self.std]))
         )
         self.assertEqual(self.lib.dir(), expected)
 
@@ -66,7 +66,7 @@ class TestLibrary(TestCase):
 
         execute.return_value = "pi"
         self.assertEqual(self.stdlib.execute("merge"), "pi")
-        self.assertEqual(execute.call_args.args[0].path, paths.stdlib)
+        self.assertEqual(execute.call_args.args[0].path, self.std)
 
         with self.assertRaises(Exception):
             self.lib.execute("bananenbrot")
