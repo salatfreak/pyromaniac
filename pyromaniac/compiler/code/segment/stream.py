@@ -89,7 +89,7 @@ def generate(code: str) -> Iterable[Token]:
             if info.start[0] == info.end[0]:
                 slc = slice(start, line_start + info.end[1])
             else:
-                slc = slice(start, start + len(t.string))
+                slc = slice(start, start + len(info.string))
 
             # keep track of start of line
             match info.type:
