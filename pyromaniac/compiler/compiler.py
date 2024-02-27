@@ -1,13 +1,21 @@
 from typing import Self
 from pathlib import PosixPath as Path
-import json
 
+from .. import paths
+from .errors import NotADictError
+from .pyromaniac import Pyromaniac
 from .butane import butane
 from .expand import expand
+from .library import Component
+from .library import Library
+from .library import Context
 
 
 class Compiler:
     """Pyromaniac config compiler."""
+
+    def __init__(self, lib: Library):
+        self.lib = lib
 
     @classmethod
     def create(cls, path: Path) -> Self:
@@ -16,7 +24,7 @@ class Compiler:
         :param path: path to component library
         :returns: created compiler
         """
-        return cls()
+        return cls(Library(path, [Library(paths.stdlib)]))
 
     def compile(
         self, source: str,
@@ -29,4 +37,13 @@ class Compiler:
         :param auth: basic auth credentials for encryption secret requests
         :returns: compiled ignition config
         """
-        return butane(expand(json.loads(source), True, True))
+        component = Component.create(source)
+
+        context = Context(self.lib, self.lib.view(), self.lib.get_path(""))
+        context["pyromaniac"] = Pyromaniac(address, auth)
+
+        result = component.execute(context)
+        if not isinstance(result, dict):
+            raise NotADictError(result)
+
+        return butane(expand(result, True, True))

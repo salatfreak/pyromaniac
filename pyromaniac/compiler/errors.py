@@ -1,3 +1,5 @@
+from typing import Any
+
 from ..errors import PyromaniacError
 
 
@@ -11,6 +13,11 @@ class NotAComponentError(CompilerError):
 
 class RenderError(CompilerError):
     pass
+
+
+class NotADictError(RenderError):
+    def __init__(self, result: Any):
+        self.result = result
 
 
 class ButaneError(RenderError):
