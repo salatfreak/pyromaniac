@@ -11,3 +11,8 @@ class NotAComponentError(CompilerError):
 
 class RenderError(CompilerError):
     pass
+
+
+class ButaneError(RenderError):
+    def __init__(self, message: str):
+        self.message = message

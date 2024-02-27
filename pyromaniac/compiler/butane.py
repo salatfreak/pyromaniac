@@ -5,7 +5,7 @@ from pathlib import PosixPath as Path
 import yaml
 
 from .. import paths
-from .errors import RenderError
+from .errors import ButaneError
 from .url import URL
 
 config: list[str] = []
@@ -31,7 +31,7 @@ def butane(source: dict) -> str:
         input=yaml.dump(source), capture_output=True, text=True,
     )
     if res.returncode != 0:
-        raise RenderError(res.stderr.strip())
+        raise ButaneError(res.stderr.strip())
 
     warning = res.stderr.strip()
     warning == "" or print(warning, file=sys.stderr)
