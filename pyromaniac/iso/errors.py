@@ -1,4 +1,7 @@
-class IsoError(Exception):
+from ..errors import PyromaniacError
+
+
+class IsoError(PyromaniacError):
     pass
 
 

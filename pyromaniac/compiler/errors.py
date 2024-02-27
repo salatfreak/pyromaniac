@@ -1,4 +1,7 @@
-class CompilerError(Exception):
+from ..errors import PyromaniacError
+
+
+class CompilerError(PyromaniacError):
     pass
 
 

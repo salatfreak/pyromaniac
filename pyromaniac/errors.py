@@ -1,0 +1,2 @@
+class PyromaniacError(Exception):
+    pass
