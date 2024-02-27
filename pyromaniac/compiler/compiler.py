@@ -26,7 +26,7 @@ class Compiler:
 
         :param source: pyromaniac config source text
         :param address: scheme, host and port for encryption secret requests
-        :param auth: basic auth credentials for encryption secret reqeusts
+        :param auth: basic auth credentials for encryption secret requests
         :returns: compiled ignition config
         """
         return butane(expand(json.loads(source), True, True))
