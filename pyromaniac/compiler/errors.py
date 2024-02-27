@@ -5,9 +5,9 @@ class CompilerError(PyromaniacError):
     pass
 
 
-class RenderError(CompilerError):
+class NotAComponentError(CompilerError):
     pass
 
 
-class NotAComponentError(CompilerError):
+class RenderError(CompilerError):
     pass
