@@ -1,4 +1,4 @@
-from typing import Self
+from typing import Any, Self
 from pathlib import PosixPath as Path
 
 from .. import paths
@@ -29,12 +29,15 @@ class Compiler:
     def compile(
         self, source: str,
         address: tuple[str, str, int], auth: str | None = None,
+        args: list = [], kwargs: dict[str, Any] = {},
     ) -> str:
         """Compile config to ignition.
 
         :param source: pyromaniac config source text
         :param address: scheme, host and port for encryption secret requests
         :param auth: basic auth credentials for encryption secret requests
+        :param args: positional arguments to pass to the component
+        :param kwargs: keyword arguments to pass to the component
         :returns: compiled ignition config
         """
         component = Component.create(source)
@@ -42,7 +45,7 @@ class Compiler:
         context = Context(self.lib, self.lib.view(), self.lib.get_path(""))
         context["pyromaniac"] = Pyromaniac(address, auth)
 
-        result = component.execute(context)
+        result = component.execute(context, *args, **kwargs)
         if not isinstance(result, dict):
             raise NotADictError(result)
 
