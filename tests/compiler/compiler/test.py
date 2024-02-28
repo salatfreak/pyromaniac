@@ -1,3 +1,4 @@
+from typing import Any
 from unittest import TestCase
 from pathlib import PosixPath as Path
 import json
@@ -20,6 +21,17 @@ class TestCompiler(TestCase):
         self.assertEqual(replace['source'], "http://localhost:8000/config.ign")
         self.assertEqual(replace['httpHeaders'][0]['value'], "Basic secret")
 
+    def test_arguments(self):
+        args = {"args": ["/foo"], "kwargs": {"content": "bar"}}
+        file = self.compile("arguments", **args)['storage']['files'][0]
+        self.assertEqual(file['path'], "/foo")
+        self.assertIn("bar", json.dumps(file['contents']))
+
+        args = {"args": ["/baz"]}
+        file = self.compile("arguments", **args)['storage']['files'][0]
+        self.assertEqual(file['path'], "/baz")
+        self.assertIn("default", json.dumps(file['contents']))
+
     def test_not_a_dict_error(self):
         with self.assertRaises(NotADictError) as e:
             self.compile("returns_string")
@@ -28,7 +40,9 @@ class TestCompiler(TestCase):
     def compile(
         self, path: str,
         address: tuple[str, str, int] = ("http", "localhost", 8000),
-        auth: str | None = None
+        auth: str | None = None,
+        args: list = [], kwargs: dict[str, Any] = {},
     ) -> dict:
         source = self.comps.joinpath(path).with_suffix(".pyro").read_text()
-        return json.loads(self.compiler.compile(source, address, auth))
+        result = self.compiler.compile(source, address, auth, args, kwargs)
+        return json.loads(result)

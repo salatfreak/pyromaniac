@@ -1,0 +1,5 @@
+(path: str, content: str = "default")
+
+storage.files[0]:
+  path: {{ path }}
+  contents.inline: {{ content }}
