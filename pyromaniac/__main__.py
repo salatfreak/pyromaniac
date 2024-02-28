@@ -14,7 +14,7 @@ def ignition():
     if 'source' not in globals() or not args.input.is_char_device():
         source = args.input.read_text()
 
-    return compile(source, args.address, args.auth)
+    return compile(source, args.address, args.auth, args.args)
 
 
 match args.mode:

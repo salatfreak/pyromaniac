@@ -44,12 +44,9 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     "connection:\n"
     "$ pyromaniac --serve --address https://192.168.0.16:443443/ -i config.py"
 ), formatter_class=Formatter, add_help=False)
+parser._positionals.title = "Positional"
 parser._optionals.title = "Options"
 
-parser.add_argument(
-    "-i", "--input", default="/dev/stdin", type=Path,
-    help="Set pyromaniac file to compile. (default: standard input)",
-)
 butane_args = {'action': 'append_const', 'dest': 'butane', 'default': []}
 parser.add_argument(
     "-p", "--pretty", **butane_args, const='--pretty',
@@ -115,6 +112,16 @@ parser.add_argument("--auth", default='default', help=(
 parser.add_argument("-h", "--help", action="help", help=(
     "Show this help message and exit."
 ))
+
+parser.add_argument(
+    "input", nargs='?', default="/dev/stdin", type=Path,
+    help="Pyromaniac file or directory to compile. (default: standard input)",
+)
+
+parser.add_argument(
+    "args", nargs='*', default=[],
+    help="Arguments to pass to the main component",
+)
 
 for args, kwargs in generate():
     parser.add_argument(*args, **kwargs)
