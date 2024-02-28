@@ -4,6 +4,7 @@
 
 readonly DIR="$(realpath "$(dirname "$0")")"
 exec podman run --rm "$input" \
+  --security-opt "label=disable" \
   -v "$DIR/pyromaniac:/src/pyromaniac:ro" \
   -v "pyromaniac-cache:/data/cache" \
   -v "pyromaniac-secrets:/data/secrets" \
