@@ -6,9 +6,9 @@ from .errors import NotADictError
 from .pyromaniac import Pyromaniac
 from .butane import butane
 from .expand import expand
-from .library import Component
+from .component import Component
 from .library import Library
-from .library import Context
+from .context import Context
 
 
 class Compiler:
