@@ -1,9 +1,11 @@
+(path: str, content: str = "default")
+
 ---
 from yaml import safe_load as yaml_load
 
 config = yaml_load((_/"config.yml").read_text())
 
 merge(
-    core_files(*config["files"]),
+    core_files({"path": path, "content": content}, *config["files"]),
     storage(config["disk"]),
 )

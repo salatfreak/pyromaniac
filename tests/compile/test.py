@@ -19,13 +19,14 @@ class TestCompile(TestCase):
         self.assertEqual(replace["httpHeaders"][0]["value"], "Basic secret")
 
     def test_complex(self):
-        result = self.compile("main")
+        result = self.compile("main", args=["/file"])
         self.assertEqual(len(result["ignition"]["config"]["merge"]), 2)
 
     def compile(
         self, path: str,
         address: tuple[str, str, int] = ("http", "localhost", 8000),
         auth: str | None = None,
+        args: list = [], kwargs: dict[str, Any] = {},
     ) -> Any:
         source = Path(path).with_suffix(".pyro").read_text()
-        return json.loads(compile(source, address, auth))
+        return json.loads(compile(source, address, auth, args, kwargs))
