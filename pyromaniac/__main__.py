@@ -2,7 +2,7 @@ from .args import parse
 from .compiler.butane import configure
 from .iso import customize
 from .server import serve
-from .__init__ import compile
+from .__init__ import compile, PyromaniacError
 
 args = parse()
 configure(args.butane)
@@ -17,13 +17,16 @@ def ignition():
     return compile(source, args.address, args.auth, args.args)
 
 
-match args.mode:
-    case 'ign':
-        print(ignition())
-    case 'iso':
-        customize(
-            ignition(), args.iso_arch, args.iso_net, args.iso_disk,
-            args.installer,
-        )
-    case 'serve':
-        serve(ignition, *args.address[:2], args.auth)
+try:
+    match args.mode:
+        case 'ign':
+            print(ignition())
+        case 'iso':
+            customize(
+                ignition(), args.iso_arch, args.iso_net, args.iso_disk,
+                args.installer,
+            )
+        case 'serve':
+            serve(ignition, *args.address[:2], args.auth)
+except PyromaniacError as e:
+    exit(e)
