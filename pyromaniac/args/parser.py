@@ -114,7 +114,7 @@ parser.add_argument("-h", "--help", action="help", help=(
 ))
 
 parser.add_argument(
-    "input", nargs='?', default="/dev/stdin", type=Path,
+    "input", nargs='?', default="/dev/stdin", type=types.input,
     help="Pyromaniac file or directory to compile. (default: standard input)",
 )
 

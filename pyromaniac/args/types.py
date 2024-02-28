@@ -1,4 +1,5 @@
 import re
+from pathlib import PosixPath as Path
 
 from ..server.auth import auto_auth
 
@@ -54,3 +55,8 @@ def auth(value: str, scheme: str, host: str, port: int) -> str | None:
         return auto_auth(scheme, host, port)
     else:
         return value
+
+
+def input(value: str) -> Path:
+    path = Path(value)
+    return path.joinpath("main.pyro") if path.is_dir() else path
