@@ -1,0 +1,5 @@
+ignition.config.replace:
+  source: {{ pyromaniac.url / "config.ign" }}
+  http_headers[0]:
+    name: Authorization
+    value: {{ "Basic " + pyromaniac.auth }}

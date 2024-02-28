@@ -1,0 +1,9 @@
+(path: str, content: str | Path)
+
+---
+key = "inline" if isinstance(content, str) else "local"
+contents = {key: content}
+---
+
+path: {{ path }}
+contents: {{ contents }}

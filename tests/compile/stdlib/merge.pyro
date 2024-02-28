@@ -1,0 +1,10 @@
+(*configs: dict)
+
+---
+igns = [butane(expand(c, True, True)) for c in configs]
+---
+
+ignition.config.merge:
+{%- for ign in igns %}
+  - inline: {{ ign }}
+{%- endfor %}

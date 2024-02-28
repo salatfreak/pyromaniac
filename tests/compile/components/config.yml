@@ -1,0 +1,6 @@
+disk: /dev/vda
+files:
+  - path: "/foo"
+    content: "foo"
+  - path: "/bar"
+    content: "bar"

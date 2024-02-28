@@ -1,0 +1,9 @@
+---
+from yaml import safe_load as yaml_load
+
+config = yaml_load((_/"config.yml").read_text())
+
+merge(
+    core_files(*config["files"]),
+    storage(config["disk"]),
+)
