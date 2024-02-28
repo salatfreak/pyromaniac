@@ -16,9 +16,9 @@ class TestCompiler(TestCase):
     def test_pyromaniac_object(self):
         address = ("http", "localhost", 8000)
         result = self.compile("pyromaniac_object", address, "secret")
-        merge = result['ignition']['config']['merge'][0]
-        self.assertEqual(merge['source'], "http://localhost:8000/config.ign")
-        self.assertEqual(merge['httpHeaders'][0]['value'], "Basic secret")
+        replace = result['ignition']['config']['replace']
+        self.assertEqual(replace['source'], "http://localhost:8000/config.ign")
+        self.assertEqual(replace['httpHeaders'][0]['value'], "Basic secret")
 
     def test_not_a_dict_error(self):
         with self.assertRaises(NotADictError) as e:
