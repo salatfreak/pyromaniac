@@ -10,9 +10,12 @@ from . import temp
 class TestArgs(TestCase):
     def test_input(self):
         self.assertEqual(parse().input, Path("/dev/stdin"))
+
         args = parse(["/foo.pyro"])
         self.assertEqual(args.input, Path("/foo.pyro"))
         self.assertEqual(args.args, [])
+
+        self.assertEqual(parse(["."]).input, Path("main.pyro"))
 
     def test_args(self):
         args = parse(["/bar.pyro", "foo", "bar"])
