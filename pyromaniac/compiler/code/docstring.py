@@ -5,10 +5,7 @@ from .errors import InvalidDocstringError
 
 def parse(code: str) -> str:
     # parse doc string source code
-    try:
-        tree = ast.parse(code)
-    except SyntaxError as e:
-        raise InvalidDocstringError() from e
+    tree = ast.parse(code)
 
     # extract string content
     if not len(tree.body) == 1 \
