@@ -1,5 +1,5 @@
 from unittest import TestCase
-from pyromaniac.compiler.code import InvalidDocstringError
+from pyromaniac.compiler.code.errors import InvalidDocstringError
 from pyromaniac.compiler.code.docstring import parse
 
 

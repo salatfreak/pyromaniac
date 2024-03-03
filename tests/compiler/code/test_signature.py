@@ -1,7 +1,7 @@
 from typing import Any
 from unittest import TestCase
 from pathlib import Path
-from pyromaniac.compiler.code import (
+from pyromaniac.compiler.code.errors import (
     InvalidArgumentError, InvalidSignatureError,
 )
 from pyromaniac.compiler.url import URL

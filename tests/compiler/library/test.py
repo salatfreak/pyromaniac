@@ -3,7 +3,7 @@ from unittest.mock import patch, Mock
 from collections.abc import Iterable
 from pathlib import PosixPath as Path
 from itertools import chain
-from pyromaniac.compiler import NonExistentPathError, NotAComponentError
+from pyromaniac.compiler.errors import NonExistentPathError, NotAComponentError
 from pyromaniac.compiler.library import Library, View
 from pyromaniac.compiler.component import Component
 

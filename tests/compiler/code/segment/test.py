@@ -1,7 +1,7 @@
 from unittest import TestCase
 from pathlib import PosixPath as Path
 from pyromaniac.compiler.code.segment.errors import (
-    InvalidSignatureError,
+    SignatureSyntaxError,
     UnexpectedTokenError,
 )
 from pyromaniac.compiler.code.segment import segment
@@ -31,7 +31,7 @@ class TestSegment(TestCase):
         self.assertTrue(yaml.splitlines()[13].startswith("storage.files"))
 
     def test_invalid_signature(self):
-        with self.assertRaises(InvalidSignatureError):
+        with self.assertRaises(SignatureSyntaxError):
             self.segment("invalid_signature")
 
     def test_unexpected_token(self):

@@ -3,10 +3,10 @@ from collections.abc import Iterable
 from unittest import TestCase
 from contextlib import contextmanager
 
-from pyromaniac.compiler.expand import (
+from pyromaniac.compiler.expand.errors import (
     KeyExpandError, DuplicateKeyError, MixedKeysError, MissingIndexError,
-    expand
 )
+from pyromaniac.compiler.expand import expand
 
 
 # check if expanding changes value

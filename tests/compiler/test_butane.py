@@ -3,7 +3,7 @@ from unittest.mock import patch, Mock
 from pathlib import PosixPath as Path
 import json
 
-from pyromaniac.compiler import ButaneError, NotADictError
+from pyromaniac.compiler.errors import ButaneError, NotADictError
 from pyromaniac.compiler.butane import butane, configure
 
 

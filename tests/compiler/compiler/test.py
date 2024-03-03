@@ -2,7 +2,7 @@ from typing import Any
 from unittest import TestCase
 from pathlib import PosixPath as Path
 import json
-from pyromaniac.compiler import NotADictError
+from pyromaniac.compiler.errors import NotADictError
 from pyromaniac.compiler.compiler import Compiler
 
 
