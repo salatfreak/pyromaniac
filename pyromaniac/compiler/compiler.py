@@ -7,7 +7,7 @@ from .butane import butane
 from .expand import expand
 from .component import Component
 from .library import Library
-from .context import Context
+from .context import context
 
 
 class Compiler:
@@ -39,10 +39,7 @@ class Compiler:
         :param kwargs: keyword arguments to pass to the component
         :returns: compiled ignition config
         """
-        component = Component.create(source)
-
-        context = Context(self.lib, self.lib.view(), self.lib.get_path(""))
-        context["pyromaniac"] = Pyromaniac(address, auth)
-
-        result = component.execute(context, *args, **kwargs)
+        vars = {'pyromaniac': Pyromaniac(address, auth)}
+        ctx = context(self.lib, self.lib.view(), **vars)
+        result = Component.create(source).execute(ctx, *args, **kwargs)
         return butane(expand(result, True, True))

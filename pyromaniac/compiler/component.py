@@ -1,7 +1,6 @@
 from typing import Self, Any
 
 from .code import parse, Signature, Python, Yaml
-from .context import Context
 
 
 class Component:
@@ -24,16 +23,16 @@ class Component:
         """
         return cls(*parse(source))
 
-    def execute(self, context: Context, *args: Any, **kwargs: Any) -> Any:
+    def execute(self, ctx: dict, *args: Any, **kwargs: Any) -> Any:
         """Execute component with the given context and arguments.
 
-        :param context: context to execute in
+        :param ctx: context to execute in
         :returns: result of the components execution
         """
-        context.update(self.sig.parse(*args, **kwargs))
+        ctx.update(self.sig.parse(*args, **kwargs))
         if self.python is not None:
-            self.python.execute(context)
+            self.python.execute(ctx)
         if self.yaml is None:
-            return context['result']
+            return ctx['result']
         else:
-            return self.yaml.execute(context)
+            return self.yaml.execute(ctx)

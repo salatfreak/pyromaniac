@@ -7,6 +7,10 @@ class CompilerError(PyromaniacError):
     pass
 
 
+class NonExistentPathError(CompilerError, AttributeError):
+    pass
+
+
 class NotAComponentError(CompilerError):
     pass
 
