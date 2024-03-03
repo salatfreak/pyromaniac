@@ -28,7 +28,7 @@ class Signature:
         """
         context = {'Any': Any, 'Path': Path, 'URL': URL}
         try:
-            exec(f"def func{code}: pass", context)
+            exec(f"def func({code}): pass", context)
         except Exception as e:
             raise InvalidSignatureError() from e
         sig = inspect.signature(context['func'])
@@ -41,7 +41,7 @@ class Signature:
 
         :returns: compiled signature object
         """
-        return cls.create("(*args, **kwargs)")
+        return cls.create("*args, **kwargs")
 
     def parse(self, *args, **kwargs) -> dict[str, Any]:
         """Match arguments to signature and check and coerce types.

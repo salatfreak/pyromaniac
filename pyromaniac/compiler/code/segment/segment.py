@@ -16,7 +16,7 @@ def segment(
     doc, sig, python, yaml = Segmenter(code).segment()
     return (
         code[doc] if doc is not None else None,
-        code[sig] if sig is not None else None,
+        extract(code, sig) if sig is not None else None,
         extract(code, python) if python is not None else None,
         extract(code, yaml) if yaml is not None else None,
     )

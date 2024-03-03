@@ -83,7 +83,7 @@ class Segmenter:
 
         # consume opening paranthesis
         last = self.tokens.consume(1)
-        start = last.start
+        start = last.start + 1
         balance += 1
 
         # consume until matching closing paranthesis
@@ -96,7 +96,7 @@ class Segmenter:
                 raise InvalidSignatureError(self.tokens.get(0))
             last = self.tokens.consume(1)
 
-        return slice(start, last.stop), last
+        return slice(start, last.stop - 1), last
 
     # read the python code and return slice, the last token, and whether at end
     def read_python(self) -> tuple[slice, Token, bool]:
