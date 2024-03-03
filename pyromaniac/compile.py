@@ -6,7 +6,7 @@ from .compiler import Compiler
 
 def compile(
     source: str, address: tuple[str, str, int], auth: str | None = None,
-    args: list = [], kwargs: dict[str, Any] = {},
+    args: tuple = tuple(), kwargs: dict[str, Any] = {},
 ) -> str:
     """Compile config to ingnition.
 

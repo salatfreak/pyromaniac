@@ -18,7 +18,7 @@ def ignition():
         except IOError as e:
             raise MainComponentIOError() from e
 
-    return compile(source, args.address, args.auth, args.args)
+    return compile(source, args.address, args.auth, tuple(args.args))
 
 
 try:

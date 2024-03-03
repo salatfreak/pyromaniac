@@ -23,7 +23,9 @@ class Component:
         """
         return cls(*parse(source))
 
-    def execute(self, ctx: dict, *args: Any, **kwargs: Any) -> Any:
+    def execute(
+        self, ctx: dict, args: tuple = tuple(), kwargs: dict[str, Any] = {},
+    ) -> Any:
         """Execute component with the given context and arguments.
 
         :param ctx: context to execute in

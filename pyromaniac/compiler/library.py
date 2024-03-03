@@ -32,11 +32,13 @@ class Library(Mapping):
             return self, f"{name}.main"
         return next(filter(None, (b.resolve(name) for b in self.libs)), None)
 
-    def execute(self, name: str, *args: Any, **kwargs: Any) -> Any:
+    def execute(
+        self, name: str, args: tuple = tuple(), kwargs: dict[str, Any] = {}
+    ) -> Any:
         comp = self.get_component(name)
         parent = name.rsplit(".", 1)[0] if "." in name else ""
         try:
-            return comp.execute(context(self, self[parent]), *args, **kwargs)
+            return comp.execute(context(self, self[parent]), args, kwargs)
         except CompilerError as e:
             raise e.push(name)
 
@@ -131,7 +133,7 @@ class View:
         pair = self.__lib.resolve(self.__path)
         if pair is None:
             raise NotAComponentError(self.__path)
-        return pair[0].execute(pair[1], *args, **kwargs)
+        return pair[0].execute(pair[1], args, kwargs)
 
     def __truediv__(self, other: str | Path) -> Path:
         return self.__lib.get_path(self.__path).joinpath(other)

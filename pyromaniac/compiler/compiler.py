@@ -28,7 +28,7 @@ class Compiler:
     def compile(
         self, source: str,
         address: tuple[str, str, int], auth: str | None = None,
-        args: list = [], kwargs: dict[str, Any] = {},
+        args: tuple = tuple(), kwargs: dict[str, Any] = {},
     ) -> str:
         """Compile config to ignition.
 
@@ -41,5 +41,5 @@ class Compiler:
         """
         vars = {'pyromaniac': Pyromaniac(address, auth)}
         ctx = context(self.lib, self.lib.view(), **vars)
-        result = Component.create(source).execute(ctx, *args, **kwargs)
+        result = Component.create(source).execute(ctx, args, kwargs)
         return butane(expand(result, True, True))
