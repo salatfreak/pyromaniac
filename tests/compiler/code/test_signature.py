@@ -19,14 +19,14 @@ class TestSignature(TestCase):
 
     def test_invalid(self):
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(foo: strint)")
+            Signature.create("foo: strint")
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(bar: int: str)")
+            Signature.create("bar: int: str")
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(in: Any)")
+            Signature.create("in: Any")
 
     def test_no_type(self):
-        sig = Signature.create("(foo)")
+        sig = Signature.create("foo")
         sig.parse("bar")
         with self.assertRaises(InvalidArgumentError):
             sig.parse()
@@ -34,11 +34,11 @@ class TestSignature(TestCase):
             sig.parse("bar", 42)
 
     def test_default(self):
-        sig = Signature.create("(foo: str = 'bar')")
+        sig = Signature.create("foo: str = 'bar'")
         self.assertEqual(sig.parse(), {"foo": "bar"})
         self.assertEqual(sig.parse("baz"), {"foo": "baz"})
 
-        sig = Signature.create("(foo: str = None)")
+        sig = Signature.create("foo: str = None")
         self.assertEqual(sig.parse(), {"foo": None})
         self.assertEqual(sig.parse(None), {"foo": None})
         self.assertEqual(sig.parse("baz"), {"foo": "baz"})
@@ -50,7 +50,7 @@ class TestSignature(TestCase):
     def test_none(self):
         self.assertCoercion('None', None)
         self.assertRaisesInvalidArgument('None', 42)
-        sig = Signature.create("(foo: None)")
+        sig = Signature.create("foo: None")
         with self.assertRaises(InvalidArgumentError):
             sig.parse()
 
@@ -98,7 +98,7 @@ class TestSignature(TestCase):
 
     def test_generic(self):
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(foo: set[str])")
+            Signature.create("foo: set[str]")
 
     def test_list(self):
         self.assertCoercion('list', [], equality=True)
@@ -118,7 +118,7 @@ class TestSignature(TestCase):
         self.assertRaisesInvalidArgument('list[str]', [42])
 
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(foo: list[str, int])")
+            Signature.create("foo: list[str, int]")
 
     def test_tuple(self):
         path, url = "/hello/world", "https://example.com/hello/world"
@@ -153,9 +153,9 @@ class TestSignature(TestCase):
         self.assertRaisesInvalidArgument('dict[int, str]', {"foo", "bar"})
 
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(foo: dict[str])")
+            Signature.create("foo: dict[str]")
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(foo: dict[str, int, float])")
+            Signature.create("foo: dict[str, int, float]")
 
     def test_union(self):
         self.assertCoercion('str | int', "foo")
@@ -174,9 +174,9 @@ class TestSignature(TestCase):
         self.assertRaisesInvalidArgument('int | str', None)
 
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(foo: int | dict[str])")
+            Signature.create("foo: int | dict[str]")
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(foo: int | dict[str])")
+            Signature.create("foo: int | dict[str]")
 
     def test_other(self):
         self.assertCoercion('set', {"foo", "bar"})
@@ -185,16 +185,16 @@ class TestSignature(TestCase):
         self.assertRaisesInvalidArgument('set', None)
 
         with self.assertRaises(InvalidSignatureError):
-            Signature.create("(test: set[str])")
+            Signature.create("test: set[str]")
 
     def test_complex(self):
-        sig = Signature.create("""(
+        sig = Signature.create("""
             foo: int | str,
             bar,
             baz: dict[Path, list[tuple[str, float | bool]]] = None,
             qux: Any = Path("lol"),
             **quux,
-        )""")
+        """)
 
         self.assertEqual(sig.parse(42, object), {
             "foo": 42, "bar": object,
@@ -226,7 +226,7 @@ class TestSignature(TestCase):
     ):
         if res is Ellipsis:
             res = val
-        sig = Signature.create(f"(foo: {type})")
+        sig = Signature.create(f"foo: {type}")
         if equality:
             self.assertEqual(sig.parse(val)['foo'], res)
         else:
@@ -237,13 +237,13 @@ class TestSignature(TestCase):
     ):
         if res is Ellipsis:
             res = val
-        sig = Signature.create(f"(foo: {type})")
+        sig = Signature.create(f"foo: {type}")
         if equality:
             self.assertNotEqual(sig.parse(val)['foo'], res)
         else:
             self.assertIsNot(sig.parse(val)['foo'], res)
 
     def assertRaisesInvalidArgument(self, type: str, input: Any):
-        sig = Signature.create(f"(foo: {type})")
+        sig = Signature.create(f"foo: {type}")
         with self.assertRaises(InvalidArgumentError):
             sig.parse(input)
