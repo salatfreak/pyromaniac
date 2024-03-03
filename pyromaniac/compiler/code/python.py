@@ -65,8 +65,7 @@ def add_assignment(code: str) -> str:
 
     # check for trailing expression
     if len(mod.body) == 0 or not isinstance(mod.body[-1], ast.Expr):
-        msg = "pure python component must end with an expression"
-        raise PythonSyntaxError(msg)
+        raise PythonSyntaxError.end_expression()
 
     # add assignment code
     mod.body[-1] = ast.Assign(

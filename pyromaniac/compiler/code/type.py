@@ -116,7 +116,7 @@ class TypeGeneric(Type):
 
     def __init__(self, type: GenericAlias):
         if self.expected >= 0 and len(type.__args__) != self.expected:
-            raise InvalidSignatureError.invalid_type(str(type))
+            raise InvalidSignatureError.unsupported_type(str(type))
         super().__init__(type.__origin__)
         self.subtypes = tuple(Type.create(t) for t in type.__args__)
 
@@ -129,7 +129,7 @@ class TypeGeneric(Type):
         elif type.__origin__ is dict:
             return TypeDict(type)
         else:
-            raise InvalidSignatureError.invalid_type(str(type))
+            raise InvalidSignatureError.unsupported_type(str(type))
 
 
 class TypeList(TypeGeneric):

@@ -35,13 +35,19 @@ class Library(Mapping):
     def execute(self, name: str, *args: Any, **kwargs: Any) -> Any:
         comp = self.get_component(name)
         parent = name.rsplit(".", 1)[0] if "." in name else ""
-        return comp.execute(context(self, self[parent]), *args, **kwargs)
+        try:
+            return comp.execute(context(self, self[parent]), *args, **kwargs)
+        except CompilerError as e:
+            raise e.push(name)
 
     def get_component(self, name: str) -> Component:
         path = self.get_path(name).with_suffix(".pyro")
 
         if name not in self.cache:
-            self.cache[name] = Component.create(path.read_text())
+            try:
+                self.cache[name] = Component.create(path.read_text())
+            except CompilerError as e:
+                raise e.push(name)
 
         return self.cache[name]
 

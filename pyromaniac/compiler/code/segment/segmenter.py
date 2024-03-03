@@ -1,6 +1,6 @@
 import tokenize as t
 
-from .errors import UnexpectedTokenError, InvalidSignatureError
+from .errors import UnexpectedTokenError, SignatureSyntaxError
 from .token import Token
 from .stream import Stream
 
@@ -93,7 +93,7 @@ class Segmenter:
             elif self.tokens.match((t.OP, ')')):
                 balance -= 1
             elif self.tokens.match(t.ERRORTOKEN):
-                raise InvalidSignatureError(self.tokens.get(0))
+                raise SignatureSyntaxError(self.tokens.get(0))
             last = self.tokens.consume(1)
 
         return slice(start, last.stop - 1), last

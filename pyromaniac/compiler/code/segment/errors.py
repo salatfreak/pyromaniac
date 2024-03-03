@@ -6,12 +6,13 @@ if TYPE_CHECKING:
 
 
 class SegmentError(CodeError):
-    """Code segmenting error.
+    """Base class for component code segmenting errors.
 
     :param token: token at which error occured
     """
 
     def __init__(self, token: 'Token'):
+        super().__init__()
         self.token = token
 
     @property
@@ -20,19 +21,15 @@ class SegmentError(CodeError):
         return self.token.info.start[0]
 
 
-class InvalidSignatureError(SegmentError):
-    """Invalid signature error.
+class SignatureSyntaxError(SegmentError):
+    """Error raised when component signature has unmatched delimiter."""
 
-    :param token: token at wich error occured
-    """
-
-    def __str__(self) -> str:
-        print(self.token.string)
-        return f"unmatched delimiter in signature in line {self.line}"
+    def message(self) -> str:
+        return f"Unmatched delimiter in signature in line {self.line}."
 
 
 class UnexpectedTokenError(SegmentError):
-    """Unexpected token error.
+    """Error raised when invalid token is encountered while segmentating code.
 
     :param token: token at wich error occured
     :param location: string describing where the error occured
@@ -42,6 +39,6 @@ class UnexpectedTokenError(SegmentError):
         super().__init__(token)
         self.location = location
 
-    def __str__(self) -> str:
+    def message(self) -> str:
         string = repr(self.token.string)
-        return f"unexpected {string} {self.location} in line {self.line}"
+        return f"Unexpected {string} {self.location} in line {self.line}."
