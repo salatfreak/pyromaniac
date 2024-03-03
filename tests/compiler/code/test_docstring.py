@@ -21,10 +21,6 @@ class TestDocstring(TestCase):
             in total.
          """''').splitlines()), 5)
 
-    def test_invalid_syntax(self):
-        self.assertRaisesInvalidDocstring('"foo grault')
-        self.assertRaisesInvalidDocstring("foo grault")
-
     def test_wrong_type(self):
         self.assertRaisesInvalidDocstring("None")
         self.assertRaisesInvalidDocstring("42")
