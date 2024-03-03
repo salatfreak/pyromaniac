@@ -66,13 +66,13 @@ def add_assignment(code: str) -> str:
     # check for trailing expression
     if len(mod.body) == 0 or not isinstance(mod.body[-1], ast.Expr):
         raise PythonSyntaxError.end_expression()
+    expr = mod.body[-1]
 
-    # add assignment code
-    mod.body[-1] = ast.Assign(
-        targets=[ast.Name(id='result', ctx=ast.Store())],
-        value=mod.body[-1].value,
-        lineno=mod.body[-1].lineno,
-    )
+    # insert assignment
+    lines = code.splitlines()
+    line = lines[expr.lineno - 1]
+    line = line[:expr.col_offset] + "result=" + line[expr.col_offset:]
+    lines[expr.lineno - 1] = line
 
     # return transformed code string
-    return ast.unparse(mod)
+    return "\n".join(lines)
