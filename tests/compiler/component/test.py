@@ -1,7 +1,7 @@
 from unittest import TestCase
 from pathlib import PosixPath as Path
 from pyromaniac.compiler.code.errors import InvalidArgumentError
-from pyromaniac.compiler.context import Context
+from pyromaniac.compiler.context import context
 from pyromaniac.compiler.component import Component
 from pyromaniac.compiler.library import Library
 
@@ -11,7 +11,7 @@ class TestComponent(TestCase):
         self.comps = Path(__file__).parent.joinpath("components")
         stdlib = Path(__file__).parent.joinpath("stdlib")
         lib = Library(self.comps, [Library(stdlib)])
-        self.ctx = Context(lib, lib.view(), self.comps)
+        self.ctx = context(lib, lib.view())
 
     def test_minimal(self):
         comp = self.load("minimal")
