@@ -33,4 +33,4 @@ try:
         case 'serve':
             serve(ignition, *args.address[:2], args.auth)
 except PyromaniacError as e:
-    exit(e)
+    exit(f"Error: {e}")
