@@ -3,7 +3,7 @@ from unittest.mock import patch, Mock
 from pathlib import PosixPath as Path
 import json
 
-from pyromaniac.compiler import ButaneError
+from pyromaniac.compiler import ButaneError, NotADictError
 from pyromaniac.compiler.butane import butane, configure
 
 
@@ -29,3 +29,7 @@ class TestButane(TestCase):
         }
         ignition = json.loads(butane(config))
         self.assertEqual(ignition["storage"]["files"][0]["path"], "/foo/bar")
+
+    def test_not_a_dict_error(self):
+        with self.assertRaises(NotADictError):
+            butane([])
