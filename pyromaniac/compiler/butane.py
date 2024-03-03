@@ -5,7 +5,7 @@ from pathlib import PosixPath as Path
 import yaml
 
 from .. import paths
-from .errors import ButaneError
+from .errors import NotADictError, ButaneError
 from .url import URL
 
 config: list[str] = []
@@ -26,6 +26,9 @@ def butane(source: dict) -> str:
     :param source: butane config structured dict
     :returns: ignition config as string
     """
+    if not isinstance(source, dict):
+        raise NotADictError(source)
+
     res = subprocess.run(
         [paths.butane, "--files-dir", ".", *config],
         input=yaml.dump(source), capture_output=True, text=True,

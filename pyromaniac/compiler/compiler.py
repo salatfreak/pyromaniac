@@ -2,7 +2,6 @@ from typing import Any, Self
 from pathlib import PosixPath as Path
 
 from .. import paths
-from .errors import NotADictError
 from .pyromaniac import Pyromaniac
 from .butane import butane
 from .expand import expand
@@ -46,7 +45,4 @@ class Compiler:
         context["pyromaniac"] = Pyromaniac(address, auth)
 
         result = component.execute(context, *args, **kwargs)
-        if not isinstance(result, dict):
-            raise NotADictError(result)
-
         return butane(expand(result, True, True))
