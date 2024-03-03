@@ -40,9 +40,9 @@ class TestLibrary(TestCase):
     @patch('pyromaniac.compiler.component.Component.execute')
     def test_execute(self, execute: Mock):
         execute.return_value = "foo"
-        self.assertEqual(self.lib.execute("comp1", "foo", bar="baz"), "foo")
-        self.assertEqual(execute.call_args.args[1:], ("foo",))
-        self.assertEqual(execute.call_args.kwargs, {"bar": "baz"})
+        self.assertEqual(self.lib.execute("comp1", ("foo",), {"bar": 7}), "foo")
+        self.assertEqual(execute.call_args.args[1], ("foo",))
+        self.assertEqual(execute.call_args.args[2], {"bar": 7})
 
         execute.return_value = "pi"
         self.assertEqual(self.stdlib.execute("merge"), "pi")
@@ -123,8 +123,8 @@ class TestView(TestCase):
         self.assertEqual(self.view.dir1.dir11.comp111("bar", baz="qux"), "foo")
         self.assertEqual(self.view.dir1.dir11("bar", baz="qux"), "foo")
 
-        self.assertEqual(execute.call_args.args[1:], ("bar",))
-        self.assertEqual(execute.call_args.kwargs, {"baz": "qux"})
+        self.assertEqual(execute.call_args.args[1], ("bar",))
+        self.assertEqual(execute.call_args.args[2], {"baz": "qux"})
 
         with self.assertRaises(NotAComponentError):
             self.view.dir1()
