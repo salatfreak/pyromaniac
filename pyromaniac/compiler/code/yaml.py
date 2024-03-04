@@ -1,26 +1,15 @@
 from typing import Self, Any
-from pathlib import PosixPath as Path
-from json import JSONEncoder, dumps
 from yaml import safe_load as yaml_load, MarkedYAMLError
 from jinja2.exceptions import TemplateSyntaxError
-from jinja2 import Environment, Template
+from jinja2 import Template
 
 from ..errors import CompilerError
 from .errors import YamlTemplateError, YamlExecutionError, YamlParseError
-from ..url import URL
-
-
-def finalize(obj: Any) -> str:
-    match obj:
-        case Raw(content): return str(content)
-        case _: return dumps(obj, cls=Encoder)
+from .jinja import json_env as environment
 
 
 class Yaml:
     """Component YAML code."""
-
-    environment = Environment(finalize=finalize)
-    environment.filters['raw'] = lambda c: Raw(c)
 
     def __init__(self, template: Template):
         self.template = template
@@ -36,7 +25,7 @@ class Yaml:
         :returns: constructed component yaml code object
         """
         try:
-            template = cls.environment.from_string(code)
+            template = environment.from_string(code)
         except TemplateSyntaxError as e:
             raise YamlTemplateError() from e
 
@@ -61,17 +50,3 @@ class Yaml:
             return yaml_load(yaml)
         except MarkedYAMLError as e:
             raise YamlParseError() from e
-
-
-class Raw:
-    __match_args__ = ("content",)
-
-    def __init__(self, content: Any):
-        self.content = content
-
-
-class Encoder(JSONEncoder):
-    def default(self, obj: Any) -> Any:
-        match obj:
-            case Path() | URL(): return str(obj)
-            case _: return super().default(obj)
