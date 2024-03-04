@@ -1,0 +1,41 @@
+"""Create contents dict as required for files and in several other places.
+
+* Specify contents inline: `contents("foo")`
+* Specify local file: `contents(Path("/path/to/file.txt"))`
+* Specify remote file: `contents(URL("http://..."), headers={"Accept": "..."})`
+
+Will contain an "inline", "local", or "source" field depending on whether the
+*content* argument is a string, Path, or URL. If *content* is a dict, all key
+value pairs from it will be copied into the result instead, overriding headers
+and other fields.
+
+:param content: string, path, or url source or a custom dict
+:param headers: map of request headers to add
+:param fields: additional fields to take over as they are
+"""
+
+(content: str | Path | URL | dict, headers: dict = {}, **fields)
+
+---
+
+# assemble headers
+headers = headers.copy()
+if 'http_headers' in fields:
+    headers.update({h['name']: h['value'] for h in fields['http_headers']})
+if isinstance(content, dict) and 'http_headers' in content:
+    headers.update({h['name']: h['value'] for h in content['http_headers']})
+header_list = [{'name': n, 'value': v} for n, v in headers.items()]
+
+# add content under appropriate key
+match content:
+    case str(): fields['inline'] = content
+    case Path(): fields['local'] = content
+    case URL(): fields['source'] = content
+    case dict(): fields = {**fields, **content}
+
+# insert headers
+if header_list != []:
+    fields['http_headers'] = header_list
+
+# return constructed fields
+fields
