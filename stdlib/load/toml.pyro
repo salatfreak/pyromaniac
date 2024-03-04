@@ -1,0 +1,29 @@
+"""Load TOML from disk injecting variables using jinja.
+
+* Load and inject: `load.toml(_/"file.toml", name="Alice")`
+
+Jinja is only invoked if at least one variable is passed as keyword argument.
+
+Jinja expressions will be serialized before inserting them into the document.
+You can therefore safely inject structured data into your TOML document without
+worrying about breaking TOML syntax. To insert raw strings into your document,
+use the *raw* filter as in `greeting = "Hello, {{ name | raw }}!"`.
+
+:param path: path to file
+:param vars: variables to pass to jinja renderer
+:returns: loaded content as structured data
+"""
+
+(path: Path, **vars: Any)
+
+---
+
+from tomllib import loads
+
+content = path.read_text()
+
+if vars != {}:
+    from pyromaniac.compiler.code.jinja import toml_env
+    content = toml_env.from_string(content).render(vars)
+
+loads(content)
