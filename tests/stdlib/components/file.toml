@@ -1,0 +1,4 @@
+name = "{{name | raw}} Li"
+hobbies = [
+  {{hobby | default("programming")}},
+]
