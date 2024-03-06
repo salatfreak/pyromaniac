@@ -5,11 +5,11 @@
 * Specify remote file: `contents(URL("http://..."), headers={"Accept": "..."})`
 
 Will contain an "inline", "local", or "source" field depending on whether the
-*content* argument is a string, Path, or URL. If *content* is a dict, all key
+*content* argument is a string, path, or URL. If *content* is a dict, all key
 value pairs from it will be copied into the result instead, overriding headers
 and other fields.
 
-:param content: string, path, or url source or a custom dict
+:param content: string, path, or URL source or a custom dict
 :param headers: map of request headers to add
 :param fields: additional fields to take over as they are
 """
