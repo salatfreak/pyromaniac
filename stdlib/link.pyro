@@ -1,0 +1,37 @@
+"""Create file system link fields with specified ownership.
+
+* Add absolute hard link for root user:
+  `link("/file.txt", "/other.txt", hard=True)`
+* Add relative soft link for "core" user in its home directory:
+  `link("bin", ".local/bin", "core")`
+
+The result is intended to be added as an element to the `storage.links` list.
+
+The *path* must be absolute unless the user name is specified, in which case
+relative paths will be interpreted relative to the users default home
+directory.
+
+The *user* and *group* arguments are passed through the *ownership* component.
+See its documentation for further details.
+
+:param path: path to create the link at in the final system
+:param target: path to link to
+:param user: user ID or name
+:param group: group ID or name (defaults to the same as user)
+:param fields: additional fields to take over as they are
+"""
+
+(
+    path: Path, target: Path,
+    user: int | str = None, group: int | str | None = ...,
+    **fields,
+)
+
+---
+
+# interpret relative to home
+if not path.is_absolute() and isinstance(user, str):
+    path = Path(f"/home/{user}", path)
+
+# construct result
+{'path': path, 'target': target, **ownership(user, group), **fields}
