@@ -15,7 +15,7 @@ class TestLink(TestCase):
     def test_complex(self):
         self.assertEqual(
             self.call(
-                "foo.txt", "bar.txt", "core", None, hard=True
+                "foo.txt", "bar.txt", "core", None, hard=True,
             ), {
                 'path': Path("/home/core/foo.txt"),
                 'target': Path("bar.txt"),
