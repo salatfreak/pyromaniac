@@ -1,0 +1,42 @@
+"""Create file fields with specified content and file ownership.
+
+* Add inline file for root user: `file("/file.txt", "foo")`
+* Add file from disk for "core" user in its home directory:
+  `file("file.txt", Path(_/"file.txt"), "core")`
+
+The result is intended to be added as an element to the `storage.files` list.
+
+The *path* must be absolute unless the user name is specified, in which case
+relative paths will be interpreted relative to the users default home
+directory.
+
+The *content* and *headers* arguments are passed through the *content*
+component. The *user* and *group* arguments are passed through the *ownership*
+component. See their documentation for further details.
+
+:param path: path to create the file at in the final system
+:param content: string, path, or URL source or a custom dict
+:param user: user ID or name
+:param group: group ID or name (defaults to the same as user)
+:param headers: map of request headers for URL contents
+:param fields: additional fields to take over as they are
+"""
+
+(
+    path: Path, content: str | Path | URL | dict = None,
+    user: int | str = None, group: int | str | None = ...,
+    headers: dict = {}, **fields
+)
+
+---
+
+# interpret relative to home
+if not path.is_absolute() and isinstance(user, str):
+    path = Path(f"/home/{user}", path)
+
+# add contents
+if content is not None:
+    fields['contents'] = contents(content, headers)
+
+# construct result
+{'path': path, **ownership(user, group), **fields}
