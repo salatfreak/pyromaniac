@@ -3,7 +3,7 @@ from pathlib import PosixPath as Path
 from .base import TestCase
 
 
-class TestLink(TestCase):
+class TestDirectory(TestCase):
     comp = 'directory'
 
     def test_minimal(self):
