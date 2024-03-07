@@ -1,0 +1,36 @@
+"""Create ownership fields as required for file system nodes.
+
+* Set user and group name to "core": `ownership("core")`
+* Set only user ID to 1000: `ownership(1000, None)`
+
+Integers are interpreted as user/group IDs and strings as user/group names. The
+group defaults to be the same as the user. Explicitly passing None disables
+setting the field in the result.
+
+:param user: user ID or name
+:param group: group ID or name
+"""
+
+(user: int | str = None, group: int | str | None = ...)
+
+---
+
+# ownership type helper
+def owner(owner: int | str):
+    match owner:
+        case int(): return {'id': owner}
+        case str(): return {'name': owner}
+
+
+# apply group default
+if group is ...:
+    group = user
+
+# assemble and return ownership fields
+fields = {}
+if user is not None:
+    fields['user'] = owner(user)
+if group is not None:
+    fields['group'] = owner(group)
+
+fields
