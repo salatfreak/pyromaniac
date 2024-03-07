@@ -25,7 +25,7 @@ component. See their documentation for further details.
 (
     path: Path, content: str | Path | URL | dict = None,
     user: int | str = None, group: int | str | None = ...,
-    headers: dict = {}, **fields
+    headers: dict = {}, **fields,
 )
 
 ---
