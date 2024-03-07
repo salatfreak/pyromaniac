@@ -1,3 +1,5 @@
+from types import EllipsisType
+
 from .url import URL
 
 
@@ -11,8 +13,8 @@ class Pyromaniac:
         return URL(f"{self.address[0]}://{self.address[1]}:{self.address[2]}")
 
     def remote(
-        self, url: str | URL | type(...) = ...,
-        auth: str | None | type(...) = ...,
+        self, url: str | URL | EllipsisType = ...,
+        auth: str | None | EllipsisType = ...,
     ) -> dict:
         url = url if url is not ... else self.url / "config.ign"
         auth = auth if auth is not ... else self.auth
