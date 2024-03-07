@@ -1,0 +1,44 @@
+"""Create directory with parents with specified ownership.
+
+* Add user unit directory for "core" user:
+  `directories(".", ".config/systemd/user", "core")`
+
+The result is intended to be added as the `storage.directories` field.
+
+The *base* must be absolute unless the user name is specified, in which case
+relative paths will be interpreted relative to the users default home
+directory. The *path* will be interpreted relative to the *base*.
+
+Only the members of the *path* that are children of *base* will be created, not
+*base* itself.
+
+The *user* and *group* arguments are passed through the *ownership* component.
+See its documentation for further details.
+
+:param base: path to create directories under in the final system
+:param path: path of directories to create
+:param user: user ID or name
+:param group: group ID or name (defaults to the same as user)
+:param fields: additional fields to take over as they are
+"""
+
+(
+    base: Path, path: Path,
+    user: int | str = None, group: int | str | None = ...,
+    **fields,
+)
+
+---
+
+# interpret relative to home
+if not base.is_absolute() and isinstance(user, str):
+    base = Path(f"/home/{user}", base)
+path = base.joinpath(path)
+
+# construct result
+parts = path.relative_to(base).parts
+
+[
+    directory(base.joinpath(*parts[:i]), user, group, **fields)
+    for i in range(1, len(parts) + 1)
+]
