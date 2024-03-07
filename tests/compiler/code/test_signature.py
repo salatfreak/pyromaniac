@@ -43,6 +43,11 @@ class TestSignature(TestCase):
         self.assertEqual(sig.parse(None), {"foo": None})
         self.assertEqual(sig.parse("baz"), {"foo": "baz"})
 
+        sig = Signature.create("foo: str = ...")
+        self.assertEqual(sig.parse(), {"foo": ...})
+        self.assertEqual(sig.parse(...), {"foo": ...})
+        self.assertEqual(sig.parse("baz"), {"foo": "baz"})
+
     def test_any(self):
         self.assertCoercion('Any', "bar")
         self.assertCoercion('Any', {"baz": "qux"})
@@ -51,6 +56,13 @@ class TestSignature(TestCase):
         self.assertCoercion('None', None)
         self.assertRaisesInvalidArgument('None', 42)
         sig = Signature.create("foo: None")
+        with self.assertRaises(InvalidArgumentError):
+            sig.parse()
+
+    def test_ellipsis(self):
+        self.assertCoercion('Ellipsis', ...)
+        self.assertRaisesInvalidArgument('Ellipsis', 42)
+        sig = Signature.create("foo: ...")
         with self.assertRaises(InvalidArgumentError):
             sig.parse()
 
