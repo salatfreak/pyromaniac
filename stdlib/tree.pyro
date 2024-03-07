@@ -1,0 +1,59 @@
+"""Add local directory tree with specified ownership.
+
+* Copy config directory to "core" user's home directory preserving permissions:
+  `tree(".config", _/"config", "core", mode=True)`
+
+The result is intended to be added as the `storage` field.
+
+The *path* must be absolute unless the user name is specified, in which case
+relative paths will be interpreted relative to the users default home
+directory.
+
+The *user* and *group* arguments are passed through the *ownership* component.
+See its documentation for further details.
+
+If *mode* is True, file permissions will be copied from the original files.
+
+:param path: path to create the directory at in the final system
+:param local: local directory to copy files from
+:param user: user ID or name
+:param group: group ID or name (defaults to the same as user)
+:param mode: whether to copy permission bits from the original files
+:param overwrite: whether to set the `overwrite` field on all nodes
+"""
+
+(
+    path: Path, local: Path,
+    user: int | str = None, group: int | str | None = ...,
+    mode: bool = False, overwrite: bool = False,
+)
+
+---
+
+# node creation helper
+def node(local_path: Path, **custom):
+    return {
+        'path': path.joinpath(local_path.relative_to(local)),
+        **ownership(user, group),
+        **({'mode': local_path.lstat().st_mode % 0o10000} if mode else {}),
+        **({'overwrite': True} if overwrite else {}),
+        **custom,
+    }
+
+
+# interpret relative to home
+if not path.is_absolute() and isinstance(user, str):
+    path = Path(f"/home/{user}", path)
+
+# assemble elements
+dirs, files, links = [], [], []
+for p in [local, *local.glob("**/*")]:
+    if p.is_symlink():
+        links.append(node(p, target=p.readlink()))
+    elif p.is_dir():
+        dirs.append(node(p))
+    elif p.is_file():
+        files.append(node(p, contents=contents(p)))
+
+# construct result
+{'directories': dirs, 'files': files, 'links': links}
