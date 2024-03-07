@@ -1,4 +1,5 @@
 from typing import Self, Any
+from types import EllipsisType
 from inspect import Parameter
 import inspect
 from pathlib import PosixPath as Path
@@ -74,5 +75,7 @@ def get_type(param: inspect.Parameter) -> Type:
             return Type.create(Any)
         case _, annotation, None:
             return Type.create(annotation | None)
+        case _, annotation, EllipsisType():
+            return Type.create(annotation | EllipsisType)
         case _, annotation, _:
             return Type.create(annotation)

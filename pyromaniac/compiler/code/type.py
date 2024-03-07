@@ -1,5 +1,5 @@
 from typing import Any, Self, NoReturn
-from types import NoneType, GenericAlias, UnionType
+from types import NoneType, EllipsisType, GenericAlias, UnionType
 from pathlib import PosixPath as Path
 
 from .errors import InvalidSignatureError, InvalidArgumentError
@@ -32,8 +32,10 @@ class Type:
         """
         if type is Any:
             return TypeAny()
-        if type is None or type is NoneType:
+        elif type is None or type is NoneType:
             return TypeNone()
+        elif type is Ellipsis or type is EllipsisType:
+            return TypeEllipsis()
         elif type is bool:
             return TypeBool()
         elif type is str:
@@ -69,6 +71,11 @@ class TypeAny(Type):
 class TypeNone(Type):
     def __init__(self):
         super().__init__(NoneType)
+
+
+class TypeEllipsis(Type):
+    def __init__(self):
+        super().__init__(EllipsisType)
 
 
 class TypeBool(Type):
