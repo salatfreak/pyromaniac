@@ -1,0 +1,9 @@
+---
+config = magic(load.toml(_/"config.toml", render=True))
+
+{
+    "ignition.config.merge": merge(
+        files(),
+        storage(config.storage.size or 10000),
+    ),
+}

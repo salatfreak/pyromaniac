@@ -1,0 +1,8 @@
+---
+storage = tree("/tree", _/"tree")
+storage['files'].append(file("/foo.txt", "foo", "core"))
+storage['directories'].extend(directories("/", "foo/bar"))
+storage['links'].append(link("/link.txt", "/foo.txt"))
+---
+
+storage: {{ storage }}

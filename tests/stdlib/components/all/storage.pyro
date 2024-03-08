@@ -1,0 +1,8 @@
+(root_size: int)
+
+storage.disks[0]:
+  device: /dev/disk/by-id/coreos-boot-disk
+  partitions[0]:
+    number: 4
+    label: root
+    size_mib: {{ root_size }}
