@@ -1,7 +1,13 @@
 title: Pyromaniac
-defaults:
-  - scope:
-      path: ""
-      type: pages
-    values:
-      layout: default
+description: Pyromaniac documentation
+url: https://salatfreak.github.io
+baseurl: "/pyromaniac"
+
+plugins:
+  - jekyll-remote-theme
+
+remote_theme: just-the-docs/just-the-docs@v0.8.1
+logo: "/assets/title.png"
+aux_links:
+  "Pyromaniac on GitHub":
+    - "https://github.com/salatfreak/pyromaniac"
