@@ -1,8 +1,5 @@
 """Wrap value in magic type for convenient member access and default handling.
 
-* Dot notation: `magic({"foo": [{"bar": "baz"}]}).foo[0].bar`
-* Default handling: `magic({"foo": "bar"}).baz.qux or "default"`
-
 Recursively wraps dicts and lists to allow access to dict members via dot
 notation.
 
@@ -14,11 +11,14 @@ Beware that everything other than dicts, lists, and non-existent keys are
 returned as is: `magic({"foo": 42}).foo.bar` will still result in an
 AttributeError because 42 has no attribute *bar*.
 
-:param value: any value to wrap
-:returns: wrapped value for dicts and lists or the original value
+**Examples:**
+- Dot notation: `magic({"foo": [{"bar": "baz"}]}).foo[0].bar`
+- Default handling: `magic({"foo": "bar"}).baz.qux or "default"`
 """
 
-(value: Any)
+(
+    value: Any,  # any value to wrap
+)
 
 ---
 

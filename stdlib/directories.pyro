@@ -1,8 +1,5 @@
 """Create directory with parents with specified ownership.
 
-* Add user unit directory for "core" user:
-  `directories(".", ".config/systemd/user", "core")`
-
 The result is intended to be added as the `storage.directories` field.
 
 The *base* must be absolute unless the user name is specified, in which case
@@ -15,17 +12,17 @@ Only the members of the *path* that are children of *base* will be created, not
 The *user* and *group* arguments are passed through the *ownership* component.
 See its documentation for further details.
 
-:param base: path to create directories under in the final system
-:param path: path of directories to create
-:param user: user ID or name
-:param group: group ID or name (defaults to the same as user)
-:param fields: additional fields to take over as they are
+**Example:**
+- Add user unit directory for "core" user:
+  `directories(".", ".config/systemd/user", "core")`
 """
 
 (
-    base: Path, path: Path,
-    user: int | str = None, group: int | str | None = ...,
-    **fields,
+    base: Path,                     # path to create directories under in the final system
+    path: Path,                     # path of directories to create
+    user: int | str = None,         # user ID or name
+    group: int | str | None = ...,  # group ID or name (defaults to the same as user)
+    **fields: Any,                  # additional fields to take over as they are
 )
 
 ---

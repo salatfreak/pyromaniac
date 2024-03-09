@@ -1,15 +1,15 @@
 """Load file from disk and render it using jinja if variables are supplied.
 
-* Load and render text file: `load(_/"file.txt", name="Alice")`
-
 Jinja is only invoked if at least one variable is passed as keyword argument.
 
-:param path: path to file
-:param vars: variables to pass to jinja renderer
-:returns: loaded (and rendered) file content as string
+**Example:**
+- Load and render text file: `load(_/"file.txt", name="Alice")`
 """
 
-(path: Path, **vars: Any)
+(
+    path: Path,   # path to file
+    **vars: Any,  # variables to pass to jinja renderer
+)
 
 ---
 

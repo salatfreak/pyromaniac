@@ -1,9 +1,5 @@
 """Create merge fields for inline, local, and/or remote configs.
 
-* Merge inline butane config with remote ignition file using authentication:
-  `merge({'storage.files[0].path': "/my/file.txt"},
-  URL("https://example.com/config.ign"), headers={"Authorization": "..."})`
-
 The result is intended to be added as the `ignition.config.merge` field.
 
 For strings, paths, and URLs the result of passing them to the *contents*
@@ -11,11 +7,16 @@ component is added to the merge. For dicts composite keys are expanded and they
 are rendered to a string using butane. Empty dicts are ignored. The *headers*
 dict is passed to the *contents* component only for URLs.
 
-:param configs: configurations to create merge for
-:param headers: headers to add for URLs
+**Example:**
+- Merge inline butane config with remote ignition file using authentication:
+  `merge({'storage.files[0].path': "/my/file.txt"},
+  URL("https://example.com/config.ign"), headers={"Authorization": "..."})`
 """
 
-(*configs: str | Path | URL | dict, headers: dict = {})
+(
+    *configs: str | Path | URL | dict,  # configurations to create merge for
+    headers: dict = {},                 # headers to add for URLs
+)
 
 ---
 

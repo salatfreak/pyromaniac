@@ -1,8 +1,5 @@
 """Add local directory tree with specified ownership.
 
-* Copy config directory to "core" user's home directory preserving permissions:
-  `tree(".config", _/"config", "core", mode=True)`
-
 The result is intended to be added as the `storage` field.
 
 The *path* must be absolute unless the user name is specified, in which case
@@ -14,18 +11,18 @@ See its documentation for further details.
 
 If *mode* is True, file permissions will be copied from the original files.
 
-:param path: path to create the directory at in the final system
-:param local: local directory to copy files from
-:param user: user ID or name
-:param group: group ID or name (defaults to the same as user)
-:param mode: whether to copy permission bits from the original files
-:param overwrite: whether to set the `overwrite` field on all nodes
+**Example:**
+- Copy config directory to "core" user's home directory preserving permissions:
+  `tree(".config", _/"config", "core", mode=True)`
 """
 
 (
-    path: Path, local: Path,
-    user: int | str = None, group: int | str | None = ...,
-    mode: bool = False, overwrite: bool = False,
+    path: Path,                     # path to create the directory at in the final system
+    local: Path,                    # local directory to copy files from
+    user: int | str = None,         # user ID or name
+    group: int | str | None = ...,  # group ID or name (defaults to the same as user)
+    mode: bool = False,             # whether to copy permission bits from the original files
+    overwrite: bool = False,        # whether to set the `overwrite` field on all nodes
 )
 
 ---
