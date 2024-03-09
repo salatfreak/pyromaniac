@@ -8,6 +8,7 @@ The standard library provides a default set of components that can be used in
 every pyromaniac configuration. It contains components for configuration
 rendering, loading and rendering templates, and adding file system nodes.
 
+{{ raw }}
 ## Create merge fields for inline, local, and/or remote configs
 ```python
 merge(
@@ -283,3 +284,4 @@ setting the field in the result.
 **Examples:**
 - Set user and group name to "core": `ownership("core")`
 - Set only user ID to 1000: `ownership(1000, None)`
+{{ endraw }}

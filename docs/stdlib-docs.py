@@ -37,6 +37,8 @@ every pyromaniac configuration. It contains components for configuration
 rendering, loading and rendering templates, and adding file system nodes.
 """.strip())
 
+print("\n{{ raw }}", end="")
+
 for name in ORDER:
     file = STDLIB.joinpath(*name.split(".")).with_suffix(".pyro")
     doc, sig, _, _ = segment(file.read_text())
@@ -44,3 +46,5 @@ for name in ORDER:
     title, text = doc.strip().split("\n\n", 1)
     title, text = title.rstrip("."), text.strip()
     print(f"\n## {title}\n```python\n{name}(\n{sig}\n)\n```\n\n{text}")
+
+print("{{ endraw }}")
