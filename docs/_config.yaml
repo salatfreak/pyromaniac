@@ -3,6 +3,9 @@ description: Pyromaniac documentation
 url: https://salatfreak.github.io
 baseurl: "/pyromaniac"
 
+exclude:
+  - stdlib-docs.py
+
 plugins:
   - jekyll-remote-theme
 
