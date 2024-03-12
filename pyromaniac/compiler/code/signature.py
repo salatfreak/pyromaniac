@@ -24,7 +24,7 @@ class Signature:
     def create(cls, code: str) -> Self:
         """Create signature from source code.
 
-        :param code: signature code enclosed in paranthesis
+        :param code: signature code enclosed in parantheses
         :returns: compiled signature object
         """
         context = {'Any': Any, 'Path': Path, 'URL': URL}

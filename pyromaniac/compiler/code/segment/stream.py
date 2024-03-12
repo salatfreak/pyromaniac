@@ -9,7 +9,7 @@ class Stream:
     """Token stream with look ahead and matching.
 
     Produces an endless stream of ERRORTOKENs after the ENDMARKER or when an
-    unclosed pair (paranthesis, quotes, etc.) is encountered.
+    unclosed pair (parantheses, quotes, etc.) is encountered.
 
     :param code: source code to parse
     """
