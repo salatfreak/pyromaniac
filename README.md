@@ -100,7 +100,7 @@ Learn more in the [Component Documentation][components].
 [jinja]: https://jinja.palletsprojects.com/
 [components]: https://salatfreak.github.io/pyromaniac/components.html
 
-# 🐍 Arbitrary Python Code, Local Files, and Much More! 🐍
+# 🐍 Arbitrary Python Code, Local Files, and More! 🐍
 *Pyromaniac* allows you to to include arbitrary *python* code into your
 configuration including the definition of functions and even classes, to make
 your components even more powerful. It also comes with a standard library of
