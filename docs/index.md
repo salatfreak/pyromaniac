@@ -28,6 +28,9 @@ worry: Your existing *Butane* configuration files are already valid
 *Pyromaniac* components. The [Components][components] page is all about the
 syntax and built-in functions that *Pyromaniac* has to offer.
 
+Get inspired by the examples and further hints in the [Recipes][recipes]
+section.
+
 *Pyromaniac* executes arbitrary python code from your source files but it does
 so in an optionally read-only container. Read more about this on the [Security
 Considerations][security] page.
@@ -38,5 +41,6 @@ the [Development][development] page to learn about what to pay attention to.
 [installation]: installation.html
 [cli]: cli.html
 [components]: components.html
+[recipes]: recipes.html
 [security]: security.html
 [development]: development.html
