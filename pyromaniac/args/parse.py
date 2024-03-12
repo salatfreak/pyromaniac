@@ -1,6 +1,5 @@
 from argparse import Namespace
 
-from .types import auth
 from .parser import parser
 
 
@@ -11,5 +10,4 @@ def parse(args: list[str] | None = None) -> Namespace:
     :returns: representation of the parsed arguments
     """
     namespace = parser.parse_args(args)
-    namespace.auth = auth(namespace.auth, *namespace.address)
     return namespace

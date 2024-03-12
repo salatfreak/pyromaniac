@@ -1,8 +1,6 @@
 import re
 from pathlib import PosixPath as Path
 
-from ..server.auth import auto_auth
-
 ADDRESS_RE = re.compile("".join([
     r'(?:(http(?:s)?)://)?',
     r'(\[[0-9a-f:]+\]|[0-9.]+|[a-z0-9-.]+)',
@@ -43,18 +41,6 @@ def address(value: str) -> tuple[str, str, int]:
     port = int(match[3] or {"https": 443, "http": 80}[scheme])
 
     return scheme, host, port
-
-
-def auth(value: str, scheme: str, host: str, port: int) -> str | None:
-    if value == 'default':
-        value = {"http": 'none', "https": 'auto'}[scheme]
-
-    if value == 'none':
-        return None
-    elif value == 'auto':
-        return auto_auth(scheme, host, port)
-    else:
-        return value
 
 
 def input(value: str) -> Path:

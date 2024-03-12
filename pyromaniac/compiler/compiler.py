@@ -1,13 +1,15 @@
-from typing import Any, Self
+from typing import Any, Self, TYPE_CHECKING
 from pathlib import PosixPath as Path
 
 from .. import paths
-from .pyromaniac import Pyromaniac
 from .butane import butane
 from .expand import expand
 from .component import Component
 from .library import Library
 from .context import context
+
+if TYPE_CHECKING:
+    from ..remote import Remote
 
 
 class Compiler:
@@ -26,20 +28,17 @@ class Compiler:
         return cls(Library(path, [Library(paths.stdlib)]))
 
     def compile(
-        self, source: str,
-        address: tuple[str, str, int], auth: str | None = None,
+        self, source: str, remote: 'Remote',
         args: tuple = tuple(), kwargs: dict[str, Any] = {},
     ) -> str:
         """Compile config to ignition.
 
         :param source: pyromaniac config source text
-        :param address: scheme, host and port for encryption secret requests
-        :param auth: basic auth credentials for encryption secret requests
+        :param remote: remote object with address and authentication secret
         :param args: positional arguments to pass to the component
         :param kwargs: keyword arguments to pass to the component
         :returns: compiled ignition config
         """
-        vars = {'pyromaniac': Pyromaniac(address, auth)}
-        ctx = context(self.lib, self.lib.view(), **vars)
+        ctx = context(self.lib, self.lib.view(), remote=remote)
         result = Component.create(source).execute(ctx, args, kwargs)
         return butane(expand(result, True, True))

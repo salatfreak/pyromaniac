@@ -103,7 +103,7 @@ parser.add_argument(
         "connection. (default: %(default)s)"
     ),
 )
-parser.add_argument("--auth", default='default', help=(
+parser.add_argument("--auth", help=(
     "Set the credentials for HTTP(S) basic authentication in the format "
     '"USER:PASS". Use "auto" to generate credentials from a cryptographic '
     "hash of the address and a randomly generated but persistent salt. Use "

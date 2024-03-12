@@ -1,5 +1,6 @@
 from .errors import PyromaniacError, MainComponentIOError
 from .args import parse
+from .remote import Remote
 from .compiler.butane import configure
 from .iso import customize
 from .server import serve
@@ -7,6 +8,7 @@ from .compile import compile
 
 args = parse()
 configure(args.butane)
+remote = Remote.create(args.address, args.auth)
 
 
 def ignition():
@@ -18,7 +20,7 @@ def ignition():
         except IOError as e:
             raise MainComponentIOError() from e
 
-    return compile(source, args.address, args.auth, tuple(args.args))
+    return compile(source, remote, tuple(args.args))
 
 
 try:
@@ -31,6 +33,6 @@ try:
                 args.installer,
             )
         case 'serve':
-            serve(ignition, *args.address[:2], args.auth)
+            serve(remote, ignition)
 except PyromaniacError as e:
     exit(f"Error: {e}")

@@ -1,13 +1,13 @@
-from typing import Callable
+from typing import Callable, TYPE_CHECKING
 
 from .log import log
 from .server import Server
 
+if TYPE_CHECKING:
+    from ..remote import Remote
 
-def serve(
-    generator: Callable[[], str],
-    scheme: str, host: str, auth: str | None = None,
-):
+
+def serve(remote: 'Remote', generator: Callable[[], str]):
     """Serve config and secrets until keyboard interrupt.
 
     Serves the ignition config produced by `generator()` under "/config.ign"
@@ -15,15 +15,13 @@ def serve(
     for generating TLS certificate. No authentication is used when auth is
     None.
 
+    :param remote: remote object with address and authentication secret
     :param generator: function that generates an ignition config
-    :param scheme: http or https
-    :param host: host name or ip address for connection securing
-    :param auth: optional credentials in the format "USER:PASS"
     """
 
     # run server
     log("starting server")
-    server = Server(scheme, host, auth, generator)
+    server = Server(remote.scheme, remote.host, remote.auth, generator)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
