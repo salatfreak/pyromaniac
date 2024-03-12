@@ -7,9 +7,12 @@ Pyromaniac is developed in python and like [Butane][butane] intended to be
 distributed and run as a container image. It can simply be built by running
 `podman build -t pyromaniac .` in the repositories root directory.
 
-The project is non-commercial and contributions are very welcome.
+The project is non-commercial and contributions are very welcome. Consider
+opening a [GitHub issue][issues] first to dicuss your ideas and get feedback on
+whether your changes would be approved.
 
 [butane]: https://coreos.github.io/butane/
+[issues]: https://github.com/salatfreak/pyromaniac/issues
 
 ## Structure
 Pyromaniac is structured as a runnable python package which is designed to be
@@ -22,6 +25,9 @@ separation of concerns and maintainability.
 Function signatures are annotated with types. All classes and functions that
 are supposed to be used outside of their module should be augmented with a
 reST-formatted docstring.
+
+Imports are ordered by their level of abstraction. A library that is or would
+be more likely to be used by another one is imported before it.
 
 Any python code should pass [pycodestyle][pycodestyle] without warnings.
 
@@ -74,10 +80,14 @@ podman run --rm \
 [unittest]: https://docs.python.org/3/library/unittest.html
 
 ## Updating
-Whenever a new version of a used python package, *Butane*, or the *CoreOS
-Installer* is released, it should be bumped up in the *pyproject.toml* or
-*Containerfile* respectively, the unit tests should be executed and a new patch
-release of *pyromaniac* should be published.
+Whenever a new release is pulled to the main branch, the *pyromaniac.sh* script
+should reference the container image with the version number the release will
+get.
+
+Updates to used python package, *Butane*, or the *CoreOS Installer* should be
+brought in by bumping up their version number in the *pyproject.toml* or
+*Containerfile* respectively. The unit tests should then be executed and a new
+patch release of *pyromaniac* should be published.
 
 If an update to the *CoreOS Installer* modifies the command line flags to the
 `iso customize` subcommand, pyromaniacs argument parsing needs to be updated to
