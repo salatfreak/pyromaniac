@@ -32,7 +32,7 @@ def generate() -> Iterable[tuple[list[str], dict[str, str]]]:
     values to the coreos-installer.
     """
     for name, arg_count in ARGS:
-        args = [f"--installer-{name}"]
+        args = [f"--iso-raw-{name}"]
         kwargs = {'dest': 'installer', 'default': [], 'help': SUPPRESS}
         match arg_count:
             case 0: kwargs.update({'action': 'append_const', 'const': (name,)})
