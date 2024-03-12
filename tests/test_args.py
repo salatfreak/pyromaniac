@@ -39,24 +39,12 @@ class TestArgs(TestCase):
         ])
         self.assertEqual(args.iso_net, "192.168.0.2:::255.255.255.0::::::")
 
-    @temp.place("salt.hex")
-    def test_address(self, salt_file: Path):
+    def test_address(self):
         self.assertEqual(parse().address, ('http', '127.0.0.1', 8000))
-
-        with patch('pyromaniac.server.auth.SALT_FILE', salt_file):
-            args = parse(["--address", "https://example.com/"])
-            self.assertEqual(args.address, ("https", "example.com", 443))
-            args = parse(["--address", "https://example.com:9000/"])
-            self.assertEqual(args.address, ("https", "example.com", 9000))
-        self.assertTrue(salt_file.exists())
-
-    @temp.place("salt.hex")
-    def test_auth(self, salt_file: Path):
-        self.assertIsNone(parse().auth)
-        self.assertEqual(parse(["--auth", "name:pass"]).auth, "name:pass")
-        with patch('pyromaniac.server.auth.SALT_FILE', salt_file):
-            args = parse(["--address", "https://example.com/"])
-            self.assertTrue(args.auth.startswith("pyromaniac:"))
+        args = parse(["--address", "https://example.com/"])
+        self.assertEqual(args.address, ("https", "example.com", 443))
+        args = parse(["--address", "https://example.com:9000/"])
+        self.assertEqual(args.address, ("https", "example.com", 9000))
 
     def test_installer(self):
         self.assertEqual(parse().installer, [])

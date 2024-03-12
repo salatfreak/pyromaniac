@@ -4,7 +4,7 @@ from unittest.mock import patch
 from os import chdir
 import json
 from pathlib import PosixPath as Path
-from pyromaniac import compile
+from pyromaniac import compile, Remote
 
 
 @patch('pyromaniac.paths.stdlib', Path(__file__).parent.joinpath("stdlib"))
@@ -13,7 +13,8 @@ class TestCompile(TestCase):
         chdir(Path(__file__).parent.joinpath("components"))
 
     def test_remote(self):
-        result = self.compile("remote", auth="secret")
+        remote = Remote.create(("http", "localhost", 8000), "secret")
+        result = self.compile("remote", remote)
         replace = result["ignition"]["config"]["replace"]
         self.assertEqual(replace["source"], "http://localhost:8000/config.ign")
         self.assertEqual(replace["httpHeaders"][0]["value"], "Basic secret")
@@ -24,9 +25,8 @@ class TestCompile(TestCase):
 
     def compile(
         self, path: str,
-        address: tuple[str, str, int] = ("http", "localhost", 8000),
-        auth: str | None = None,
+        remote: Remote = Remote.create(("http", "localhost", 8000)),
         args: list = [], kwargs: dict[str, Any] = {},
     ) -> Any:
         source = Path(path).with_suffix(".pyro").read_text()
-        return json.loads(compile(source, address, auth, args, kwargs))
+        return json.loads(compile(source, remote, args, kwargs))

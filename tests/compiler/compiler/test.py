@@ -2,6 +2,7 @@ from typing import Any
 from unittest import TestCase
 from pathlib import PosixPath as Path
 import json
+from pyromaniac.remote import Remote
 from pyromaniac.compiler.errors import NotADictError
 from pyromaniac.compiler.compiler import Compiler
 
@@ -14,9 +15,9 @@ class TestCompiler(TestCase):
     def test_minimal(self):
         self.assertEqual(list(self.compile("minimal").keys()), ["ignition"])
 
-    def test_pyromaniac_object(self):
-        address = ("http", "localhost", 8000)
-        result = self.compile("pyromaniac_object", address, "secret")
+    def test_remote_object(self):
+        remote = Remote.create(("http", "localhost", 8000), "secret")
+        result = self.compile("remote_object", remote)
         replace = result['ignition']['config']['replace']
         self.assertEqual(replace['source'], "http://localhost:8000/config.ign")
         self.assertEqual(replace['httpHeaders'][0]['value'], "Basic secret")
@@ -39,10 +40,9 @@ class TestCompiler(TestCase):
 
     def compile(
         self, path: str,
-        address: tuple[str, str, int] = ("http", "localhost", 8000),
-        auth: str | None = None,
+        remote: Remote = Remote.create(("http", "localhost", 8000)),
         args: list = [], kwargs: dict[str, Any] = {},
     ) -> dict:
         source = self.comps.joinpath(path).with_suffix(".pyro").read_text()
-        result = self.compiler.compile(source, address, auth, args, kwargs)
+        result = self.compiler.compile(source, remote, args, kwargs)
         return json.loads(result)
