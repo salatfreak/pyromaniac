@@ -99,7 +99,7 @@ parser.add_argument(
         "reachable at. The host can be an IPv4 address, an IPv6 address in "
         "square brackets or a domain name. These are used for generating "
         "certificates (in the case of HTTPS) and authentication credentials "
-        "(if configured to be generated automatically) for a mutually secure "
+        "(if configured to be generated automatically) for a mutually secured "
         "connection. (default: %(default)s)"
     ),
 )
@@ -121,7 +121,7 @@ parser.add_argument(
 
 parser.add_argument(
     "args", nargs='*', default=[],
-    help="Arguments to pass to the main component",
+    help="Arguments to pass to the main component.",
 )
 
 for args, kwargs in generate():
