@@ -3,6 +3,7 @@ parent: Command Line Interface
 nav_order: 80
 ---
 
+{% raw %}
 # Help Text
 This is the full help text of the pyromaniac program as produced by executing
 `pyromaniac --help`.
@@ -88,3 +89,4 @@ $ pyromaniac --iso \
 Serve a config over a mutually authenticated encrypted network connection:
 $ pyromaniac --serve --address https://192.168.0.16:443443/ -i config.py
 ```
+{% endraw %}

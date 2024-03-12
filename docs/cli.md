@@ -4,6 +4,7 @@ has_children: true
 has_toc: false
 ---
 
+{% raw %}
 # Command Line Interface
 The core functionality of compiling your configurations into ignition format
 works just like *Butane* including the *--strict* flag to make *Pyromaniac*
@@ -70,3 +71,4 @@ features on the [ISO Generation][iso] and [HTTP(S) Server][server] pages.
 
 [iso]: cli-iso.html
 [server]: cli-serve.html
+{% endraw %}

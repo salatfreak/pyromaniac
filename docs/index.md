@@ -2,6 +2,7 @@
 nav_order: 0
 ---
 
+{% raw %}
 # Pyromaniac
 *Pyromaniac* is a framework for configuring and deploying self-maintaining
 server operating systems and services in a declarative, reproducible, and
@@ -44,3 +45,4 @@ the [Development][development] page to learn about what to pay attention to.
 [recipes]: recipes.html
 [security]: security.html
 [development]: development.html
+{% endraw %}

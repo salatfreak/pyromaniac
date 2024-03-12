@@ -3,6 +3,7 @@ parent: Command Line Interface
 nav_order: 30
 ---
 
+{% raw %}
 # HTTP(S) Server
 *Pyromaniac* allows you to compile your configurations on demand and serve them
 over HTTP(S). Simply add the `--serve` parameter to start an HTTP server on
@@ -78,3 +79,4 @@ Check out the [Remote Configuration][recipe] recipe for an example of creating
 a remote ISO and loading the configuration over HTTPS.
 
 [recipe]: recipes-remote.md
+{% endraw %}

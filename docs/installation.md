@@ -2,6 +2,7 @@
 nav_order: 10
 ---
 
+{% raw %}
 # Installation
 The intended way to run *Pyromaniac* is as a *podman* or *docker* container.
 A small *Bash* script is availlable to make this as easy as possible.
@@ -55,3 +56,4 @@ cloning the [GitHub repository][repo], adjusting the file sytem paths in
 *pyromaniac/paths.py*, and executing `pip3 install .`.
 
 You can run the python package by executing `python3 -m pyromaniac [ARG...]`.
+{% endraw %}
