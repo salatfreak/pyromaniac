@@ -60,14 +60,14 @@ class TestArgs(TestCase):
 
     def test_installer(self):
         self.assertEqual(parse().installer, [])
-        self.assertEqual(parse(["--installer-force"]).installer, [("force",)])
+        self.assertEqual(parse(["--iso-raw-force"]).installer, [("force",)])
         self.assertEqual(
-            parse(["--installer-pre-install", "foo"]).installer,
+            parse(["--iso-raw-pre-install", "foo"]).installer,
             [("pre-install", "foo")]
         )
         self.assertEqual(parse([
-            "--installer-ignition-ca", "bar",
-            "--installer-help",
+            "--iso-raw-ignition-ca", "bar",
+            "--iso-raw-help",
         ]).installer, [
             ("ignition-ca", "bar"),
             ("help",),
