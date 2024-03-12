@@ -3,8 +3,8 @@ parent: Command Line Interface
 nav_order: 20
 ---
 
-{% raw %}
 # ISO Generation
+{% raw %}
 *Pyromaniac* supports compiling your configuration and embedding it into an
 *ISO* image with a single command. You can produce images for both live boots
 and unattended installation. Just like *Ignition* code, *ISO* images will be

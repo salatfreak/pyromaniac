@@ -3,8 +3,8 @@ parent: Command Line Interface
 nav_order: 80
 ---
 
-{% raw %}
 # Help Text
+{% raw %}
 This is the full help text of the pyromaniac program as produced by executing
 `pyromaniac --help`.
 

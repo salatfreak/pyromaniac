@@ -3,8 +3,8 @@ parent: Command Line Interface
 nav_order: 30
 ---
 
-{% raw %}
 # HTTP(S) Server
+{% raw %}
 *Pyromaniac* allows you to compile your configurations on demand and serve them
 over HTTP(S). Simply add the `--serve` parameter to start an HTTP server on
 the default *TCP* port 8000 as in `pyromaniac --serve .`.

@@ -2,8 +2,8 @@
 nav_order: 70
 ---
 
-{% raw %}
 # Security Considerations
+{% raw %}
 *Pyromaniac* was developed with security in mind. Since it supports the
 execution of arbitrary code from configurations and has networking
 capabilities, you should however be mindful about the inevitable security

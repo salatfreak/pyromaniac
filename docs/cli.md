@@ -4,8 +4,8 @@ has_children: true
 has_toc: false
 ---
 
-{% raw %}
 # Command Line Interface
+{% raw %}
 The core functionality of compiling your configurations into ignition format
 works just like *Butane* including the *--strict* flag to make *Pyromaniac*
 fail on any warnings and the *--pretty* flag to produce pretty formatted

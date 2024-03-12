@@ -2,8 +2,8 @@
 nav_order: 10
 ---
 
-{% raw %}
 # Installation
+{% raw %}
 The intended way to run *Pyromaniac* is as a *podman* or *docker* container.
 A small *Bash* script is availlable to make this as easy as possible.
 
