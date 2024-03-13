@@ -1,6 +1,5 @@
 """Construct argument parser"""
 
-from pathlib import PosixPath as Path
 from argparse import ArgumentParser
 
 from .. import paths
