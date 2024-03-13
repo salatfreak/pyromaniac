@@ -3,7 +3,7 @@
 Recursively wraps dicts and lists to allow access to dict members via dot
 notation.
 
-When encountering non-existent array or dict keys a *Nothing* object will be
+When encountering non-existent array or dict keys, a *Nothing* object will be
 returned that in turn returns itself when indexed. The *Nothing* object is
 falsy and therefore allows specifying default values using `or DEFAULT`.
 

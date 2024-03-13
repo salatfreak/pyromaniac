@@ -3,7 +3,7 @@
 The result is intended to be added as the `storage.directories` field.
 
 The *base* must be absolute unless the user name is specified, in which case
-relative paths will be interpreted relative to the users default home
+relative paths will be interpreted relative to the user's default home
 directory. The *path* will be interpreted relative to the *base*.
 
 Only the members of the *path* that are children of *base* will be created, not
