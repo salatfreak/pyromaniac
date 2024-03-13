@@ -23,7 +23,7 @@ parser = ArgumentParser(prog="pyromaniac", description=(
 ), epilog=(
     "Additionally, when generating an ISO you can specify flags to be passed "
     "on to `coreos-installer iso customize` by prefixing them with "
-    '"--iso-raw-" (e.g. "--iso-raw-dest-karg-append quiet").'
+    '"--iso-raw-" (e.g., "--iso-raw-dest-karg-append quiet").'
     "\n\n"
     "Examples:"
     "\n\n"
@@ -50,7 +50,7 @@ parser._optionals.title = "Options"
 butane_args = {'action': 'append_const', 'dest': 'butane', 'default': []}
 parser.add_argument(
     "-p", "--pretty", **butane_args, const='--pretty',
-    help="Make butane produce pretty formatted json.",
+    help="Make butane produce pretty formatted JSON.",
 )
 parser.add_argument(
     "-s", "--strict", **butane_args, const='--strict',
@@ -70,7 +70,7 @@ parser.add_argument("--iso-arch", default="x86_64", help=(
 ))
 parser.add_argument("--iso-net", type=types.net, help=(
     'Set static network configuration values for the ISOs "ip=" kernel '
-    'parameter as a comma separated list of "KEY=VALUE" pairs. The keys '
+    'parameter as a comma-separated list of "KEY=VALUE" pairs. The keys '
     'correspond to fields in the kernel parameter without "-ip" suffixes. See '
     "the example below."
 ))
@@ -96,7 +96,7 @@ parser.add_argument(
     help=(
         "Set the host and optionally the scheme and port the server is "
         "reachable at. The host can be an IPv4 address, an IPv6 address in "
-        "square brackets or a domain name. These are used for generating "
+        "square brackets, or a domain name. These are used for generating "
         "certificates (in the case of HTTPS) and authentication credentials "
         "(if configured to be generated automatically) for a mutually secured "
         "connection. (default: %(default)s)"
