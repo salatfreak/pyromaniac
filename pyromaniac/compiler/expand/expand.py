@@ -9,7 +9,7 @@ FCOS_DEFAULTS = {'variant': "fcos", 'version': "1.5.0"}
 FlatType = list[tuple[list[str | int], Any]]
 
 
-def expand(config: Any, clean: bool = False, fcos: bool = False) -> dict:
+def expand(config: Any, clean: bool = False, fcos: bool = False) -> Any:
     """Expand composite keys into hierarchy and add defaults.
 
     :param config: value with potentially composite keys
