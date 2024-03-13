@@ -4,23 +4,23 @@ nav_order: 80
 
 # Development
 {% raw %}
-Pyromaniac is developed in python and like [Butane][butane] intended to be
-distributed and run as a container image. It can simply be built by running
-`podman build -t pyromaniac .` in the repositories root directory.
+*Pyromaniac* is developed in *Python* and, like [Butane][butane], intended to
+be distributed and run as a container image. It can simply be built by running
+`podman build -t pyromaniac .` in the repository's root directory.
 
-The project is non-commercial and contributions are very welcome. Consider
-opening a [GitHub issue][issues] first to dicuss your ideas and get feedback on
+The project is non-commercial, and contributions are very welcome. Consider
+opening a [GitHub issue][issues] first to discuss your ideas and get feedback on
 whether your changes would be approved.
 
 [butane]: https://coreos.github.io/butane/
 [issues]: https://github.com/salatfreak/pyromaniac/issues
 
 ## Structure
-Pyromaniac is structured as a runnable python package which is designed to be
-shipped in a container image based on *Butane* and the [CoreOS
-Installer][coreos-installer].
+*Pyromaniac* is structured as a runnable *Python* package which is designed to
+be shipped in a container image based on *Butane* and the [CoreOS Installer]
+[coreos-installer].
 
-The code is structured into managable modules and subpackages to improve
+The code is structured into manageable modules and subpackages to improve
 separation of concerns and maintainability.
 
 Function signatures are annotated with types. All classes and functions that
@@ -30,7 +30,7 @@ reST-formatted docstring.
 Imports are ordered by their level of abstraction. A library that is or would
 be more likely to be used by another one is imported before it.
 
-Any python code should pass [pycodestyle][pycodestyle] without warnings.
+Any *Python* code should pass [pycodestyle][pycodestyle] without warnings.
 
 [coreos-installer]: https://coreos.github.io/coreos-installer/
 [pycodestyle]: https://github.com/PyCQA/pycodestyle
@@ -58,15 +58,15 @@ malfunction of enabled features.
 [conventional-commits]: https://www.conventionalcommits.org/en/v1.0.0/
 
 ## Testing
-Pythons built-in [unittest][unittest] framework is used for testing. Test cases
-shall be placed in the */tests* directory, which is not shipped with the
+*Python*'s built-in [unittest][unittest] framework is used for testing. Test
+cases shall be placed in the */tests* directory, which is not shipped with the
 container. The test modules are named after the subpackage or module they are
 providing tests for.
 
 There should be test cases covering all major features of the package. All
 tests must succeed before code is merged into the *main* branch.
 
-It is recommended to run the tests directly in the pyromaniac container:
+It is recommended to run the tests directly in the *Pyromaniac* container:
 
 ```sh
 podman run --rm \
@@ -85,14 +85,14 @@ Whenever a new release is pulled to the main branch, the *pyromaniac.sh* script
 should reference the container image with the version number the release will
 get.
 
-Updates to used python package, *Butane*, or the *CoreOS Installer* should be
+Updates to used *Python* package, *Butane*, or the *CoreOS Installer* should be
 brought in by bumping up their version number in the *pyproject.toml* or
-*Containerfile* respectively. The unit tests should then be executed and a new
+*Containerfile* respectively. The unit tests should then be executed, and a new
 patch release of *pyromaniac* should be published.
 
 If an update to the *CoreOS Installer* modifies the command line flags to the
-`iso customize` subcommand, pyromaniacs argument parsing needs to be updated to
-be able to pass them on via the `--iso-raw-*` flags. Assuming the format of
+`iso customize` subcommand, *Pyromaniac*'s argument parsing needs to be updated
+to be able to pass them on via the `--iso-raw-*` flags. Assuming the format of
 the `iso customize --help` message doesn't change, the updated list of flags
 for the argument parser can be generated using the following command:
 

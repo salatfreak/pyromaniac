@@ -15,8 +15,8 @@ Usage: pyromaniac [-p] [-s] [--iso] [--iso-arch ISO_ARCH] [--iso-net ISO_NET]
                   [input] [args ...]
 
 Compile a pyromaniac config into ignition format and output it as a string,
-as an live or installer ISO image or over HTTP(S). Automatically generate TLS
-certificates and authentication credentials for secured network based
+as a live or installer ISO image or over HTTP(S). Automatically generate TLS
+certificates and authentication credentials for secured network-based
 installations.
 
 The pyromaniac configuration format is described in the official
@@ -32,14 +32,14 @@ Positional:
   args                 Arguments to pass to the main component.
 
 Options:
-  -p, --pretty         Make butane produce pretty formatted json.
+  -p, --pretty         Make butane produce pretty formatted JSON.
   -s, --strict         Make butane fail on any warnings.
   --iso                Generate an ISO live or installer image instead of an
                        ignition config and write it to standard output.
   --iso-arch ISO_ARCH  Set the processor architecture to generate the ISO
                        image for. (default: x86_64)
   --iso-net ISO_NET    Set static network configuration values for the ISOs
-                       "ip=" kernel parameter as a comma separated list of
+                       "ip=" kernel parameter as a comma-separated list of
                        "KEY=VALUE" pairs. The keys correspond to fields in
                        the kernel parameter without "-ip" suffixes. See the
                        example below.
@@ -55,7 +55,7 @@ Options:
                        to avoid storing those in plain text.
   --address ADDRESS    Set the host and optionally the scheme and port the
                        server is reachable at. The host can be an IPv4
-                       address, an IPv6 address in square brackets or a
+                       address, an IPv6 address in square brackets, or a
                        domain name. These are used for generating
                        certificates (in the case of HTTPS) and authentication
                        credentials (if configured to be generated
@@ -70,8 +70,8 @@ Options:
   -h, --help           Show this help message and exit.
 
 Additionally, when generating an ISO you can specify flags to be passed on to
-`coreos-installer iso customize` by prefixing them with "--iso-raw-" (e.g. "
---iso-raw-dest-karg-append quiet").
+`coreos-installer iso customize` by prefixing them with "--iso-raw-" (e.g.,
+"--iso-raw-dest-karg-append quiet").
 
 Examples:
 

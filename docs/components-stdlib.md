@@ -19,10 +19,10 @@ merge(
 
 The result is intended to be added as the `ignition.config.merge` field.
 
-For strings, paths, and URLs the result of passing them to the *contents*
-component is added to the merge. For dicts composite keys are expanded and they
-are rendered to a string using butane. Empty dicts are ignored. The *headers*
-dict is passed to the *contents* component only for URLs.
+For strings, paths, and URLs, the result of passing them to the *contents*
+component is added to the merge. For dicts, composite keys are expanded, and
+they are rendered to a string using butane. Empty dicts are ignored. The
+*headers* dict is passed to the *contents* component only for URLs.
 
 **Example:**
 - Merge inline butane config with remote ignition file using authentication:
@@ -106,7 +106,7 @@ magic(
 Recursively wraps dicts and lists to allow access to dict members via dot
 notation.
 
-When encountering non-existent array or dict keys a *Nothing* object will be
+When encountering non-existent array or dict keys, a *Nothing* object will be
 returned that in turn returns itself when indexed. The *Nothing* object is
 falsy and therefore allows specifying default values using `or DEFAULT`.
 
@@ -133,7 +133,7 @@ file(
 The result is intended to be added as an element to the `storage.files` list.
 
 The *path* must be absolute unless the user name is specified, in which case
-relative paths will be interpreted relative to the users default home
+relative paths will be interpreted relative to the user's default home
 directory.
 
 The *content* and *headers* arguments are passed through the *content*
@@ -159,7 +159,7 @@ link(
 The result is intended to be added as an element to the `storage.links` list.
 
 The *path* must be absolute unless the user name is specified, in which case
-relative paths will be interpreted relative to the users default home
+relative paths will be interpreted relative to the user's default home
 directory.
 
 The *user* and *group* arguments are passed through the *ownership* component.
@@ -185,7 +185,7 @@ The result is intended to be added as an element to the `storage.directories`
 list.
 
 The *path* must be absolute unless the user name is specified, in which case
-relative paths will be interpreted relative to the users default home
+relative paths will be interpreted relative to the user's default home
 directory.
 
 The *user* and *group* arguments are passed through the *ownership* component.
@@ -210,7 +210,7 @@ directories(
 The result is intended to be added as the `storage.directories` field.
 
 The *base* must be absolute unless the user name is specified, in which case
-relative paths will be interpreted relative to the users default home
+relative paths will be interpreted relative to the user's default home
 directory. The *path* will be interpreted relative to the *base*.
 
 Only the members of the *path* that are children of *base* will be created, not
@@ -238,7 +238,7 @@ tree(
 The result is intended to be added as the `storage` field.
 
 The *path* must be absolute unless the user name is specified, in which case
-relative paths will be interpreted relative to the users default home
+relative paths will be interpreted relative to the user's default home
 directory.
 
 The *user* and *group* arguments are passed through the *ownership* component.

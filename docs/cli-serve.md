@@ -25,16 +25,16 @@ terminal you are running *Pyromaniac* in e.g. from your password manager.
 You can specify the host and optionally the scheme and port using the
 `--address` parameter as in `pyromaniac --server
 --address https://192.168.0.10:4433`. The scheme will default to *HTTPS*, the
-host to *127.0.0.1* and the port to 80 for *HTTP*, 443 for *HTTPS* and 8000 if
+host to *127.0.0.1* and the port to 80 for *HTTP*, 443 for *HTTPS*, and 8000 if
 the `--address` parameter is not specified.
 
 The scheme determines whether the server will use *TLS* but it will always
 listen on port 8000 on all interfaces. The host and port will only be used for
 generating a TLS certificate and authentication credentials as described
-in the next section. The `--address` parameter can also be used to embedded the
+in the next section. The `--address` parameter can also be used to embed the
 appropriate remote address when generating remote *ISO* images.
 
-The *Bash* script will however honor the addresses port and publish the
+The *Bash* script will, however, honor the address's port and publish the
 internal port 8000 to the specified port on the host on all interfaces. This
 means that running `pyromaniac --serve --address https://localhost:1234 .`
 will open the server up to your local network beyond the localhost on port 1234
@@ -62,18 +62,18 @@ answering any request. Use the `--auth` parameter to specify the credentials.
 Pass *none* to disable authentication and *auto* to instruct *Pyromaniac* to
 deterministically derive authentication credentials from the aforementioned
 secret key, the scheme, host, and port using a cryptographic hash function. The
-default is  *none* for *HTTP* and *auto* for *HTTPS*.
+default is *none* for *HTTP* and *auto* for *HTTPS*.
 
 ## Generating the Remote ISO Image
 *Pyromaniac* provides a function to generate the configuration to generate an
-*ISO* image that loads the actual configuration via *HTTP(S)*. It is availlable
+*ISO* image that loads the actual configuration via *HTTP(S)*. It is available
 only to the main component as `remote.merge()`. It will take the `--address`
 and `--auth` parameters into account and include the *TLS* root certificate, if
 the address scheme is *HTTPS*.
 
 To generate a remote installer simply execute `pyromaniac --address ADDR
 --auth AUTH <<< '{{ remote.merge() }}' > remote.iso` with appropriate values
-for the *address* and *auth* paramaters.
+for the *address* and *auth* parameters.
 
 Check out the [Remote Configuration][recipe] recipe for an example of creating
 a remote ISO and loading the configuration over HTTPS.

@@ -16,13 +16,13 @@ publish your own libraries with ease.
 [jinja]: https://jinja.palletsprojects.com/
 
 ## How to Read this Documentation
-First of all to get *Pyromaniac* running, check out the
+First of all, to get *Pyromaniac* running, check out the
 [Installation][installation] page.
 
-To learn about how to execute *Pyromaniac* read the [Command Line
+To learn about how to execute *Pyromaniac*, read the [Command Line
 Interface][cli] page. You can mostly use it as a drop-in replacement for
-*Butane* but *Pyromaniac* doesn't support all of its command line options and
-has a couple exciting additional features.
+*Butane*, but *Pyromaniac* doesn't support all of its command line options and
+has a couple of exciting additional features.
 
 You will write your configuration source code as *Pyromaniac* components. Don't
 worry: Your existing *Butane* configuration files are already valid
@@ -32,12 +32,13 @@ syntax and built-in functions that *Pyromaniac* has to offer.
 Get inspired by the examples and further hints in the [Recipes][recipes]
 section.
 
-*Pyromaniac* executes arbitrary python code from your source files but it does
+*Pyromaniac* executes arbitrary Python code from your source files, but it does
 so in an optionally read-only container. Read more about this on the [Security
 Considerations][security] page.
 
-This is a non-commercial project and you are welcome to contribute. Please read
-the [Development][development] page to learn about what to pay attention to.
+This is a non-commercial project, and you are welcome to contribute. Please
+read the [Development][development] page to learn about what to pay attention
+to.
 
 [installation]: installation.html
 [cli]: cli.html

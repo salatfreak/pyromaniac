@@ -22,7 +22,7 @@ parameterized components, or build and publish your own libraries with ease.
 
 [docs]: https://salatfreak.github.io/pyromaniac/
 
-# 💫 One Tool to Rule them All 💫
+# 💫 One Tool to Rule Them All 💫
 *Pyromaniac* combines the powers of [Butane][butane], the [CoreOS
 Installer][installer], and even comes with an *HTTP(S)* server for loading your
 configurations over the network, saving you the hassle of generating a new
@@ -34,7 +34,7 @@ Switch out *Butane* for *Pyromaniac* to generate your *Ignition* file:
 pyromaniac --pretty config.bu > config.ign
 ```
 
-Generate an *ISO*  for unattended installation from your configuration with a
+Generate an *ISO* for unattended installation from your configuration with a
 single command:
 
 ```sh
@@ -101,7 +101,7 @@ Learn more in the [Component Documentation][components].
 [components]: https://salatfreak.github.io/pyromaniac/components.html
 
 # 🐍 Arbitrary Python Code, Local Files, and More! 🐍
-*Pyromaniac* allows you to to include arbitrary *python* code into your
+*Pyromaniac* allows you to include arbitrary *python* code into your
 configuration including the definition of functions and even classes, to make
 your components even more powerful. It also comes with a standard library of
 components for loading files, rendering *Jinja* templates, adding file system
@@ -141,10 +141,10 @@ Learn more in the [Standard Library Documentation][stdlib].
 # ❤️ Charityware ❤️
 *Pyromaniac* is charityware. It is GPL licensed and you may therefore freely
 use and modify it without charge. It would however be great if you took a
-minute to consider your power to fundamentally change other peoples lives for
+minute to consider your power to fundamentally change other people's lives for
 the better.
 
-You can [restore a persons eyesight][sight] for half a weeks pay or [save a
+You can [restore a person's eyesight][sight] for half a week's pay or [save a
 child from getting malaria][malaria] for a third of an hourly wage.
 Contributing to [non-human animal focused charities][animals] is plausibly even
 orders of magnitude more effective, since our society brutalizes them in such
@@ -155,7 +155,7 @@ even [pledge to donate 99%][pledge-99] of their wealth. Whatever small or large
 contribution you are able and willing to make can mean the world to those who
 benefit from it.
 
-Please read up on [effective altruism][ea] and the devestating [effects of
+Please read up on [effective altruism][ea] and the devastating [effects of
 animal agriculture][animal-ag] on our planet ❤️
 
 [sight]: https://www.hollows.org/au/home

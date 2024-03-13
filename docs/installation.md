@@ -5,13 +5,13 @@ nav_order: 10
 # Installation
 {% raw %}
 The intended way to run *Pyromaniac* is as a *podman* or *docker* container.
-A small *Bash* script is availlable to make this as easy as possible.
+A small *Bash* script is available to make this as easy as possible.
 
 ## Installation of the Bash Script
 To run *Pyromaniac* using the script, make sure [Bash][bash] and
 [podman][podman] are installed on your machine and download the [script from
 GitHub][script]. If you rename it to `pyromaniac` and place it in your *PATH*
-or alternatively create a link to it with that name in your *PATH* (e.g. in
+or alternatively create a link to it with that name in your *PATH* (e.g., in
 *~/.local/bin/*), you can simply run it by executing `pyromaniac [ARG...]` in
 your command line.
 
@@ -36,9 +36,9 @@ podman run \
 ```
 
 You can skip or adjust the `--publish 8000:8000` line, if you don't need the
-HTTP(S) server or would like it to be reachable under another *TCP* port. You
+*HTTP(S)* server or would like it to be reachable under another *TCP* port. You
 can also skip the `--volume pyromaniac-secrets:/data/secrets`, if you don't
-need the securing of the HTTP server. The `--volume
+need the securing of the *HTTP* server. The `--volume
 pyromaniac-cache:/data/cache` is only necessary for caching *Fedora CoreOS*
 *ISO* images. You can even skip the `--volume .:/spec:ro`, if you provide the
 entire configuration via standard input.
@@ -51,9 +51,9 @@ repository][repo] and executing `podman build -t pyromaniac .` in it.
 
 ## Installing Pyromaniac Manually
 Make sure you have *pip3*, *butane*, and the *CoreOS Installer* installed on
-your system. You can then install the *Pyromaniac* python package manually by
-cloning the [GitHub repository][repo], adjusting the file sytem paths in
+your system. You can then install the *Pyromaniac* *python* package manually by
+cloning the [GitHub repository][repo], adjusting the file system paths in
 *pyromaniac/paths.py*, and executing `pip3 install .`.
 
-You can run the python package by executing `python3 -m pyromaniac [ARG...]`.
+You can run the *python* package by executing `python3 -m pyromaniac [ARG...]`.
 {% endraw %}

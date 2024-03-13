@@ -18,9 +18,9 @@ your configuration instead of booting a live image, specify a target disk using
 the `--iso-disk` parameter as in `pyromaniac --iso --iso-disk /dev/sda . >
 image.iso`.
 
-## Finetuning Your Image
+## Fine-tuning Your Image
 You can use the `--iso-arch` parameter to generate an *ISO* for a processor
-architechture other than *x86_64*. The list of supported architectures can be
+architecture other than *x86_64*. The list of supported architectures can be
 [found on the *Fedora CoreOS* website][archs].
 
 If you need static IP addressing in your live image or during installation, you
