@@ -5,7 +5,7 @@ from jinja2 import Template
 
 from ..errors import CompilerError
 from .errors import YamlTemplateError, YamlExecutionError, YamlParseError
-from .jinja import json_env as environment
+from .jinja import pyro_env as environment
 
 
 class Yaml:

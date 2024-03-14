@@ -15,7 +15,7 @@ class Raw:
         self.content = content
 
 
-# JSON environment
+# JSON environments
 class JSONEncoder(JSONEncoderBase):
     def default(self, obj: Any) -> Any:
         match obj:
@@ -28,6 +28,11 @@ def json_finalize(obj: Any) -> str:
         case Raw(content): return str(content)
         case _: return json_dumps(obj, cls=JSONEncoder)
 
+
+pyro_env = Environment(
+    variable_start_string="$", variable_end_string="$", finalize=json_finalize
+)
+pyro_env.filters['raw'] = lambda c: Raw(c)
 
 json_env = Environment(finalize=json_finalize)
 json_env.filters['raw'] = lambda c: Raw(c)
