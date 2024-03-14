@@ -16,49 +16,49 @@ class TestYaml(TestCase):
         self.assertIsNone(execute(""), None)
 
     def test_insert_variable(self):
-        self.assertEqual(execute("foo-{{var}}", {"var": "bar"}), 'foo-"bar"')
+        self.assertEqual(execute("foo-$var$", {"var": "bar"}), 'foo-"bar"')
         self.assertEqual(
-            execute("r: {{a + b}}", {"a": 42, "b": 69}),
+            execute("r: $a + b$", {"a": 42, "b": 69}),
             {"r": 42 + 69},
         )
 
     def test_raw_filter(self):
         self.assertEqual(
-            execute("foo-{{var | raw}}", {"var": "bar"}),
+            execute("foo-$var | raw$", {"var": "bar"}),
             "foo-bar",
         )
 
     def test_structured_data(self):
         self.assertEqual(
-            execute("foo: 69\nbar: {{ bar }}", {"bar": [42, 3.1415]}),
+            execute("foo: 69\nbar: $bar$", {"bar": [42, 3.1415]}),
             {"foo": 69, "bar": [42, 3.1415]},
         )
 
     def test_path_and_url(self):
         ctx = {"path": Path("/foo/bar"), "url": URL("https://example.com/")}
         self.assertEqual(
-            execute("foo: {{ path }}\nbar: {{ url }}", ctx),
+            execute("foo: $path$\nbar: $url$", ctx),
             {"foo": "/foo/bar", "bar": "https://example.com/"},
         )
 
     def test_template_error(self):
-        self.assertRaisesYamlTemplate("foo: {{}")
-        self.assertRaisesYamlTemplate("{{||}}")
-        self.assertRaisesYamlTemplate("{{ if then what }}")
+        self.assertRaisesYamlTemplate("foo: $")
+        self.assertRaisesYamlTemplate("$||$")
+        self.assertRaisesYamlTemplate("$if then what$")
 
     def test_execution_error(self):
         err = ValueError()
 
         def f():
             raise err
-        raised = self.assertRaisesYamlExecution("{{ f() }}", {"f": f})
+        raised = self.assertRaisesYamlExecution("$f()$", {"f": f})
         self.assertIs(raised.__cause__, err)
 
-        raised = self.assertRaisesYamlExecution("{{ 'foo' + 42 }}")
+        raised = self.assertRaisesYamlExecution("$'foo' + 42$")
         self.assertIsInstance(raised.__cause__, TypeError)
 
     def test_parse_error(self):
-        self.assertRaisesYamlParse("foo: bar: {{ 'baz' }}")
+        self.assertRaisesYamlParse("foo: bar: $'baz'$")
         self.assertRaisesYamlParse("qux: '")
 
     def assertRaisesYamlTemplate(self, code: str):

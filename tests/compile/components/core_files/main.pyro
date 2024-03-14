@@ -1,7 +1,7 @@
 (*files: dict[str, str])
 
 storage.files:
-  - {{ _.file("/data.json", _/"data.json") }}
+  - $_.file("/data.json", _/"data.json")$
 {%- for f in files %}
-  - {{ _.file(**f) }}
+  - $_.file(**f)$
 {%- endfor %}

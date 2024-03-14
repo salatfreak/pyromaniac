@@ -1,5 +1,5 @@
 (bar: str, baz: int, qux: str = "quux")
 
-- bar: {{ bar }}
-  baz: {{ baz }}
-  qux: {{ qux }}
+- bar: $bar$
+  baz: $baz$
+  qux: $qux$

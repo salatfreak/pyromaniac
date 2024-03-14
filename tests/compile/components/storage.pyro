@@ -1,5 +1,5 @@
 (disk: str = "/dev/sda")
 
 storage.disks[0]:
-  device: {{ disk }}
+  device: $disk$
   wipe_table: true

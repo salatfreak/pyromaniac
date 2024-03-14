@@ -5,4 +5,4 @@ storage.disks[0]:
   partitions[0]:
     number: 4
     label: root
-    size_mib: {{ root_size }}
+    size_mib: $root_size$

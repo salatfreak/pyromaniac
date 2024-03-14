@@ -5,4 +5,4 @@ storage['directories'].extend(directories("/", "foo/bar"))
 storage['links'].append(link("/link.txt", "/foo.txt"))
 ---
 
-storage: {{ storage }}
+storage: $storage$

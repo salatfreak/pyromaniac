@@ -1,2 +1,2 @@
-- bar: {{ args[0] }}
-  baz: {{ kwargs["foo"] }}
+- bar: $args[0]$
+  baz: $kwargs["foo"]$
