@@ -5,7 +5,6 @@ has_toc: false
 ---
 
 # Components
-{% raw %}
 *Pyromaniac* configurations are written as one or more potentially nested
 components in a custom format that combines *YAML*, *Jinja*, and *Python*.
 Except for the special meaning of *Jinja* control structures, any valid
@@ -111,4 +110,3 @@ component names must be valid *Python* identifiers.
 currently evaluated component using the global *_* (underscore) variable
 available in both *Python* code blocks and the *YAML*/*Jinja* section. You'll
 find more information about it on the [Python Section][python] page.
-{% endraw %}

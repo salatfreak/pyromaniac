@@ -4,7 +4,6 @@ nav_order: 20
 ---
 
 # Signature Section
-{% raw %}
 *Pyromaniac* component signatures specify the arguments accepted by your
 components with their types and default values. They use the same syntax as
 Python function signatures including variadic arguments, union types, etc. If
@@ -70,4 +69,3 @@ Strings will be coerced into *Path*s and *URL*s but not the other way around.
 Tuples and lists may be passed interchangeably.
 
 Other coercions will not take place.
-{% endraw %}

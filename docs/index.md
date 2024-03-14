@@ -3,7 +3,6 @@ nav_order: 0
 ---
 
 # Pyromaniac
-{% raw %}
 *Pyromaniac* is a framework for configuring and deploying self-maintaining
 server operating systems and services in a declarative, reproducible, and
 modular way based on [Fedora CoreOS][fcos], [Butane][butane], and
@@ -46,4 +45,3 @@ to.
 [recipes]: recipes.html
 [security]: security.html
 [development]: development.html
-{% endraw %}

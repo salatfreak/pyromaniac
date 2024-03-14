@@ -4,7 +4,6 @@ nav_order: 30
 ---
 
 # Python Section
-{% raw %}
 The *Python* code block allows you to write arbitrary python code, including
 import statements, function and class definitions, etc. Any imports, variables,
 functions, and classes that you define will also be available in the
@@ -86,4 +85,3 @@ like you would from other *Python* modules.
 *Python* modules should be referenced relative to the current component's path
 for the same reason as components and local files. To import *pkg/mod.py* from
 the component *pkg/comp.pyro*, write `from . import mod`.
-{% endraw %}

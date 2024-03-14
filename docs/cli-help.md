@@ -4,7 +4,6 @@ nav_order: 80
 ---
 
 # Help Text
-{% raw %}
 This is the full help text of the pyromaniac program as produced by executing
 `pyromaniac --help`.
 
@@ -84,9 +83,8 @@ $ pyromaniac --iso \
 ... --iso-net client=192.168.0.32,netmask=255.255.255.0,gw=192.168.0.1 \
 ... --iso-disk /dev/sda \
 ... --address https://192.168.0.16:443443/ \
-... <<< "{{ remote.merge() }}" > installer.iso
+... <<< "$remote.merge()$" > installer.iso
 
 Serve a config over a mutually authenticated encrypted network connection:
 $ pyromaniac --serve --address https://192.168.0.16:443443/ -i config.py
 ```
-{% endraw %}

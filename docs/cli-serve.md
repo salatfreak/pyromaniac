@@ -4,7 +4,6 @@ nav_order: 30
 ---
 
 # HTTP(S) Server
-{% raw %}
 *Pyromaniac* allows you to compile your configurations on demand and serve them
 over HTTP(S). Simply add the `--serve` parameter to start an HTTP server on
 the default *TCP* port 8000 as in `pyromaniac --serve .`.
@@ -72,11 +71,10 @@ and `--auth` parameters into account and include the *TLS* root certificate, if
 the address scheme is *HTTPS*.
 
 To generate a remote installer simply execute `pyromaniac --address ADDR
---auth AUTH <<< '{{ remote.merge() }}' > remote.iso` with appropriate values
+--auth AUTH <<< '$remote.merge()$' > remote.iso` with appropriate values
 for the *address* and *auth* parameters.
 
 Check out the [Remote Configuration][recipe] recipe for an example of creating
 a remote ISO and loading the configuration over HTTPS.
 
 [recipe]: recipes-remote.md
-{% endraw %}

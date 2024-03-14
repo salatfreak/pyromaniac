@@ -4,5 +4,3 @@ has_children: true
 ---
 
 # Recipes
-{% raw %}
-{% endraw %}

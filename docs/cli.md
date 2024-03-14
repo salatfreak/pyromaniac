@@ -5,7 +5,6 @@ has_toc: false
 ---
 
 # Command Line Interface
-{% raw %}
 The core functionality of compiling your configurations into ignition format
 works just like *Butane*, including the *--strict* flag to make *Pyromaniac*
 fail on any warnings and the *--pretty* flag to produce pretty formatted
@@ -71,4 +70,3 @@ features on the [ISO Generation][iso] and [HTTP(S) Server][server] pages.
 
 [iso]: cli-iso.html
 [server]: cli-serve.html
-{% endraw %}

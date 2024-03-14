@@ -3,7 +3,6 @@ nav_order: 80
 ---
 
 # Development
-{% raw %}
 *Pyromaniac* is developed in *Python* and, like [Butane][butane], intended to
 be distributed and run as a container image. It can simply be built by running
 `podman build -t pyromaniac .` in the repository's root directory.
@@ -103,4 +102,3 @@ podman run --rm "quay.io/coreos/coreos-installer:v${VERSION}" \
     -e 's/^  \(-[a-z0-9],\|   \) --\([a-z0-9_-]\+\)$/  ("\2", 0),/p' \
     -e 's/^  \(-[a-z0-9],\|   \) --\([a-z0-9_-]\+\) <.*>$/  ("\2", 1),/p'
 ```
-{% endraw %}

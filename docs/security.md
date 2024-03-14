@@ -3,7 +3,6 @@ nav_order: 70
 ---
 
 # Security Considerations
-{% raw %}
 *Pyromaniac* was developed with security in mind. Since it supports the
 execution of arbitrary code from configurations and has networking
 capabilities, you should however be mindful about the inevitable security
@@ -68,4 +67,3 @@ keep working if you open the server on the same address again in the future.
 
 You can always specify custom credentials using the `--auth` parameter to avoid
 the use of automatically generated ones.
-{% endraw %}
