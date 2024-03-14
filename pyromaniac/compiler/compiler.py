@@ -1,5 +1,8 @@
 from typing import Any, Self, TYPE_CHECKING
+import sys
+from contextlib import contextmanager
 from pathlib import PosixPath as Path
+from tempfile import TemporaryDirectory
 
 from .. import paths
 from .butane import butane
@@ -40,5 +43,17 @@ class Compiler:
         :returns: compiled ignition config
         """
         ctx = context(self.lib, self.lib.view(), remote=remote)
-        result = Component.create(source).execute(ctx, args, kwargs)
+        comp = Component.create(source)
+        with python_context(self.lib.root):
+            result = comp.execute(ctx, args, kwargs)
         return butane(expand(result, True, True))
+
+
+# Add temporary directory containing link to root to python path
+@contextmanager
+def python_context(path: Path):
+    with TemporaryDirectory() as temp:
+        sys.path.insert(0, temp)
+        Path(temp, "_main_").symlink_to(path.absolute())
+        yield
+        sys.path.remove(temp)
