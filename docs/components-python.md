@@ -76,4 +76,14 @@ writing `load(_/"file.txt")`, or from its parent by writing
 `load(_._/"file.txt")`.
 
 [stdlib]: components-stdlib.html
+
+## Referencing Pure Python Files
+If your project requires complex *Python* logic or you wish to share classes or
+functions between multiple components, you may also want to outsource code into
+regular *Python* source files and import them from inside your components just
+like you would from other *Python* modules.
+
+*Python* modules should be referenced relative to the current component's path
+for the same reason as components and local files. To import *pkg/mod.py* from
+the component *pkg/comp.pyro*, write `from . import mod`.
 {% endraw %}
