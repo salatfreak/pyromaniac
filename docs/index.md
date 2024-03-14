@@ -10,9 +10,15 @@ modular way based on [Fedora CoreOS][fcos], [Butane][butane], and
 break your config up into reusable parameterized components, or build and
 publish your own libraries with ease.
 
+Since *Butane* is the basis for *Pyromaniac*'s configuration format, you should
+get a grasp of *Butane* first. Don't worry: It's quite straightforward. Check
+out [the examples][examples] and the [full format specification][spec].
+
 [fcos]: https://fedoraproject.org/coreos/
 [butane]: https://coreos.github.io/butane/
 [jinja]: https://jinja.palletsprojects.com/
+[examples]: https://coreos.github.io/butane/examples/
+[spec]: https://coreos.github.io/butane/config-fcos-v1_5/
 
 ## How to Read this Documentation
 First of all, to get *Pyromaniac* running, check out the
