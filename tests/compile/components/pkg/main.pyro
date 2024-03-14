@@ -1,0 +1,5 @@
+---
+from . import number
+from pkg.sub import module
+
+f"/{number}/{module.number}"

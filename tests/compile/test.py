@@ -1,6 +1,7 @@
 from typing import Any
 from unittest import TestCase
 from unittest.mock import patch
+import sys
 from os import chdir
 import json
 from pathlib import PosixPath as Path
@@ -10,7 +11,9 @@ from pyromaniac import compile, Remote
 @patch('pyromaniac.paths.stdlib', Path(__file__).parent.joinpath("stdlib"))
 class TestCompile(TestCase):
     def setUp(self):
-        chdir(Path(__file__).parent.joinpath("components"))
+        dir = Path(__file__).parent.joinpath("components")
+        sys.path.insert(0, str(dir))
+        chdir(dir)
 
     def test_remote(self):
         remote = Remote.create(("http", "localhost", 8000), "secret")
@@ -22,6 +25,10 @@ class TestCompile(TestCase):
     def test_complex(self):
         result = self.compile("main", args=["/file"])
         self.assertEqual(len(result["ignition"]["config"]["merge"]), 2)
+
+    def test_python_modules(self):
+        result = self.compile("python")
+        self.assertEqual(result['storage']['files'][0]['path'], "/69/42/42/69")
 
     def compile(
         self, path: str,
