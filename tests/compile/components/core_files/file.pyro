@@ -5,5 +5,5 @@ key = "inline" if isinstance(content, str) else "local"
 contents = {key: content}
 ---
 
-path: $path$
-contents: $contents$
+path: `path`
+contents: `contents`

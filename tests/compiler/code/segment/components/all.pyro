@@ -13,4 +13,4 @@ message = f"Hello {age} year old {name}!"
 # here comes the yaml code
 storage.files[0]:
   path: /greeting.txt
-  contents.inline: $message$ # here we insert the message with jinja syntax
+  contents.inline: `message` # here we insert the message with jinja syntax

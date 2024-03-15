@@ -9,7 +9,7 @@ It contains all possible segments :O
 intro = " ".join(f"I like {h}." for h in hobbies)
 ---
 
-name: $name | raw$ X
-job: $job or "making worlds"$
-age: $age$
-intro: $intro$
+name: `name | raw` X
+job: `job or "making worlds"`
+age: `age`
+intro: `intro`

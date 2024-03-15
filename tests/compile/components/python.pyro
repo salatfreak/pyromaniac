@@ -5,4 +5,4 @@ from .pkg.sub.module import number
 path = f"/{number}/{module.number}" + pkg()
 ---
 
-storage.files[0].path: $path$
+storage.files[0].path: `path`

@@ -1,5 +1,5 @@
 ignition.config.replace:
-  source: $remote.url / "config.ign"$
+  source: `remote.url / "config.ign"`
   http_headers[0]:
     name: Authorization
-    value: $"Basic " + remote.auth$
+    value: `"Basic " + remote.auth`
