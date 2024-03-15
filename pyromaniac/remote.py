@@ -45,6 +45,13 @@ class Remote:
         """Assemble URL from scheme, host, and port."""
         return URL(f"{self.scheme}://{self.host}:{self.port}")
 
+    @property
+    def headers(self) -> dict:
+        """Return HTTP headers as dict for authentication."""
+        if self.auth is None:
+            return {}
+        return {"Authorization": f"Basic {self.auth}"}
+
     def merge(self) -> dict:
         """Generate remote merge configuration.
 
