@@ -52,7 +52,7 @@ docs][luks]. The configuration described here will break unattended upgrades
 because you'll need to manually type in the encryption key every time the
 machine is rebooted.
 
-```yaml
+```python
 storage.luks[0]:
     name: root
     label: luks-root
@@ -71,7 +71,7 @@ pass the *URL* and headers as arguments to it.
 You can now start the *Pyromaniac* *HTTPS* server with the same address used
 for the *ISO* generation using the following command:
 
-```
+```sh
 pyromaniac --serve --address 'https://192.168.0.10:4433/' .
 ```
 
@@ -97,7 +97,7 @@ longer.
 You can easily serve an *Ignition* file named *config.ign* by writing a
 one-liner using the `ignition.config.replace` field:
 
-```
+```sh
 pyromaniac --serve --address 'https://192.168.0.10:4433/' \
   <<< 'ignition.config.replace: `contents(Path("config.ign"))`'
 ```
