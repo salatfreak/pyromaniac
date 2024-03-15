@@ -1,4 +1,6 @@
 from typing import Callable, Any
+from pathlib import PosixPath as Path
+from hashlib import md5
 import ssl
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from base64 import b64encode
@@ -16,7 +18,7 @@ class Server(HTTPServer):
 
     def __init__(
         self, scheme: str, host: str, auth: str | None,
-        generator: Callable[[], str],
+        generator: Callable[[], str], watch: Path | None = None,
     ):
         super().__init__(('0.0.0.0', 8000), self.handle)
 
@@ -28,18 +30,40 @@ class Server(HTTPServer):
         self.scheme = scheme
         self.host = host
         self.auth = auth
-        self.generator = generator
+        self.cache = Cache(generator, watch)
 
     def handle(self, *args: Any, **kwargs: Any) -> 'Handler':
-        return Handler(self.auth, self.generator, *args, **kwargs)
+        return Handler(self.auth, self.cache, *args, **kwargs)
+
+
+class Cache:
+    def __init__(self, generator: Callable[[], str], watch: Path | None):
+        self.generator = generator
+        self.watch = watch
+        self.value = None
+        self.last_hash = None
+
+    def get(self):
+        hash = self.hash()
+        if self.last_hash is None or self.last_hash != hash:
+            self.value = self.generator()
+            self.last_hash = hash
+        return self.value
+
+    def hash(self) -> bytes | None:
+        if self.watch is None:
+            return None
+        stat = "\n".join(
+            f"{f},{f.lstat().st_mtime},{f.lstat().st_ctime}"
+            for f in sorted(self.watch.glob("**/*"))
+        )
+        return md5(stat.encode()).digest()
 
 
 class Handler(BaseHTTPRequestHandler):
-    def __init__(
-        self, auth: str | None, generator: Callable[[], str], *args, **kwargs
-    ):
+    def __init__(self, auth: str | None, cache: Cache, *args, **kwargs):
         self.auth = auth
-        self.generator = generator
+        self.cache = cache
 
         super().__init__(*args, **kwargs)
 
@@ -50,10 +74,8 @@ class Handler(BaseHTTPRequestHandler):
 
         # serve config from generator
         if self.path == '/config.ign':
-            log("compiling and serving config")
-            self.respond_headers("application/json")
-            config = self.generator()
-            return self.respond_body(config)
+            log("serving config")
+            return self.respond(self.cache.get(), typ="application/json")
 
         # serve secret from prompt
         match = SECRET_PATH_RE.fullmatch(self.path)

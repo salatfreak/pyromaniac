@@ -1,3 +1,5 @@
+from pathlib import PosixPath as Path
+
 from .errors import PyromaniacError, MainComponentIOError
 from .args import parse
 from .remote import Remote
@@ -33,6 +35,6 @@ try:
                 args.installer,
             )
         case 'serve':
-            serve(remote, ignition)
+            serve(remote, ignition, Path("."))
 except PyromaniacError as e:
     exit(f"Error: {e}")

@@ -1,4 +1,5 @@
 from typing import Callable, TYPE_CHECKING
+from pathlib import PosixPath as Path
 
 from .log import log
 from .server import Server
@@ -7,7 +8,9 @@ if TYPE_CHECKING:
     from ..remote import Remote
 
 
-def serve(remote: 'Remote', generator: Callable[[], str]):
+def serve(
+    remote: 'Remote', generator: Callable[[], str], watch: Path | None = None,
+):
     """Serve config and secrets until keyboard interrupt.
 
     Serves the ignition config produced by `generator()` under "/config.ign"
@@ -21,7 +24,7 @@ def serve(remote: 'Remote', generator: Callable[[], str]):
 
     # run server
     log("starting server")
-    server = Server(remote.scheme, remote.host, remote.auth, generator)
+    server = Server(remote.scheme, remote.host, remote.auth, generator, watch)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
