@@ -45,9 +45,13 @@ This is a non-commercial project, and you are welcome to contribute. Please
 read the [Development][development] page to learn about what to pay attention
 to.
 
+If you find an error in the documentation or find anything unclear, please open
+an [issue on GitHub][issues].
+
 [installation]: installation.html
 [cli]: cli.html
 [components]: components.html
 [recipes]: recipes.html
 [security]: security.html
 [development]: development.html
+[issues]: https://github.com/salatfreak/pyromaniac/issues
