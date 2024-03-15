@@ -53,12 +53,23 @@ because you'll need to manually type in the encryption key every time the
 machine is rebooted.
 
 ```python
-storage.luks[0]:
+storage:
+  disks[0]:
+    device: /dev/disk/by-id/coreos-boot-disk
+    partitions[0]:
+      number: 4
+      size_mib: 10000
+      resize: true
+  luks[0]:
     name: root
-    label: luks-root
     device: /dev/disk/by-partlabel/root
     key_file: `contents(remote.url / "root.secret", remote.headers)`
     wipe_volume: true
+  filesystems[0]:
+    device: /dev/mapper/root
+    label: root
+    format: xfs
+    wipe_filesystem: true
 ```
 
 Remember that the `remote` variable will only be available in your main
