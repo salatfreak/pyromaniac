@@ -65,6 +65,6 @@ class Remote:
             header = {'name': "Authorization", 'value': f"Basic {self.auth}"}
             result['ignition.config.merge[0].http_headers[0]'] = header
         if self.scheme == "https":
-            key = 'ignition.security.tls.certificate_authorities[0].source'
+            key = 'ignition.security.tls.certificate_authorities[0].inline'
             result[key] = root()[0].read_text()
         return result
