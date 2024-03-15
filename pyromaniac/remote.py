@@ -1,5 +1,4 @@
 from typing import Self
-from types import EllipsisType
 
 from .server.auth import auto_auth
 from .server.certs import root
