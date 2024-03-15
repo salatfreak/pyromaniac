@@ -26,7 +26,7 @@ class TestRemote(TestCase):
         keys = [
             'ignition.config.merge[0].source',
             'ignition.config.merge[0].http_headers[0]',
-            'ignition.security.tls.certificate_authorities[0].source',
+            'ignition.security.tls.certificate_authorities[0].inline',
         ]
         with patch('pyromaniac.server.auth.SALT_FILE', salt_file):
             result = remote.merge()
