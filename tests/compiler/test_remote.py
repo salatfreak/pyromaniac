@@ -1,5 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
+from base64 import b64encode
 from pathlib import PosixPath as Path
 from pyromaniac.remote import Remote
 from pyromaniac.compiler.url import URL
@@ -25,15 +26,15 @@ class TestRemote(TestCase):
         url = URL("https://foo.com:443/config.ign")
         keys = [
             'ignition.config.merge[0].source',
-            'ignition.config.merge[0].http_headers[0]',
+            'ignition.config.merge[0].http_headers',
             'ignition.security.tls.certificate_authorities[0].inline',
         ]
         with patch('pyromaniac.server.auth.SALT_FILE', salt_file):
             result = remote.merge()
         self.assertEqual(set(result.keys()), set(keys))
         self.assertEqual(result[keys[0]], url)
-        self.assertEqual(result[keys[1]], {
+        self.assertEqual(result[keys[1]], [{
             'name': "Authorization",
-            'value': "Basic secret",
-        })
+            'value': "Basic " + b64encode("secret".encode()).decode(),
+        }])
         self.assertTrue(result[keys[2]].startswith('-----BEGIN CERTIFICATE'))
