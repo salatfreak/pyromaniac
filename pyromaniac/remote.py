@@ -1,4 +1,5 @@
 from typing import Self
+from base64 import b64encode
 
 from .server.auth import auto_auth
 from .server.certs import root
@@ -50,7 +51,8 @@ class Remote:
         """Return HTTP headers as dict for authentication."""
         if self.auth is None:
             return {}
-        return {"Authorization": f"Basic {self.auth}"}
+        auth = b64encode(self.auth.encode()).decode()
+        return {"Authorization": f"Basic {auth}"}
 
     def merge(self) -> dict:
         """Generate remote merge configuration.
@@ -62,8 +64,9 @@ class Remote:
         """
         result = {'ignition.config.merge[0].source': self.url / "config.ign"}
         if self.auth is not None:
-            header = {'name': "Authorization", 'value': f"Basic {self.auth}"}
-            result['ignition.config.merge[0].http_headers[0]'] = header
+            result['ignition.config.merge[0].http_headers'] = [
+                {'name': k, 'value': v} for k, v in self.headers.items()
+            ]
         if self.scheme == "https":
             key = 'ignition.security.tls.certificate_authorities[0].inline'
             result[key] = root()[0].read_text()
