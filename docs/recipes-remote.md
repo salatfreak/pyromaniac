@@ -108,6 +108,9 @@ pyromaniac --serve --address 'https://192.168.0.10:4433/' \
   <<< 'ignition.config.replace: `contents(Path("config.ign"))`'
 ```
 
+Reading the config from standard input will, of course, impede your ability to
+enter secrets on the terminal.
+
 ## For Debugging
 Remote configuration loading can accelerate testing of your configs in virtual
 machines as well. Start the installation as usual but make a snapshot right
