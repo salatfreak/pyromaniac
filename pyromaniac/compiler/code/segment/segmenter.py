@@ -108,8 +108,9 @@ class Segmenter:
                 return slice(start, last.stop), last, True
             elif self.tokens.match(t.ERRORTOKEN):
                 return slice(start, self.length), last, True
-            elif last.type in (t.NL, t.NEWLINE) and self.tokens.match(
-                (t.OP, '-'), (t.OP, '-'), (t.OP, '-'), t.NEWLINE,
+            elif last.type in (t.NL, t.NEWLINE, t.DEDENT) \
+                and self.tokens.match(
+                    (t.OP, '-'), (t.OP, '-'), (t.OP, '-'), t.NEWLINE,
             ):
                 return slice(start, last.stop), self.tokens.consume(4), False
             else:
