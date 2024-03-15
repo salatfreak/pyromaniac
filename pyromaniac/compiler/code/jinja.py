@@ -30,7 +30,7 @@ def json_finalize(obj: Any) -> str:
 
 
 pyro_env = Environment(
-    variable_start_string="$", variable_end_string="$", finalize=json_finalize
+    variable_start_string="`", variable_end_string="`", finalize=json_finalize
 )
 pyro_env.filters['raw'] = lambda c: Raw(c)
 

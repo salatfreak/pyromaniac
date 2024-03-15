@@ -28,7 +28,8 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     "Examples:"
     "\n\n"
     'Create a pretty ignition config for placing a file "/foo.txt":\n'
-    '''$ pyromaniac --pretty <<< "file('/foo.txt', 'bar')" > main.ign'''
+    "$ pyromaniac --pretty > main.ign \\\n"
+    """... <<< 'storage.files[0]: `file("/foo.txt", "bar")`'"""
     "\n\n"
     "Create an ISO image for installation based on a configuration fetched "
     "over a mutually authenticated encrypted statically configured network "
@@ -38,7 +39,7 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     "client=192.168.0.32,netmask=255.255.255.0,gw=192.168.0.1 \\\n"
     "... --iso-disk /dev/sda \\\n"
     "... --address https://192.168.0.16:443443/ \\\n"
-    '... <<< "$remote.merge()$" > installer.iso'
+    "... <<< '`remote.merge()`' > installer.iso"
     "\n\n"
     "Serve a config over a mutually authenticated encrypted network "
     "connection:\n"
