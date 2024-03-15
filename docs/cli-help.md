@@ -83,9 +83,9 @@ mutually authenticated encrypted statically configured network connection:
 $ pyromaniac --iso \
 ... --iso-net client=192.168.0.32,netmask=255.255.255.0,gw=192.168.0.1 \
 ... --iso-disk /dev/sda \
-... --address https://192.168.0.16:443443/ \
+... --address https://192.168.0.16:4433/ \
 ... <<< '`remote.merge()`' > installer.iso
 
 Serve a config over a mutually authenticated encrypted network connection:
-$ pyromaniac --serve --address https://192.168.0.16:443443/ -i config.py
+$ pyromaniac --serve --address https://192.168.0.16:4433/ -i config.py
 ```
