@@ -59,16 +59,16 @@ Learn more in the [CLI Documentation][cli].
 
 # 🧁 Sugar, Parameterization, and Decomposition 🧁
 *Pyromaniac* extends the *Butane* format with support for composite keys,
-[Jinja][jinja] templating and parameterized components for better clarity and
-maintainability.
+[Jinja][jinja] templating using the "\`" (backtick) delimiter, and
+parameterized components for better clarity and maintainability.
 
 Configure three text files using composite keys and without repeating yourself:
 
 ```yaml
 storage.files:
 {%- for name in ["Alice", "Bob", "Carol"] %}
-  - path: $"/" + name + ".txt"$
-    contents.inline: $name + " was here!"$
+  - path: `"/" + name + ".txt"`
+    contents.inline: `name + " was here!"`
 {%- endfor %}
 ```
 
@@ -79,8 +79,8 @@ Turn your configuration into a reusable component:
 (*names: str, ext: str = ".txt")
 
 {%- for name in names %}
-- path: $"/" + name + ext$
-  contents.inline: $name + " was here"$
+- path: `"/" + name + ext`
+  contents.inline: `name + " was here"`
 {%- endfor %}
 ```
 
@@ -89,7 +89,7 @@ And include it from your main component:
 `main.pyro`
 ```yaml
 storage:
-  files: $files("Alice", "Bob", "Carol", ext=".md")$
+  files: `files("Alice", "Bob", "Carol", ext=".md")`
   links[0]:
     path: /favourite.md
     target: /Carol.md
@@ -119,7 +119,7 @@ def path(name: str) -> str:
   return f"/greeting-{name.lower()}.txt"
 ---
 
-storage.files[0]: $file(path(name), load(_/"greeting.jinja", name=name))$
+storage.files[0]: `file(path(name), load(_/"greeting.jinja", name=name))`
 ```
 
 Load two butane configurations specified in TOML format, render them and create
@@ -131,7 +131,7 @@ config1 = load.toml(_/"config-1.toml")
 config2 = load.toml(_/"config-2.toml")
 ---
 
-ignition.config.merge: $merge(config1, config2)$
+ignition.config.merge: `merge(config1, config2)`
 ```
 
 Learn more in the [Standard Library Documentation][stdlib].

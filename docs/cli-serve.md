@@ -70,8 +70,8 @@ only to the main component as `remote.merge()`. It will take the `--address`
 and `--auth` parameters into account and include the *TLS* root certificate, if
 the address scheme is *HTTPS*.
 
-To generate a remote installer simply execute `pyromaniac --address ADDR
---auth AUTH <<< '$remote.merge()$' > remote.iso` with appropriate values
+To generate a remote installer simply execute ``pyromaniac --address ADDR
+--auth AUTH <<< '`remote.merge()`' > remote.iso`` with appropriate values
 for the *address* and *auth* parameters.
 
 Check out the [Remote Configuration][recipe] recipe for an example of creating

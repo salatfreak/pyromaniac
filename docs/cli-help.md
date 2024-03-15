@@ -75,7 +75,8 @@ Additionally, when generating an ISO you can specify flags to be passed on to
 Examples:
 
 Create a pretty ignition config for placing a file "/foo.txt":
-$ pyromaniac --pretty <<< "file('/foo.txt', 'bar')" > main.ign
+$ pyromaniac --pretty > main.ign \
+... <<< 'storage.files[0]: `file("/foo.txt", "bar")`'
 
 Create an ISO image for installation based on a configuration fetched over a
 mutually authenticated encrypted statically configured network connection:
@@ -83,7 +84,7 @@ $ pyromaniac --iso \
 ... --iso-net client=192.168.0.32,netmask=255.255.255.0,gw=192.168.0.1 \
 ... --iso-disk /dev/sda \
 ... --address https://192.168.0.16:443443/ \
-... <<< "$remote.merge()$" > installer.iso
+... <<< "`remote.merge()`" > installer.iso
 
 Serve a config over a mutually authenticated encrypted network connection:
 $ pyromaniac --serve --address https://192.168.0.16:443443/ -i config.py
