@@ -90,12 +90,7 @@ If you boot your installer medium, it will request the */config.ign* path from
 your server, which will compile your configuration and send it back to the
 installer. During the storage setup, the installer will request the encryption
 key from the */root.secret* path. *Pyromaniac* will prompt you for the secret
-in the terminal and respond to the request with whatever line you type.
-
-The installer might request your configuration multiple times during the
-installation process, and it will be recompiled every time. You might run into
-problems if your code is not deterministic and depends on randomness to compile
-your configuration.
+on the terminal and respond to the request with whatever line you type.
 
 After the installation finishes, the server will be up and running as specified
 in your configuration.
