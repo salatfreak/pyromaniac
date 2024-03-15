@@ -8,8 +8,10 @@ nav_order: 30
 over HTTP(S). Simply add the `--serve` parameter to start an HTTP server on
 the default *TCP* port 8000 as in `pyromaniac --serve .`.
 
-Each time a client sends a GET request for the */config.ign* path, your
-configuration will be compiled and sent back in the response body.
+Each time a client sends a GET request for the */config.ign* path, the
+*Ignition* config will be sent back in the response body. *Pyromaniac* caches
+the compiled configuration and only recompiles it if the files in the current
+directory have changed since the last request.
 
 ## Requesting Encryption Secrets
 Besides the */config.ign* path, the server will also answer GET requests to
