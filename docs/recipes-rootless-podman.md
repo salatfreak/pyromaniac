@@ -62,7 +62,7 @@ this:
 
 `quadlet.pyro`
 ```python
-(user: str, name: str, ext: str = "container", **sections: dict[str, str] = [])
+(user: str, name: str, ext: str = "container", **sections: dict[str, str])
 ---
 lines = []
 for section, fields in sections.items():
