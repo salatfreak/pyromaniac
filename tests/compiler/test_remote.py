@@ -21,7 +21,7 @@ class TestRemote(TestCase):
         self.assertEqual(remote.url, URL("https://foo.com:443"))
 
     @place("salt.hex")
-    def test_merge(self, salt_file: Path):
+    def test_call(self, salt_file: Path):
         remote = Remote("https", "foo.com", 443, "secret")
         url = URL("https://foo.com:443/config.ign")
         keys = [
@@ -30,7 +30,7 @@ class TestRemote(TestCase):
             'ignition.security.tls.certificate_authorities[0].inline',
         ]
         with patch('pyromaniac.server.auth.SALT_FILE', salt_file):
-            result = remote.merge()
+            result = remote()
         self.assertEqual(set(result.keys()), set(keys))
         self.assertEqual(result[keys[0]], url)
         self.assertEqual(result[keys[1]], [{
