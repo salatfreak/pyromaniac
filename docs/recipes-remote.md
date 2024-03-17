@@ -32,7 +32,7 @@ in a single command:
 ```sh
 pyromaniac --iso --iso-disk /dev/sda \
   --address 'https://192.168.0.10:4433/' \
-  <<< '`remote.merge()`' > installer.iso
+  <<< '`remote()`' > installer.iso
 ```
 
 A self-signed certificate and random credentials for encryption and mutual

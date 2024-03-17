@@ -68,13 +68,13 @@ default is *none* for *HTTP* and *auto* for *HTTPS*.
 ## Generating the Remote ISO Image
 *Pyromaniac* provides a function to generate the configuration to generate an
 *ISO* image that loads the actual configuration via *HTTP(S)*. It is available
-only to the main component as `remote.merge()`. It will take the `--address`
-and `--auth` parameters into account and include the *TLS* root certificate, if
-the address scheme is *HTTPS*.
+only to the main component as `remote()`. It will take the `--address` and
+`--auth` parameters into account and include the *TLS* root certificate, if the
+address scheme is *HTTPS*.
 
 To generate a remote installer simply execute ``pyromaniac --address ADDR
---auth AUTH <<< '`remote.merge()`' > remote.iso`` with appropriate values
-for the *address* and *auth* parameters.
+--auth AUTH <<< '`remote()`' > remote.iso`` with appropriate values for the
+*address* and *auth* parameters.
 
 Check out the [Remote Configuration][recipe] recipe for an example of creating
 a remote ISO and loading the configuration over HTTPS.
