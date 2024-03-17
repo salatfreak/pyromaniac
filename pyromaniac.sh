@@ -41,4 +41,4 @@ exec podman run \
   --rm --interactive --security-opt 'label=disable' \
   --volume '.:/spec:ro' \
   "${params[@]}" \
-  ghcr.io/salatfreak/pyromaniac:0.1 "${args[@]}"
+  ghcr.io/salatfreak/pyromaniac:0.1.0 "${args[@]}"
