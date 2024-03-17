@@ -113,5 +113,5 @@ before the configuration is loaded. You can then restore that snapshot whenever
 you'd like to test a new version of your configuration and have the
 provisioning of your machine happen within seconds.
 
-Since the *HTTP(S)* server will recompile your configuration on every request,
-you can simply keep it running while tinkering with your configs.
+Since the *HTTP(S)* server will recompile your configuration whenever it
+changed, you can simply keep it running while tinkering with your configs.
