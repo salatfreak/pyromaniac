@@ -39,11 +39,6 @@ A self-signed certificate and random credentials for encryption and mutual
 authentication will be embedded into the installer by default.
 
 ## Setting Up Disk Encryption
-To use disk encryption in *CoreOS*, you'll need to use *Clevis* pinning as
-[described in the CoreOS docs][luks]. You may still want to choose and store
-the encryption keys for your root partition and further data partitions
-yourself.
-
 This configuration piece will encrypt your root partition with a key of your
 choosing to demonstrate the retrieval of secret keys over *HTTP(S)*. This would
 be more useful for persistent data partitions in practice. Consider using
