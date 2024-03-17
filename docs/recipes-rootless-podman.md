@@ -52,6 +52,15 @@ storage:
 
 [quadlet]: https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
 
+## Enable Lingering
+In order for user services to be started without an active login session,
+lingering needs to be enabled. This can be done by making sure a file for the
+Linux user exists in systemd's *linger* directory:
+
+```yaml
+storage.files[0].path: /var/lib/systemd/linger/myuser
+```
+
 ## Templating
 The great thing about *Pyromaniac* is that you can outsource code and build
 abstractions very easily. You can write a component for constructing a unit
