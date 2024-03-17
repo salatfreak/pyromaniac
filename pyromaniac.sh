@@ -29,7 +29,7 @@ if $cache; then
   params+=(--volume 'pyromaniac-secrets:/data/secrets')
 fi
 if $debug; then
-  dir="$(realpath "$(dirname "$0")")"
+  dir="$(dirname "$(realpath "$0")")"
   params+=(--volume "$dir/pyromaniac:/src/pyromaniac:ro")
   params+=(--volume "$dir/stdlib:/usr/local/lib/pyromaniac:ro")
 fi
