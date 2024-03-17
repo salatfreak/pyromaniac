@@ -33,7 +33,7 @@ Image=docker.io/my/image
 Restart=always
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 ```
 
 You can use the *tree* standard library component to include an entire
@@ -83,7 +83,7 @@ unit = quadlet(
     unit={"description": "My Service"},
     container={"image": "docker.io/my/image"},
     service={"restart": "always"},
-    install={"wanted_by": "multi-user.target"},
+    install={"wanted_by": "default.target"},
 )
 ---
 
