@@ -7,6 +7,7 @@
   <a href="../../actions/workflows/tests.yml">
     <img src="../../actions/workflows/tests.yml/badge.svg" alt="tests badge" />
   </a>
+  <img src="docs/assets/beta.svg" alt="beta badge" />
 </p>
 
 *Pyromaniac* is a framework for configuring and deploying self-maintaining
