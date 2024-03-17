@@ -39,7 +39,7 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     "client=192.168.0.32,netmask=255.255.255.0,gw=192.168.0.1 \\\n"
     "... --iso-disk /dev/sda \\\n"
     "... --address https://192.168.0.16:4433/ \\\n"
-    "... <<< '`remote.merge()`' > installer.iso"
+    "... <<< '`remote()`' > installer.iso"
     "\n\n"
     "Serve a config over a mutually authenticated encrypted network "
     "connection:\n"

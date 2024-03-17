@@ -54,7 +54,7 @@ class Remote:
         auth = b64encode(self.auth.encode()).decode()
         return {"Authorization": f"Basic {auth}"}
 
-    def merge(self) -> dict:
+    def __call__(self) -> dict:
         """Generate remote merge configuration.
 
         Adds the merge source, authorization header if requested and TLS root
