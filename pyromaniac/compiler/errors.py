@@ -10,9 +10,9 @@ class CompilerError(PyromaniacError):
     :param stack: list of component names
     """
 
-    def __init__(self, *args, stack: list[str] = []):
+    def __init__(self, *args, stack: list[str] | None = None):
         super().__init__(*args)
-        self.stack = stack
+        self.stack = stack or []
 
     def push(self, component: str) -> Self:
         """Push a component name onto the stack.
