@@ -20,7 +20,7 @@ class TestTree(TestCase):
     def test_full(self, tmp: Path):
         # unpack archive in temporary directory
         tar = TarFile.open(self.lib.view() / "tree.tar")
-        tar.extractall(tmp)
+        tar.extractall(tmp, filter='tar')
         tar.close()
         local = tmp.joinpath("tree")
 
