@@ -4,12 +4,10 @@ from io import StringIO
 from pathlib import PosixPath as Path
 from pyromaniac.args import parse
 
-from . import temp
-
 
 class TestArgs(TestCase):
     def test_input(self):
-        self.assertEqual(parse().input, Path("/dev/stdin"))
+        self.assertEqual(parse([]).input, Path("/dev/stdin"))
 
         args = parse(["/foo.pyro"])
         self.assertEqual(args.input, Path("/foo.pyro"))

@@ -108,9 +108,9 @@ your components even more powerful. It also comes with a standard library of
 components for loading files, rendering *Jinja* templates, adding file system
 nodes, etc.
 
-Add a python block with a helper function to your component and use the *file*
-and *load* standard library components to configure a file from a local Jinja
-template:
+Add a *Python* block with a helper function to your component and use the
+*file* and *load* standard library components to configure a file from a local
+*Jinja* template:
 
 ```python
 (name: str)
@@ -123,8 +123,8 @@ def path(name: str) -> str:
 storage.files[0]: `file(path(name), load(_/"greeting.jinja", name=name))`
 ```
 
-Load two butane configurations specified in TOML format, render them and create
-an ignition merge from them:
+Load two *Butane* configurations specified in *TOML* format, render them and
+create an *Ignition* merge from them:
 
 ```python
 ---
@@ -140,7 +140,7 @@ Learn more in the [Standard Library Documentation][stdlib].
 [stdlib]: https://salatfreak.github.io/pyromaniac/components-stdlib.html
 
 # ❤️ Charityware ❤️
-*Pyromaniac* is charityware. It is GPL licensed and you may therefore freely
+*Pyromaniac* is charityware. It is *GPL* licensed and you may therefore freely
 use and modify it without charge. It would however be great if you took a
 minute to consider your power to fundamentally change other people's lives for
 the better.
