@@ -24,7 +24,7 @@ terminal you are running *Pyromaniac* in e.g. from your password manager.
 
 ## Customizing Scheme and Address
 You can specify the host and optionally the scheme and port using the
-`--address` parameter as in `pyromaniac --server
+`--address` parameter as in `pyromaniac --serve
 --address https://192.168.0.10:4433`. The scheme will default to *HTTPS*, the
 host to *127.0.0.1* and the port to 80 for *HTTP*, 443 for *HTTPS*, and 8000 if
 the `--address` parameter is not specified.
