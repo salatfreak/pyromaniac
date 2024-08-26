@@ -87,7 +87,7 @@ get.
 Updates to used *Python* package, *Butane*, or the *CoreOS Installer* should be
 brought in by bumping up their version number in the *pyproject.toml* or
 *Containerfile* respectively. The unit tests should then be executed, and a new
-patch release of *pyromaniac* should be published.
+minor release of *pyromaniac* should be published.
 
 If an update to the *CoreOS Installer* modifies the command line flags to the
 `iso customize` subcommand, *Pyromaniac*'s argument parsing needs to be updated
