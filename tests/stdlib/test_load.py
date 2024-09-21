@@ -7,13 +7,13 @@ class TestLoad(TestCase):
     def test_text(self):
         file = self.lib.view() / "greeting.txt"
 
-        result = self.call('load', file)
+        result = self.call('std.load', file)
         self.assertEqual(result, file.read_text())
 
-        result = self.call('load', file, name="Alice")
+        result = self.call('std.load', file, name="Alice")
         self.assertEqual(result.strip(), "Hello, Alice!")
 
-        result = self.call('load', file, foo="bar")
+        result = self.call('std.load', file, foo="bar")
         self.assertEqual(result.strip(), "Hello, Bob!")
 
     def test_json(self):
@@ -26,7 +26,7 @@ class TestLoad(TestCase):
         self.structured("toml")
 
     def structured(self, type: str):
-        comp = f'load.{type}'
+        comp = f'std.load.{type}'
         file = self.lib.view() / f"file.{type}"
 
         with self.assertRaises(PythonRuntimeError):

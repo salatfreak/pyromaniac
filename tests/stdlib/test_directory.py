@@ -4,7 +4,7 @@ from .base import TestCase
 
 
 class TestDirectory(TestCase):
-    comp = 'directory'
+    comp = 'std.directory'
 
     def test_minimal(self):
         self.assertEqual(self.call("/foo"), {'path': Path("/foo")})

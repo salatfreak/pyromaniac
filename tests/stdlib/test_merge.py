@@ -6,7 +6,7 @@ from .base import TestCase
 
 
 class TestMerge(TestCase):
-    comp = 'merge'
+    comp = 'std.merge'
 
     def test_types(self):
         result = self.call("{}", Path("/foo.txt"), URL("https://bar.com/"))

@@ -4,8 +4,8 @@ from pyromaniac.compiler.url import URL
 from .base import TestCase
 
 
-class TestMagic(TestCase):
-    comp = 'contents'
+class TestContents(TestCase):
+    comp = "std.contents"
 
     def test_minimal(self):
         path, url = Path("file.txt"), URL("https://example.com/")

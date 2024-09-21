@@ -4,7 +4,7 @@ from .base import TestCase
 
 
 class TestLink(TestCase):
-    comp = 'link'
+    comp = 'std.link'
 
     def test_minimal(self):
         self.assertEqual(self.call("/foo.txt", "/bar.txt"), {

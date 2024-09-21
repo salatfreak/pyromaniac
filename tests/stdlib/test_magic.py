@@ -2,7 +2,7 @@ from .base import TestCase
 
 
 class TestMagic(TestCase):
-    comp = 'magic'
+    comp = 'std.magic'
 
     def test_primitives(self):
         self.assertIs(self.call(True), True)

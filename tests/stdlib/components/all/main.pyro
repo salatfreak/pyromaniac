@@ -1,8 +1,8 @@
 ---
-config = magic(load.toml(_/"config.toml", render=True))
+config = std.magic(std.load.toml(_/"config.toml", render=True))
 
 {
-    "ignition.config.merge": merge(
+    "ignition.config.merge": std.merge(
         files(),
         storage(config.storage.size or 10000),
     ),

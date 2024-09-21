@@ -5,7 +5,7 @@ from .base import TestCase
 
 
 class TestFile(TestCase):
-    comp = 'file'
+    comp = 'std.file'
 
     def test_minimal(self):
         self.assertEqual(self.call("/foo.txt"), {'path': Path("/foo.txt")})

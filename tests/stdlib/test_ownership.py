@@ -2,7 +2,7 @@ from .base import TestCase
 
 
 class TestOwnership(TestCase):
-    comp = 'ownership'
+    comp = 'std.ownership'
 
     def test_defaults(self):
         self.assertEqual(self.call(), {})

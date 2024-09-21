@@ -6,7 +6,7 @@ from .base import TestCase
 
 
 class TestTree(TestCase):
-    comp = 'tree'
+    comp = 'std.tree'
 
     @dir
     def test_empty(self, tmp: Path):
