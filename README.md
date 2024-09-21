@@ -109,8 +109,8 @@ components for loading files, rendering *Jinja* templates, adding file system
 nodes, etc.
 
 Add a *Python* block with a helper function to your component and use the
-*file* and *load* standard library components to configure a file from a local
-*Jinja* template:
+*std.file* and *std.load* standard library components to configure a file from
+a local *Jinja* template:
 
 ```python
 (name: str)
@@ -118,9 +118,11 @@ Add a *Python* block with a helper function to your component and use the
 ---
 def path(name: str) -> str:
   return f"/greeting-{name.lower()}.txt"
+
+content = std.load(_/"greeting.jinja", name=name)
 ---
 
-storage.files[0]: `file(path(name), load(_/"greeting.jinja", name=name))`
+storage.files[0]: `std.file(path(name), content)`
 ```
 
 Load two *Butane* configurations specified in *TOML* format, render them and
@@ -128,11 +130,11 @@ create an *Ignition* merge from them:
 
 ```python
 ---
-config1 = load.toml(_/"config-1.toml")
-config2 = load.toml(_/"config-2.toml")
+config1 = std.load.toml(_/"config-1.toml")
+config2 = std.load.toml(_/"config-2.toml")
 ---
 
-ignition.config.merge: `merge(config1, config2)`
+ignition.config.merge: `std.merge(config1, config2)`
 ```
 
 Learn more in the [Standard Library Documentation][stdlib].

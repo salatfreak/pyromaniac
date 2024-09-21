@@ -29,14 +29,15 @@ What's only a strong recommendation in the context of standalone projects is
 vital when it comes to libraries: All references to files and components within
 your library must be relative, while references to standard library components
 must be absolute. Use `_.my_component()` but
-`magic(load.toml(_/"config.toml"))`. Otherwise, your library will break when
-moved within the directory structure.
+`std.magic(std.load.toml(_/"config.toml"))`. Otherwise, your library will break
+when moved within the directory structure.
 
 The return values of your library can be whatever you need. They might be
 completely custom data, functions, classes, etc. They might also be a list or
 dict to populate some field of the *Butane* configuration you are constructing.
 Or they might be a complete configuration, ready to be merged with the rest of
-your projects' configs using the [*merge* standard library component][merge].
+your projects' configs using the
+[*std.merge* standard library component][merge].
 
 When your library has arrived at a stable state, consider adding a version tag
 (`git tag vX.Y.Z`) to easily manage different projects using different versions

@@ -70,7 +70,7 @@ It is recommended to run the tests directly in the *Pyromaniac* container:
 ```sh
 podman run --rm \
   --volume ./pyromaniac:/src/pyromaniac:ro \
-  --volume ./stdlib:/usr/local/lib/pyromaniac:ro \
+  --volume ./stdlib:/usr/local/lib/pyromaniac/std:ro \
   --volume ./tests:/src/tests:ro \
   --workdir /src \
   --entrypoint "/usr/bin/python3" \

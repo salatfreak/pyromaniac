@@ -36,13 +36,13 @@ Restart=always
 WantedBy=default.target
 ```
 
-You can use the *tree* standard library component to include an entire
-directory of such units into your deployment like this:
+You can use the [*std.tree* standard library component][tree] to include an
+entire directory of such units into your deployment like this:
 
 ```python
 ---
-dirs = directories(".", ".config/containers", "myuser")
-units = tree(".config/containers/systemd", _/"units", "myuser")
+dirs = std.directories(".", ".config/containers", "myuser")
+units = std.tree(".config/containers/systemd", _/"units", "myuser")
 ---
 
 storage:
@@ -51,6 +51,7 @@ storage:
 ```
 
 [quadlet]: https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
+[tree]: components-stdlib.html#add-local-directory-tree-with-specified-ownership
 
 ## Enable Lingering
 In order for user services to be started without an active login session,
@@ -80,7 +81,7 @@ for section, fields in sections.items():
         key = "".join(w.capitalize() for w in key.split("_"))
         lines.append(f"{key}={value}")
 
-file(f".config/containers/systemd/{name}.{ext}", "\n".join(lines), user)
+std.file(f".config/containers/systemd/{name}.{ext}", "\n".join(lines), user)
 ```
 
 It could be used to add a file for the unit from above as follows:

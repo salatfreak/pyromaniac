@@ -6,7 +6,7 @@ standard library:
 .. code-block:: sh
    podman run --rm \
      --volume ./pyromaniac:/src/pyromaniac:ro \
-     --volume ./stdlib:/usr/local/lib/pyromaniac:ro \
+     --volume ./stdlib:/usr/local/lib/pyromaniac/std:ro \
      --volume ./docs:/src/docs:ro \
      --workdir /src \
      --entrypoint "/usr/bin/python3" \
@@ -23,7 +23,7 @@ ORDER = [
     'file', 'link', 'directory', 'directories', 'tree',
     'contents', 'ownership',
 ]
-STDLIB = Path("/", "usr", "local", "lib", "pyromaniac")
+STDLIB = Path("/", "usr", "local", "lib", "pyromaniac", "std")
 
 print("""
 ---
@@ -45,6 +45,6 @@ for name in ORDER:
     doc, sig = doc.strip('"').strip(), sig.strip("\n")
     title, text = doc.strip().split("\n\n", 1)
     title, text = title.rstrip("."), text.strip()
-    print(f"\n## {title}\n```python\n{name}(\n{sig}\n)\n```\n\n{text}")
+    print(f"\n## {title}\n```python\nstd.{name}(\n{sig}\n)\n```\n\n{text}")
 
 print("{% endraw %}")

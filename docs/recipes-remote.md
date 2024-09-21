@@ -58,7 +58,7 @@ storage:
   luks[0]:
     name: root
     device: /dev/disk/by-partlabel/root
-    key_file: `contents(remote.url / "root.secret", remote.headers)`
+    key_file: `std.contents(remote.url / "root.secret", remote.headers)`
     wipe_volume: true
   filesystems[0]:
     device: /dev/mapper/root
@@ -100,7 +100,7 @@ one-liner using the `ignition.config.replace` field:
 
 ```sh
 pyromaniac --serve --address 'https://192.168.0.10:4433/' \
-  <<< 'ignition.config.replace: `contents(Path("config.ign"))`'
+  <<< 'ignition.config.replace: `std.contents(_/"config.ign")`'
 ```
 
 Reading the config from standard input will, of course, impede your ability to

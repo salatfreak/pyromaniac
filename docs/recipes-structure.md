@@ -72,8 +72,8 @@ use case, you might only want to commit a generic template for that
 configuration to your main project's source control.
 
 A solid choice would be to create a *config.toml* (and/or *config.toml.tmpl*)
-file, load it from your main component using the [*load.toml*][toml] and
-[*magic*][magic] standard library components, and pass the options on as
+file, load it from your main component using the [*std.load.toml*][toml] and
+[*std.magic*][magic] standard library components, and pass the options on as
 arguments to your other components.
 
 Your main component might look something like this:
@@ -81,9 +81,9 @@ Your main component might look something like this:
 `main.pyro`
 ```python
 ---
-config = magic(load.toml(_/"config.toml"))
+config = std.magic(std.load.toml(_/"config.toml"))
 
-merge(
+std.merge(
     my_server(**config.server),
     my_storage(config.storage.root_size or 8000),
 )

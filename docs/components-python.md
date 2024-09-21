@@ -59,7 +59,7 @@ call it by referencing the directory itself, as long as no component with the
 same name exists: `foo.bar.main()` and `foo.bar()` are equivalent as long as
 there is no component *foo/bar.pyro*.
 
-The components from the [standard library][stdlib] are in scope by default.
+The components from the [standard library][stdlib] are in scope as `std.*`.
 
 Use the *_* (underscore) from the global context to reference the directory the
 current component lies in, or use it as a field name on a component/directory
