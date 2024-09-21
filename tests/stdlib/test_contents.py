@@ -5,17 +5,16 @@ from .base import TestCase
 
 
 class TestContents(TestCase):
-    comp = "std.contents"
-
     def test_minimal(self):
         path, url = Path("file.txt"), URL("https://example.com/")
-        self.assertEqual(self.call("foo"), {"inline": "foo"})
-        self.assertEqual(self.call(path), {"local": path})
-        self.assertEqual(self.call(url), {"source": url})
-        self.assertEqual(self.call({'inline': "foo"}), {'inline': "foo"})
+        self.assertEqual(self.call('std.contents', "foo"), {"inline": "foo"})
+        self.assertEqual(self.call('std.contents', path), {"local": path})
+        self.assertEqual(self.call('std.contents', url), {"source": url})
+        result = self.call('std.contents', {'inline': "foo"})
+        self.assertEqual(result, {'inline': "foo"})
 
     def test_complex(self):
-        result = self.call({
+        result = self.call('std.contents', {
             'source': "https://example.com/",
             'http_headers': [{'name': "foo", 'value': "bar"}],
         }, {
@@ -37,3 +36,11 @@ class TestContents(TestCase):
             {'name': "fred", 'value': "waldo"},
             {'name': "qux", 'value': "quux"},
         ])
+
+    def test_parse(self):
+        result = self.call('std.contents.parse', "foo")
+        self.assertIsInstance(result, str)
+        result = self.call('std.contents.parse', "./bar.txt")
+        self.assertIsInstance(result, Path)
+        result = self.call('std.contents.parse', "https://example.com/")
+        self.assertIsInstance(result, URL)
