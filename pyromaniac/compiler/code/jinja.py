@@ -15,6 +15,11 @@ class Raw:
         self.content = content
 
 
+# Ellipsis test
+def ellipsis(val: Any) -> bool:
+    return val is Ellipsis
+
+
 # JSON environments
 class JSONEncoder(JSONEncoderBase):
     def default(self, obj: Any) -> Any:
@@ -33,9 +38,11 @@ pyro_env = Environment(
     variable_start_string="`", variable_end_string="`", finalize=json_finalize
 )
 pyro_env.filters['raw'] = lambda c: Raw(c)
+pyro_env.tests['ellipsis'] = ellipsis
 
 json_env = Environment(finalize=json_finalize)
 json_env.filters['raw'] = lambda c: Raw(c)
+json_env.tests['ellipsis'] = ellipsis
 
 
 # TOML environment
@@ -68,3 +75,4 @@ def toml_finalize(obj: Any) -> str:
 
 toml_env = Environment(finalize=toml_finalize)
 toml_env.filters['raw'] = lambda c: Raw(c)
+toml_env.tests['ellipsis'] = ellipsis
