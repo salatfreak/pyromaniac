@@ -12,7 +12,7 @@ RUN dnf install -y /usr/bin/pip3 && dnf clean all
 COPY pyproject.toml README.md LICENSE /src/
 RUN mkdir /src/pyromaniac && pip install --no-cache-dir --editable /src
 COPY pyromaniac /src/pyromaniac/
-COPY stdlib /usr/local/lib/pyromaniac
+COPY stdlib /usr/local/lib/pyromaniac/std
 
 # set up environment
 USER 1000:1000

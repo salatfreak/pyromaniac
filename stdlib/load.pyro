@@ -3,7 +3,7 @@
 Jinja is only invoked if at least one variable is passed as keyword argument.
 
 **Example:**
-- Load and render text file: `load(_/"file.txt", name="Alice")`
+- Load and render text file: `std.load(_/"file.txt", name="Alice")`
 """
 
 (

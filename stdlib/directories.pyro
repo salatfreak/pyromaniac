@@ -9,12 +9,12 @@ directory. The *path* will be interpreted relative to the *base*.
 Only the members of the *path* that are children of *base* will be created, not
 *base* itself.
 
-The *user* and *group* arguments are passed through the *ownership* component.
-See its documentation for further details.
+The *user* and *group* arguments are passed through the *std.ownership*
+component. See its documentation for further details.
 
 **Example:**
 - Add user unit directory for "core" user:
-  `directories(".", ".config/systemd/user", "core")`
+  `std.directories(".", ".config/systemd/user", "core")`
 """
 
 (
@@ -36,6 +36,6 @@ path = base.joinpath(path)
 parts = path.relative_to(base).parts
 
 [
-    directory(base.joinpath(*parts[:i]), user, group, **fields)
+    _.directory(base.joinpath(*parts[:i]), user, group, **fields)
     for i in range(1, len(parts) + 1)
 ]

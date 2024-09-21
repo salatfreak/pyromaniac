@@ -8,12 +8,12 @@ returned that in turn returns itself when indexed. The *Nothing* object is
 falsy and therefore allows specifying default values using `or DEFAULT`.
 
 Beware that everything other than dicts, lists, and non-existent keys are
-returned as is: `magic({"foo": 42}).foo.bar` will still result in an
+returned as is: `std.magic({"foo": 42}).foo.bar` will still result in an
 AttributeError because 42 has no attribute *bar*.
 
 **Examples:**
-- Dot notation: `magic({"foo": [{"bar": "baz"}]}).foo[0].bar`
-- Default handling: `magic({"foo": "bar"}).baz.qux or "default"`
+- Dot notation: `std.magic({"foo": [{"bar": "baz"}]}).foo[0].bar`
+- Default handling: `std.magic({"foo": "bar"}).baz.qux or "default"`
 """
 
 (

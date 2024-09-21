@@ -6,14 +6,14 @@ The *path* must be absolute unless the user name is specified, in which case
 relative paths will be interpreted relative to the user's default home
 directory.
 
-The *user* and *group* arguments are passed through the *ownership* component.
-See its documentation for further details.
+The *user* and *group* arguments are passed through the *std.ownership*
+component. See its documentation for further details.
 
 If *mode* is True, file permissions will be copied from the original files.
 
 **Example:**
 - Copy config directory to "core" user's home directory preserving permissions:
-  `tree(".config", _/"config", "core", mode=True)`
+  `std.tree(".config", _/"config", "core", mode=True)`
 """
 
 (
@@ -31,7 +31,7 @@ If *mode* is True, file permissions will be copied from the original files.
 def node(local_path: Path, **custom):
     return {
         'path': path.joinpath(local_path.relative_to(local)),
-        **ownership(user, group),
+        **_.ownership(user, group),
         **({'mode': local_path.lstat().st_mode % 0o10000} if mode else {}),
         **({'overwrite': True} if overwrite else {}),
         **custom,
@@ -50,7 +50,7 @@ for p in [local, *local.glob("**/*")]:
     elif p.is_dir():
         dirs.append(node(p))
     elif p.is_file():
-        files.append(node(p, contents=contents(p)))
+        files.append(node(p, contents=_.contents(p)))
 
 # construct result
 {'directories': dirs, 'files': files, 'links': links}

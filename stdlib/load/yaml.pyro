@@ -8,7 +8,7 @@ worrying about breaking YAML syntax. To insert raw strings into your document,
 use the *raw* filter as in `greeting: "Hello, {{ name | raw }}!"`.
 
 **Example:**
-- Load and inject: `load.yaml(_/"file.yml", name="Alice")`
+- Load and inject: `std.load.yaml(_/"file.yml", name="Alice")`
 """
 
 (

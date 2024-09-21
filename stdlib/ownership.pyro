@@ -5,8 +5,8 @@ group defaults to be the same as the user. Explicitly passing None disables
 setting the field in the result.
 
 **Examples:**
-- Set user and group name to "core": `ownership("core")`
-- Set only user ID to 1000: `ownership(1000, None)`
+- Set user and group name to "core": `std.ownership("core")`
+- Set only user ID to 1000: `std.ownership(1000, None)`
 """
 
 (

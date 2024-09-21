@@ -7,13 +7,13 @@ The *path* must be absolute unless the user name is specified, in which case
 relative paths will be interpreted relative to the user's default home
 directory.
 
-The *user* and *group* arguments are passed through the *ownership* component.
-See its documentation for further details.
+The *user* and *group* arguments are passed through the *std.ownership*
+component. See its documentation for further details.
 
 **Examples:**
-- Add absolute directory for root user: `directory("/dir")`
+- Add absolute directory for root user: `std.directory("/dir")`
 - Add read-only directory for "core" user in its home directory:
-  `directory("dir", "core", mode=0o550)`
+  `std.directory("dir", "core", mode=0o550)`
 """
 
 (
@@ -30,4 +30,4 @@ if not path.is_absolute() and isinstance(user, str):
     path = Path(f"/home/{user}", path)
 
 # construct result
-{'path': path, **ownership(user, group), **fields}
+{'path': path, **_.ownership(user, group), **fields}

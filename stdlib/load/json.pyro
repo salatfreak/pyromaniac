@@ -8,7 +8,7 @@ worrying about breaking JSON syntax. To insert raw strings into your document,
 use the *raw* filter as in `{"greeting": "Hello, {{ name | raw }}!"}`.
 
 **Example:**
-- Load and inject: `load.json(_/"file.json", name="Alice")`
+- Load and inject: `std.load.json(_/"file.json", name="Alice")`
 """
 
 (

@@ -6,14 +6,14 @@ The *path* must be absolute unless the user name is specified, in which case
 relative paths will be interpreted relative to the user's default home
 directory.
 
-The *content* and *headers* arguments are passed through the *content*
-component. The *user* and *group* arguments are passed through the *ownership*
-component. See their documentation for further details.
+The *content* and *headers* arguments are passed through the *std.contents*
+component. The *user* and *group* arguments are passed through the
+*std.ownership* component. See their documentation for further details.
 
 **Examples**:
-- Add inline file for root user: `file("/file.txt", "foo")`
+- Add inline file for root user: `std.file("/file.txt", "foo")`
 - Add file from disk for "core" user in its home directory:
-  `file("file.txt", Path(_/"file.txt"), "core")`
+  `std.file("file.txt", _/"file.txt", "core")`
 """
 
 (
@@ -33,7 +33,7 @@ if not path.is_absolute() and isinstance(user, str):
 
 # add contents
 if content is not None:
-    fields['contents'] = contents(content, headers)
+    fields['contents'] = _.contents(content, headers)
 
 # construct result
-{'path': path, **ownership(user, group), **fields}
+{'path': path, **_.ownership(user, group), **fields}

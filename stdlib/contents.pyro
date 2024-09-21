@@ -6,9 +6,10 @@ value pairs from it will be copied into the result instead, overriding headers
 and other fields.
 
 **Examples**:
-- Specify contents inline: `contents("foo")`
-- Specify local file: `contents(Path("/path/to/file.txt"))`
-- Specify remote file: `contents(URL("http://..."), headers={"Accept": "..."})`
+- Specify contents inline: `std.contents("foo")`
+- Specify local file: `std.contents(Path("/path/to/file.txt"))`
+- Specify remote file:
+  `std.contents(URL("http://..."), headers={"Accept": "..."})`
 """
 
 (
