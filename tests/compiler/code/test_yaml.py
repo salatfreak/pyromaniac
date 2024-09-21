@@ -28,6 +28,11 @@ class TestYaml(TestCase):
             "foo-bar",
         )
 
+    def test_ellipsis_test(self):
+        self.assertTrue(execute("`var is ellipsis`", {"var": ...}))
+        self.assertFalse(execute("`var is ellipsis`", {"var": 42}))
+        self.assertFalse(execute("`var is ellipsis`", {"var": None}))
+
     def test_structured_data(self):
         self.assertEqual(
             execute("foo: 69\nbar: `bar`", {"bar": [42, 3.1415]}),
