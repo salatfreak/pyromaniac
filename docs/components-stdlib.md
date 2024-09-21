@@ -273,7 +273,7 @@ and other fields.
 ## Parse content string into inline, path or URL value based on its format
 ```python
 std.contents.parse(
-content: str
+    content: str,  # path, URL, or inline content as string
 )
 ```
 

@@ -10,7 +10,9 @@ returned as URL objects. Everything else will be returned as is.
 - Remote file: `std.contents.parse("https://example.com/baz.txt")`
 """
 
-(content: str)
+(
+    content: str,  # path, URL, or inline content as string
+)
 
 ---
 
