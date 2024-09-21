@@ -1,0 +1,26 @@
+"""Parse content string into inline, path or URL value based on its format.
+
+Values starting with "/" or "./" will be returned as path objects. Values
+starting with one of butanes supported protocol names followed by "://" will be
+returned as URL objects. Everything else will be returned as is.
+
+**Examples**:
+- Inline content: `std.contents.parse("foo")`
+- Local file: `std.contents.parse("./bar.txt")`
+- Remote file: `std.contents.parse("https://example.com/baz.txt")`
+"""
+
+(content: str)
+
+---
+
+PROTOS = ['http', 'https', 'tftp', 's3', 'arn', 'gs', 'data']
+
+if content.startswith("/") or content.startswith("./"):
+    result = Path(content)
+elif "://" in content and content.split("://", 1)[0] in PROTOS:
+    result = URL(content)
+else:
+    result = content
+
+result
