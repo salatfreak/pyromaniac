@@ -270,6 +270,22 @@ and other fields.
 - Specify remote file:
   `std.contents(URL("http://..."), headers={"Accept": "..."})`
 
+## Parse content string into inline, path or URL value based on its format
+```python
+std.contents.parse(
+content: str
+)
+```
+
+Values starting with "/" or "./" will be returned as path objects. Values
+starting with one of butanes supported protocol names followed by "://" will be
+returned as URL objects. Everything else will be returned as is.
+
+**Examples**:
+- Inline content: `std.contents.parse("foo")`
+- Local file: `std.contents.parse("./bar.txt")`
+- Remote file: `std.contents.parse("https://example.com/baz.txt")`
+
 ## Create ownership fields as required for file system nodes
 ```python
 std.ownership(
