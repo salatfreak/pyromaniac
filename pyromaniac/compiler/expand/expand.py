@@ -5,7 +5,7 @@ from .errors import KeyExpandError
 from .errors import DuplicateKeyError, MixedKeysError, MissingIndexError
 from . import keys
 
-FCOS_DEFAULTS = {'variant': "fcos", 'version': "1.5.0"}
+FCOS_DEFAULTS = {'variant': "fcos", 'version': "1.6.0"}
 FlatType = list[tuple[list[str | int], Any]]
 
 
