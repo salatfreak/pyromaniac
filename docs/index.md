@@ -18,7 +18,7 @@ out [the examples][examples] and the [full format specification][spec].
 [butane]: https://coreos.github.io/butane/
 [jinja]: https://jinja.palletsprojects.com/
 [examples]: https://coreos.github.io/butane/examples/
-[spec]: https://coreos.github.io/butane/config-fcos-v1_5/
+[spec]: https://coreos.github.io/butane/config-fcos-v1_6/
 
 ## How to Read this Documentation
 First of all, to get *Pyromaniac* running, check out the
