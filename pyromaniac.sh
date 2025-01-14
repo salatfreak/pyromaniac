@@ -33,7 +33,7 @@ if $debug; then
   params+=(--volume "$dir/pyromaniac:/src/pyromaniac:ro")
   params+=(--volume "$dir/stdlib:/usr/local/lib/pyromaniac/std:ro")
 fi
-if [[ -t 0 ]]; then params+=(--tty); fi
+if [[ -t 0 && -t 1 ]]; then params+=(--tty); fi
 if $serve; then params+=(--publish "$port:8000"); fi
 
 # run pyromaniac using podman
