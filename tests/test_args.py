@@ -28,6 +28,10 @@ class TestArgs(TestCase):
     def test_mode(self):
         self.assertEqual(parse().mode, 'ign')
         self.assertEqual(parse(["--iso"]).mode, 'iso')
+        self.assertEqual(parse(["--iso-arch", "x86_64"]).mode, 'iso')
+        self.assertEqual(parse(["--iso-net", "gw=192.168.0.1"]).mode, 'iso')
+        self.assertEqual(parse(["--iso-disk", "/dev/vda"]).mode, 'iso')
+        self.assertEqual(parse(["--iso-raw-force"]).mode, 'iso')
         self.assertEqual(parse(["--serve"]).mode, 'serve')
 
     def test_iso_net(self):
