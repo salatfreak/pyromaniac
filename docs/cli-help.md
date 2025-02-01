@@ -34,7 +34,8 @@ Options:
   -p, --pretty         Make butane produce pretty formatted JSON.
   -s, --strict         Make butane fail on any warnings.
   --iso                Generate an ISO live or installer image instead of an
-                       ignition config and write it to standard output.
+                       ignition config and write it to standard output. This
+                       is implied, if any --iso-* parameters are passed.
   --iso-arch ISO_ARCH  Set the processor architecture to generate the ISO
                        image for. (default: x86_64)
   --iso-net ISO_NET    Set static network configuration values for the ISOs

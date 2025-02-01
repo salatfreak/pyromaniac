@@ -39,7 +39,7 @@ Generate an *ISO* for unattended installation from your configuration with a
 single command:
 
 ```sh
-pyromaniac --iso --iso-disk /dev/sda config.bu > installer.iso
+pyromaniac --iso-disk /dev/sda config.bu > installer.iso
 ```
 
 Render and serve your configuration over *HTTPS*:

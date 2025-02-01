@@ -72,7 +72,7 @@ only to the main component as `remote()`. It will take the `--address` and
 `--auth` parameters into account and include the *TLS* root certificate, if the
 address scheme is *HTTPS*.
 
-To generate a remote installer simply execute ``pyromaniac --address ADDR
+To generate a remote installer simply execute ``pyromaniac --iso --address ADDR
 --auth AUTH <<< '`remote()`' > remote.iso`` with appropriate values for the
 *address* and *auth* parameters.
 

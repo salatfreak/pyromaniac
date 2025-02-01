@@ -30,7 +30,7 @@ server will run on port *4433* at *192.168.0.10*, you can create your installer
 in a single command:
 
 ```sh
-pyromaniac --iso --iso-disk /dev/sda \
+pyromaniac --iso-disk /dev/sda \
   --address 'https://192.168.0.10:4433/' \
   <<< '`remote()`' > installer.iso
 ```

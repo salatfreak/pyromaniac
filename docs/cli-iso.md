@@ -10,11 +10,12 @@ and unattended installation. Just like *Ignition* code, *ISO* images will be
 written directly to the standard output and need to be redirected into a file.
 
 To create a live image from your configuration, simply add the `--iso`
-parameter as in `pyromaniac --iso . > image.iso`.
+parameter as in `pyromaniac --iso . > image.iso`. This is implied, if any other
+`--iso-*` parameters are passed.
 
 To make the *ISO* image automatically install *Fedora CoreOS* according to 
 your configuration instead of booting a live image, specify a target disk using
-the `--iso-disk` parameter as in `pyromaniac --iso --iso-disk /dev/sda . >
+the `--iso-disk` parameter as in `pyromaniac --iso-disk /dev/sda . >
 image.iso`.
 
 ## Fine-tuning Your Image
