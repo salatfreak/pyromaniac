@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from .. import paths
 from .formatter import Formatter
 from . import types
+from .actions import IsoStore
 from .installer import generate
 
 
@@ -62,20 +63,21 @@ parser.add_argument(
     "--iso", action='store_const', dest='mode', const='iso', default='ign',
     help=(
         "Generate an ISO live or installer image instead of an ignition "
-        "config and write it to standard output."
+        "config and write it to standard output. This is implied, if any "
+        "--iso-* parameters are passed."
     )
 )
-parser.add_argument("--iso-arch", default="x86_64", help=(
+parser.add_argument("--iso-arch", action=IsoStore, default="x86_64", help=(
     "Set the processor architecture to generate the ISO image for. (default: "
     "%(default)s)"
 ))
-parser.add_argument("--iso-net", type=types.net, help=(
+parser.add_argument("--iso-net", action=IsoStore, type=types.net, help=(
     'Set static network configuration values for the ISOs "ip=" kernel '
     'parameter as a comma-separated list of "KEY=VALUE" pairs. The keys '
     'correspond to fields in the kernel parameter without "-ip" suffixes. See '
     "the example below."
 ))
-parser.add_argument("--iso-disk", help=(
+parser.add_argument("--iso-disk", action=IsoStore, help=(
     "Make the installer automatically install Fedora CoreOS to the specified "
     "disk and use the compiled ignition config for the target system instead "
     "of creating a live image from it."

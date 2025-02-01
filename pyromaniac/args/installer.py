@@ -2,6 +2,8 @@ from typing import Callable
 from collections.abc import Iterable
 from argparse import SUPPRESS
 
+from .actions import IsoAppend, IsoAppendConst
+
 
 ARGS = [
     ("dest-ignition", 1),
@@ -36,9 +38,9 @@ def generate() -> Iterable[tuple[list[str], dict[str, str]]]:
         kwargs = {'dest': 'installer', 'default': [], 'help': SUPPRESS}
         match arg_count:
             case 0:
-                kwargs.update({'action': 'append_const', 'const': (name,)})
+                kwargs.update({'action': IsoAppendConst, 'const': (name,)})
             case 1:
-                kwargs.update({'action': 'append', 'type': wrap(name)})
+                kwargs.update({'action': IsoAppend, 'type': wrap(name)})
         yield args, kwargs
 
 
