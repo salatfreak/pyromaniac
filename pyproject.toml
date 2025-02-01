@@ -14,3 +14,7 @@ dependencies = [
 
 [tool.setuptools]
 packages = ["pyromaniac"]
+
+[tool.ruff.lint]
+select = ["F", "E", "W"]
+preview = true
