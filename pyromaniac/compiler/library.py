@@ -113,10 +113,14 @@ class View:
         :returns: new view on the library
         """
         match self.__path, name:
-            case p, '_' if "." in p: path = p.rsplit(".", 1)[0]
-            case p, '_' if p != "": path = ""
-            case "", n: path = n
-            case p, n: path = f"{p}.{n}"
+            case p, '_' if "." in p:
+                path = p.rsplit(".", 1)[0]
+            case p, '_' if p != "":
+                path = ""
+            case "", n:
+                path = n
+            case p, n:
+                path = f"{p}.{n}"
 
         if path != '_' and path in self.__lib:
             return View(self.__lib, path)

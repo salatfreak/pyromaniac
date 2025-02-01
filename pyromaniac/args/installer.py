@@ -35,8 +35,10 @@ def generate() -> Iterable[tuple[list[str], dict[str, str]]]:
         args = [f"--iso-raw-{name}"]
         kwargs = {'dest': 'installer', 'default': [], 'help': SUPPRESS}
         match arg_count:
-            case 0: kwargs.update({'action': 'append_const', 'const': (name,)})
-            case 1: kwargs.update({'action': 'append', 'type': wrap(name)})
+            case 0:
+                kwargs.update({'action': 'append_const', 'const': (name,)})
+            case 1:
+                kwargs.update({'action': 'append', 'type': wrap(name)})
         yield args, kwargs
 
 

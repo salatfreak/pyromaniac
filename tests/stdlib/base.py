@@ -18,6 +18,8 @@ class TestCase(TestCase):
 
     def call(self, *args: Any, **kwargs: Any) -> Any:
         match hasattr(self, 'comp'):
-            case True: comp = self.comp
-            case False: comp, args = args[0], args[1:]
+            case True:
+                comp = self.comp
+            case False:
+                comp, args = args[0], args[1:]
         return self.execute(comp, args, kwargs)

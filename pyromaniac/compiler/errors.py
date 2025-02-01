@@ -38,8 +38,10 @@ class CompilerError(PyromaniacError):
 
     def __str__(self) -> str:
         match self.stack_message():
-            case "": return self.message().lstrip()
-            case str(stack): return f"{stack}\n{self.message()}"
+            case "":
+                return self.message().lstrip()
+            case str(stack):
+                return f"{stack}\n{self.message()}"
 
     def message(self) -> str:
         """Create the error message for a compiler error.

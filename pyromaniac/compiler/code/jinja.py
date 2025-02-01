@@ -24,14 +24,18 @@ def ellipsis(val: Any) -> bool:
 class JSONEncoder(JSONEncoderBase):
     def default(self, obj: Any) -> Any:
         match obj:
-            case Path() | URL(): return str(obj)
-            case _: return super().default(obj)
+            case Path() | URL():
+                return str(obj)
+            case _:
+                return super().default(obj)
 
 
 def json_finalize(obj: Any) -> str:
     match obj:
-        case Raw(content): return str(content)
-        case _: return json_dumps(obj, cls=JSONEncoder)
+        case Raw(content):
+            return str(content)
+        case _:
+            return json_dumps(obj, cls=JSONEncoder)
 
 
 pyro_env = Environment(
@@ -69,8 +73,10 @@ def toml(obj: Any) -> str:
 
 def toml_finalize(obj: Any) -> str:
     match obj:
-        case Raw(content): return str(content)
-        case _: return toml(obj)
+        case Raw(content):
+            return str(content)
+        case _:
+            return toml(obj)
 
 
 toml_env = Environment(finalize=toml_finalize)

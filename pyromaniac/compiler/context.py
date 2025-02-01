@@ -17,7 +17,9 @@ CONTEXT = {
 
 def context(lib: 'Library', view: 'View', **kwargs) -> dict:
     match view._View__path:
-        case "": pkg = "_main_"
-        case path: pkg = f"_main_.{path}"
+        case "":
+            pkg = "_main_"
+        case path:
+            pkg = f"_main_.{path}"
 
     return {**CONTEXT, **lib, **{"_": view}, **kwargs, **{"__package__": pkg}}

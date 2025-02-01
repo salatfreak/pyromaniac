@@ -29,8 +29,10 @@ class Remote:
         :returns: the constructed Remote object
         """
         match address[0], auth:
-            case 'https', None: auth = 'auto'
-            case _, 'none': auth = None
+            case 'https', None:
+                auth = 'auto'
+            case _, 'none':
+                auth = None
 
         return cls(*address, auth)
 

@@ -93,8 +93,10 @@ def generate(code: str) -> Iterable[Token]:
 
             # keep track of start of line
             match info.type:
-                case t.NL | t.NEWLINE: line_start = slc.stop
-                case t.STRING: line_start = slc.stop - info.end[1]
+                case t.NL | t.NEWLINE:
+                    line_start = slc.stop
+                case t.STRING:
+                    line_start = slc.stop - info.end[1]
             end = slc.stop
 
             # yield token and position
