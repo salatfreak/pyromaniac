@@ -7,9 +7,9 @@ license = { file = "LICENSE" }
 authors = [{ name = "salatfreak" }]
 
 dependencies = [
-  "PyYAML ~= 6.0.2",
-  "Jinja2 ~= 3.1.5",
-  "cryptography ~= 44.0.0",
+  "PyYAML ~= 6.0.3",
+  "Jinja2 ~= 3.1.6",
+  "cryptography ~= 46.0.3",
 ]
 
 [tool.setuptools]
