@@ -26,7 +26,7 @@ they are rendered to a string using butane. Empty dicts are ignored. The
 
 **Example:**
 - Merge inline butane config with remote ignition file using authentication:
-  `std.merge({'storage.files[0].path': "/my/file.txt"},
+  `std.merge({'storage.files[0].path': "/var/file.txt"},
   URL("https://example.com/config.ign"), headers={"Authorization": "..."})`
 
 ## Load file from disk and render it using jinja if variables are supplied
@@ -141,7 +141,7 @@ component. The *user* and *group* arguments are passed through the
 *std.ownership* component. See their documentation for further details.
 
 **Examples**:
-- Add inline file for root user: `std.file("/file.txt", "foo")`
+- Add inline file for root user: `std.file("/var/file.txt", "foo")`
 - Add file from disk for "core" user in its home directory:
   `std.file("file.txt", _/"file.txt", "core")`
 
@@ -167,7 +167,7 @@ component. See its documentation for further details.
 
 **Examples**:
 - Add absolute hard link for root user:
-  `std.link("/file.txt", "/other.txt", hard=True)`
+  `std.link("/var/file.txt", "/var/other.txt", hard=True)`
 - Add relative soft link for "core" user in its home directory:
   `std.link("bin", ".local/bin", "core")`
 
@@ -192,7 +192,7 @@ The *user* and *group* arguments are passed through the *std.ownership*
 component. See its documentation for further details.
 
 **Examples:**
-- Add absolute directory for root user: `std.directory("/dir")`
+- Add absolute directory for root user: `std.directory("/var/dir")`
 - Add read-only directory for "core" user in its home directory:
   `std.directory("dir", "core", mode=0o550)`
 

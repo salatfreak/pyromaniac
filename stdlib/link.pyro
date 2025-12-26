@@ -11,7 +11,7 @@ component. See its documentation for further details.
 
 **Examples**:
 - Add absolute hard link for root user:
-  `std.link("/file.txt", "/other.txt", hard=True)`
+  `std.link("/var/file.txt", "/var/other.txt", hard=True)`
 - Add relative soft link for "core" user in its home directory:
   `std.link("bin", ".local/bin", "core")`
 """

@@ -11,7 +11,7 @@ component. The *user* and *group* arguments are passed through the
 *std.ownership* component. See their documentation for further details.
 
 **Examples**:
-- Add inline file for root user: `std.file("/file.txt", "foo")`
+- Add inline file for root user: `std.file("/var/file.txt", "foo")`
 - Add file from disk for "core" user in its home directory:
   `std.file("file.txt", _/"file.txt", "core")`
 """

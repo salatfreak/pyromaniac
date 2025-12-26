@@ -11,7 +11,7 @@ The *user* and *group* arguments are passed through the *std.ownership*
 component. See its documentation for further details.
 
 **Examples:**
-- Add absolute directory for root user: `std.directory("/dir")`
+- Add absolute directory for root user: `std.directory("/var/dir")`
 - Add read-only directory for "core" user in its home directory:
   `std.directory("dir", "core", mode=0o550)`
 """

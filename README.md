@@ -68,7 +68,7 @@ Configure three text files using composite keys and without repeating yourself:
 ```yaml
 storage.files:
 {%- for name in ["Alice", "Bob", "Carol"] %}
-  - path: `"/" + name + ".txt"`
+  - path: `"/var/" + name + ".txt"`
     contents.inline: `name + " was here!"`
 {%- endfor %}
 ```
@@ -80,7 +80,7 @@ Turn your configuration into a reusable component:
 (*names: str, ext: str = ".txt")
 
 {%- for name in names %}
-- path: `"/" + name + ext`
+- path: `"/var/" + name + ext`
   contents.inline: `name + " was here"`
 {%- endfor %}
 ```
@@ -92,8 +92,8 @@ And include it from your main component:
 storage:
   files: `files("Alice", "Bob", "Carol", ext=".md")`
   links[0]:
-    path: /favourite.md
-    target: /Carol.md
+    path: /var/favourite.md
+    target: /var/Carol.md
 ```
 
 Learn more in the [Component Documentation][components].
@@ -117,7 +117,7 @@ a local *Jinja* template:
 
 ---
 def path(name: str) -> str:
-  return f"/greeting-{name.lower()}.txt"
+  return f"/var/greeting-{name.lower()}.txt"
 
 content = std.load(_/"greeting.jinja", name=name)
 ---

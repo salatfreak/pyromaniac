@@ -28,9 +28,9 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     "\n\n"
     "Examples:"
     "\n\n"
-    'Create a pretty ignition config for placing a file "/foo.txt":\n'
+    'Create a pretty ignition config for placing a file "/var/foo.txt":\n'
     "$ pyromaniac --pretty > main.ign \\\n"
-    """... <<< 'storage.files[0]: `file("/foo.txt", "bar")`'"""
+    """... <<< 'storage.files[0]: `file("/var/foo.txt", "bar")`'"""
     "\n\n"
     "Create an ISO image for installation based on a configuration fetched "
     "over a mutually authenticated encrypted statically configured network "

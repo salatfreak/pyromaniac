@@ -9,7 +9,7 @@ they are rendered to a string using butane. Empty dicts are ignored. The
 
 **Example:**
 - Merge inline butane config with remote ignition file using authentication:
-  `std.merge({'storage.files[0].path': "/my/file.txt"},
+  `std.merge({'storage.files[0].path': "/var/file.txt"},
   URL("https://example.com/config.ign"), headers={"Authorization": "..."})`
 """
 
