@@ -24,6 +24,8 @@ class TestSignature(TestCase):
             Signature.create("bar: int: str")
         with self.assertRaises(InvalidSignatureError):
             Signature.create("in: Any")
+        with self.assertRaises(InvalidSignatureError):
+            Signature.create("baz: 42")
 
     def test_no_type(self):
         sig = Signature.create("foo")
