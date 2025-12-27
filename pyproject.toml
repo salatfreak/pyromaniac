@@ -6,6 +6,7 @@ readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "salatfreak" }]
 
+requires-python = ">=3.11"
 dependencies = [
   "PyYAML ~= 6.0.3",
   "Jinja2 ~= 3.1.6",
@@ -15,6 +16,9 @@ dependencies = [
 [tool.setuptools]
 packages = ["pyromaniac"]
 
-[tool.ruff.lint]
-select = ["F", "E", "W"]
-preview = true
+[tool.ruff]
+target-version = "py311"
+lint = { select = ["F", "E", "W"], preview = true }
+
+[tool.ty.environment]
+python-version = "3.11"

@@ -10,3 +10,7 @@ __pycache__/
 # virtual environment
 env/
 venv/
+.env/
+
+# uv package manager lock file
+uv.lock
