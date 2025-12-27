@@ -4,26 +4,36 @@ from collections.abc import Iterable
 from pathlib import PosixPath as Path
 from itertools import chain
 from pyromaniac.compiler.errors import NonExistentPathError, NotAComponentError
+from pyromaniac.compiler.code.signature import Signature
 from pyromaniac.compiler.library import Library, View
 from pyromaniac.compiler.component import Component
 
 
-def glob(path: Path, *patterns: str) -> Iterable[str]:
+def glob(path: Path, *patterns: str) -> Iterable[Path]:
     return chain(*(path.glob(p) for p in patterns))
 
 
 @classmethod
 def mock_create(cls: object, source: str) -> Component:
-    return Component(None, None, None, None)
+    return Component(None, Signature.create(""), None, None)
+
+
+def set_up(self: 'TestLibrary | TestView'):
+    self.comps = Path(__file__).parent.joinpath("components")
+    self.std = Path(__file__).parent.joinpath("stdlib")
+    self.stdlib = Library(self.std)
+    self.lib = Library(self.comps, [self.stdlib])
 
 
 @patch('pyromaniac.compiler.component.Component.create', mock_create)
 class TestLibrary(TestCase):
+    comps: Path
+    std: Path
+    stdlib: Library
+    lib: Library
+
     def setUp(self):
-        self.comps = Path(__file__).parent.joinpath("components")
-        self.std = Path(__file__).parent.joinpath("stdlib")
-        self.stdlib = Library(self.std)
-        self.lib = Library(self.comps, [self.stdlib])
+        set_up(self)
 
     def test_resolve(self):
         self.assertResolvesTo("comp1", "comp1")
@@ -97,8 +107,13 @@ class TestLibrary(TestCase):
 
 @patch('pyromaniac.compiler.component.Component.create', mock_create)
 class TestView(TestCase):
+    comps: Path
+    std: Path
+    stdlib: Library
+    lib: Library
+
     def setUp(self):
-        TestLibrary.setUp(self)
+        set_up(self)
         self.view = self.lib.view()
 
     def test_getattr(self):

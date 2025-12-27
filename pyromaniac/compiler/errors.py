@@ -1,4 +1,4 @@
-from typing import Any, Self
+from typing import Any, Self, cast
 import re
 
 from ..errors import PyromaniacError
@@ -116,9 +116,9 @@ class ButaneError(RenderError):
     """
 
     SURROUND_RE = re.compile(
-        r'^(?:Error translating config: (?:yaml: unmarshal errors:)?)'
-        '?(.*?)'
-        '(?:Error translating config: config generated was invalid)?$',
+        r'^(?:Error translating config: (?:yaml: unmarshal errors:)?)?'
+        r'(.*?)'
+        r'(?:Error translating config: config generated was invalid)?$',
         re.DOTALL,
     )
     LINE_RE = re.compile("^line (0|[1-9][0-9]*): (.*)$", re.DOTALL)
@@ -129,7 +129,7 @@ class ButaneError(RenderError):
         self.code = code
 
     def message(self) -> str:
-        error = self.SURROUND_RE.fullmatch(self.error)[1].strip()
+        error = cast(re.Match, self.SURROUND_RE.fullmatch(self.error))[1].strip()
         match = self.LINE_RE.fullmatch(error)
         if match:
             line = self.code.splitlines()[int(match[1]) - 1].strip()

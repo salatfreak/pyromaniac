@@ -32,4 +32,4 @@ class TestButane(TestCase):
 
     def test_not_a_dict_error(self):
         with self.assertRaises(NotADictError):
-            butane([])
+            butane([])  # type: ignore

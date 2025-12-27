@@ -42,7 +42,7 @@ print("\n{% raw %}", end="")
 for name in ORDER:
     file = STDLIB.joinpath(*name.split(".")).with_suffix(".pyro")
     doc, sig, _, _ = segment(file.read_text())
-    doc, sig = doc.strip('"').strip(), sig.strip("\n")
+    doc, sig = (doc or "").strip('"').strip(), (sig or "").strip("\n")
     title, text = doc.strip().split("\n\n", 1)
     title, text = title.rstrip("."), text.strip()
     print(f"\n## {title}\n```python\nstd.{name}(\n{sig}\n)\n```\n\n{text}")

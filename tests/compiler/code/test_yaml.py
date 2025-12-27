@@ -71,14 +71,14 @@ class TestYaml(TestCase):
             Yaml.create(code)
 
     def assertRaisesYamlExecution(
-        self, code: str, context: dict = None,
+        self, code: str, context: dict | None = None,
     ) -> Exception:
         with self.assertRaises(YamlExecutionError) as e:
             execute(code, context)
         return e.exception
 
     def assertRaisesYamlParse(
-        self, code: str, context: dict = None,
+        self, code: str, context: dict | None = None,
     ) -> Exception:
         with self.assertRaises(YamlParseError) as e:
             execute(code, context)

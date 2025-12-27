@@ -11,12 +11,13 @@ from .compile import compile
 args = parse()
 configure(args.butane)
 remote = Remote.create(args.address, args.auth)
+source = None
 
 
 def ignition():
     # only reload source if not from a character device (like standard input)
     global source
-    if 'source' not in globals() or not args.input.is_char_device():
+    if source is None or not args.input.is_char_device():
         try:
             source = args.input.read_text()
         except IOError as e:

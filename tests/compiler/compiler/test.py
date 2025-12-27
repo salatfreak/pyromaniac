@@ -23,7 +23,7 @@ class TestCompiler(TestCase):
         self.assertEqual(replace['httpHeaders'][0]['value'], "Basic secret")
 
     def test_arguments(self):
-        args = {"args": ["/foo"], "kwargs": {"content": "bar"}}
+        args: dict[str, Any] = {"args": ["/foo"], "kwargs": {"content": "bar"}}
         file = self.compile("arguments", **args)['storage']['files'][0]
         self.assertEqual(file['path'], "/foo")
         self.assertIn("bar", json.dumps(file['contents']))
@@ -41,7 +41,7 @@ class TestCompiler(TestCase):
     def compile(
         self, path: str,
         remote: Remote = Remote.create(("http", "localhost", 8000)),
-        args: list = [], kwargs: dict[str, Any] = {},
+        args: tuple = (), kwargs: dict[str, Any] = {},
     ) -> dict:
         source = self.comps.joinpath(path).with_suffix(".pyro").read_text()
         result = self.compiler.compile(source, remote, args, kwargs)

@@ -1,4 +1,5 @@
 """Construct argument parser"""
+from typing import Any
 
 from argparse import ArgumentParser
 
@@ -49,7 +50,9 @@ parser = ArgumentParser(prog="pyromaniac", description=(
 parser._positionals.title = "Positional"
 parser._optionals.title = "Options"
 
-butane_args = {'action': 'append_const', 'dest': 'butane', 'default': []}
+butane_args: dict[str, Any] = {
+    'action': 'append_const', 'dest': 'butane', 'default': []
+}
 parser.add_argument(
     "-p", "--pretty", **butane_args, const='--pretty',
     help="Make butane produce pretty formatted JSON.",

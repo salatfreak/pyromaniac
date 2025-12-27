@@ -16,7 +16,7 @@ class URL:
         :param path: path string to be concatenated
         :returns: concatenated URL object
         """
-        return URL(f"{self}/{path}")
+        return type(self)(f"{self}/{path}")
 
     def __str__(self) -> str:
         return self.url

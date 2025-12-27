@@ -1,10 +1,11 @@
 from typing import Self
+from abc import ABC, abstractmethod
 
 from ..errors import CompilerError
 from .keys import format
 
 
-class KeyExpandError(CompilerError):
+class KeyExpandError(CompilerError, ABC):
     """Base class for dictionary composite key expansion errors.
 
     :param parts: list of key parts
@@ -32,6 +33,9 @@ class KeyExpandError(CompilerError):
     def message(self) -> str:
         key = repr(self.key())
         return f"Expanding composite key {key} failed: {self.reason()}"
+
+    @abstractmethod
+    def reason(self) -> str: ...
 
 
 class DuplicateKeyError(KeyExpandError):

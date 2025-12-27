@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+from collections.abc import Iterator
 from io import BytesIO
 import tokenize as t
 
@@ -79,7 +79,7 @@ class Stream:
 
 
 # generate tokens with position in source code
-def generate(code: str) -> Iterable[Token]:
+def generate(code: str) -> Iterator[Token]:
     line_start = 0
     end = 0
     try:

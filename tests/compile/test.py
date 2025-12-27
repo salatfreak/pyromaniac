@@ -23,7 +23,7 @@ class TestCompile(TestCase):
         self.assertEqual(replace["httpHeaders"][0]["value"], "Basic secret")
 
     def test_complex(self):
-        result = self.compile("main", args=["/file"])
+        result = self.compile("main", args=("/file",))
         self.assertEqual(len(result["ignition"]["config"]["merge"]), 2)
 
     def test_python_modules(self):
@@ -33,7 +33,7 @@ class TestCompile(TestCase):
     def compile(
         self, path: str,
         remote: Remote = Remote.create(("http", "localhost", 8000)),
-        args: list = [], kwargs: dict[str, Any] = {},
+        args: tuple = (), kwargs: dict[str, Any] = {},
     ) -> Any:
         source = Path(path).with_suffix(".pyro").read_text()
         return json.loads(compile(source, remote, args, kwargs))

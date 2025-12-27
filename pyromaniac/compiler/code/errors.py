@@ -1,5 +1,8 @@
 from typing import Self, Any
 from traceback import format_exception
+
+from jinja2 import TemplateSyntaxError
+
 from ..errors import CompilerError
 
 
@@ -79,8 +82,7 @@ class PythonSyntaxError(PythonError):
         return cls("Pure python component must end with an expression.")
 
     def message(self) -> str:
-        err = self.__cause__
-        if isinstance(err, SyntaxError):
+        if isinstance(err := self.__cause__, SyntaxError):
             details = f": {repr(err.text.strip())}" if err.text else ""
             details += f" in line {err.lineno}" if err.lineno else ""
             return f"Syntax error in python code{details}."
@@ -90,6 +92,7 @@ class PythonSyntaxError(PythonError):
 
 class PythonRuntimeError(PythonError):
     """Error raised when component python code raises error at runtime."""
+    __cause__: BaseException
 
     def message(self) -> str:
         err = self.__cause__
@@ -103,6 +106,7 @@ class YamlError(CodeError):
 
 class YamlTemplateError(YamlError):
     """Error raised when jinja template is invalid."""
+    __cause__: TemplateSyntaxError
 
     def message(self) -> str:
         err = self.__cause__
@@ -112,6 +116,7 @@ class YamlTemplateError(YamlError):
 
 class YamlExecutionError(YamlError):
     """Error raised when rendering jinja template raises error."""
+    __cause__: BaseException
 
     def message(self) -> str:
         err = self.__cause__

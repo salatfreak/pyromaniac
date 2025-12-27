@@ -1,3 +1,4 @@
+from typing import cast
 from unittest import TestCase
 from pathlib import PosixPath as Path
 from pyromaniac.compiler.code.segment.errors import (
@@ -27,8 +28,8 @@ class TestSegment(TestCase):
         self.assertIsNotNone(sig)
         self.assertIsNotNone(python)
         self.assertIsNotNone(yaml)
-        self.assertTrue(python.splitlines()[8].startswith("message ="))
-        self.assertTrue(yaml.splitlines()[13].startswith("storage.files"))
+        self.assertTrue(cast(str, python).splitlines()[8].startswith("message ="))
+        self.assertTrue(cast(str, yaml).splitlines()[13].startswith("storage.files"))
 
     def test_invalid_signature(self):
         with self.assertRaises(SignatureSyntaxError):

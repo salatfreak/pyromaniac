@@ -7,7 +7,7 @@ class Component:
     """Loaded and executable pyromaniac component."""
 
     def __init__(
-        self, doc: str, sig: Signature, python: Python, yaml: Yaml,
+        self, doc: str | None, sig: Signature, python: Python | None, yaml: Yaml | None,
     ):
         self.doc = doc
         self.sig = sig

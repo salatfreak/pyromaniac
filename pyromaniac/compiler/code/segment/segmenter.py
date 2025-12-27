@@ -1,3 +1,4 @@
+from typing import cast
 import tokenize as t
 
 from .errors import UnexpectedTokenError, SignatureSyntaxError
@@ -75,6 +76,7 @@ class Segmenter:
     # read doc string and return the slice and the last consumed token
     def read_doc(self) -> tuple[slice, Token]:
         last = self.tokens.consume(1)
+        assert last is not None
         return last.slice, last
 
     # read the signature and return the slice and the last consumed token
@@ -83,6 +85,7 @@ class Segmenter:
 
         # consume opening paranthesis
         last = self.tokens.consume(1)
+        assert last is not None
         start = last.start + 1
         balance += 1
 
@@ -104,14 +107,16 @@ class Segmenter:
         start = self.tokens.get(0).start
 
         while True:
+            assert last is not None
             if self.tokens.match(t.ENDMARKER):
                 return slice(start, last.stop), last, True
             elif self.tokens.match(t.ERRORTOKEN):
                 return slice(start, self.length), last, True
-            elif last.type in (t.NL, t.NEWLINE, t.DEDENT) \
-                and self.tokens.match(
-                    (t.OP, '-'), (t.OP, '-'), (t.OP, '-'), t.NEWLINE,
+            elif last.type in (t.NL, t.NEWLINE, t.DEDENT) and self.tokens.match(
+                (t.OP, '-'), (t.OP, '-'), (t.OP, '-'), t.NEWLINE,
             ):
-                return slice(start, last.stop), self.tokens.consume(4), False
+                code_slice = slice(start, last.stop)
+                last = cast(Token, self.tokens.consume(4))
+                return code_slice, last, False
             else:
                 last = self.tokens.consume(1)

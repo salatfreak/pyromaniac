@@ -5,6 +5,9 @@ from ipaddress import ip_address
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives.asymmetric.types import (
+    CertificateIssuerPrivateKeyTypes
+)
 from cryptography.x509 import NameAttribute as Attr
 from cryptography.x509.oid import NameOID as OID
 from cryptography import x509
@@ -92,15 +95,17 @@ def generate_key(path: Path | None = None) -> Path:
 
 
 # load key from file
-def load_key(path: Path) -> rsa.RSAPrivateKey:
-    return serialization.load_pem_private_key(path.read_bytes(), None)
+def load_key(path: Path) -> CertificateIssuerPrivateKeyTypes:
+    key = serialization.load_pem_private_key(path.read_bytes(), None)
+    assert isinstance(key, CertificateIssuerPrivateKeyTypes)
+    return key
 
 
 # generate certificate
 def generate_crt(
     issuer: x509.Name, issuer_key: Path,
     subject: x509.Name, subject_key: Path,
-    days: int = 365, extensions: list[tuple[x509.Extension, bool]] = [],
+    days: int = 365, extensions: list[tuple[x509.ExtensionType, bool]] = [],
     concat: Path | None = None, path: Path | None = None,
 ) -> Path:
     ikey, skey = load_key(issuer_key), load_key(subject_key)

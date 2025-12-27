@@ -27,7 +27,7 @@ class Signature:
         :param code: signature code enclosed in parantheses
         :returns: compiled signature object
         """
-        context = {'Any': Any, 'Path': Path, 'URL': URL}
+        context: dict[str, Any] = {'Any': Any, 'Path': Path, 'URL': URL}
         try:
             exec(f"def func({code}): pass", context)
         except Exception as e:
@@ -77,5 +77,4 @@ def get_type(param: inspect.Parameter) -> Type:
             return Type.create(annotation | None)
         case _, annotation, EllipsisType():
             return Type.create(annotation | EllipsisType)
-        case _, annotation, _:
-            return Type.create(annotation)
+    return Type.create(param.annotation)

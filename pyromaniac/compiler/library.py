@@ -123,7 +123,7 @@ class View:
                 path = f"{p}.{n}"
 
         if path != '_' and path in self.__lib:
-            return View(self.__lib, path)
+            return type(self)(self.__lib, path)
 
         raise NonExistentPathError(name)
 

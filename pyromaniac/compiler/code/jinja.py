@@ -22,12 +22,12 @@ def ellipsis(val: Any) -> bool:
 
 # JSON environments
 class JSONEncoder(JSONEncoderBase):
-    def default(self, obj: Any) -> Any:
-        match obj:
+    def default(self, o: Any) -> Any:
+        match o:
             case Path() | URL():
-                return str(obj)
+                return str(o)
             case _:
-                return super().default(obj)
+                return super().default(o)
 
 
 def json_finalize(obj: Any) -> str:

@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 from collections.abc import Iterable
 from argparse import SUPPRESS
 
@@ -27,7 +27,7 @@ ARGS = [
 ]
 
 
-def generate() -> Iterable[tuple[list[str], dict[str, str]]]:
+def generate() -> Iterable[tuple[list[str], dict[str, Any]]]:
     """Generate arguments for coreos-installer.
 
     Generates tuples and dicts of values for add_argument() for passing through
