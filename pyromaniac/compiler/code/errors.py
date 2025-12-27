@@ -21,13 +21,13 @@ class InvalidSignatureError(CodeError):
     """Error raised when signature specification is invalid."""
 
     @classmethod
-    def unsupported_type(cls, type: str) -> Self:
+    def unsupported_type(cls, typ: str) -> Self:
         """Create signature error for unsupported type annotation.
 
-        :param type: type annotation as string
+        :param typ: type annotation as string
         :returns: InvalidSignatureError with appropriate message
         """
-        return cls(f'Unsupported type "{type}" in signature.')
+        return cls(f'Unsupported type "{typ}" in signature.')
 
     def message(self) -> str:
         err = self.__cause__
@@ -46,14 +46,14 @@ class InvalidArgumentError(CodeError):
     """Error raised when invalid argument was passed to component."""
 
     @classmethod
-    def wrong_type(cls, value: Any, type: str) -> Self:
+    def wrong_type(cls, value: Any, typ: str) -> Self:
         """Create argument error for wrong argument type.
 
         :param value: value passed to component
-        :param type: type that was expected for parameter
+        :param typ: type that was expected for parameter
         :returns: InvalidArgumentError with appropriate message
         """
-        return cls(f"Expected argument {repr(value)} to be of type {type}.")
+        return cls(f"Expected argument {repr(value)} to be of type {typ}.")
 
     @classmethod
     def wrong_count(cls, value: Any, count: int) -> Self:

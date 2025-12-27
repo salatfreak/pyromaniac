@@ -33,7 +33,7 @@ class Stream:
 
             # check type and string
             match pat, self.get(i):
-                case int(type), tok if type != tok.type:
+                case int(typ), tok if typ != tok.type:
                     return False
                 case (pt, ps), tok if (pt, ps) != (tok.type, tok.string):
                     return False

@@ -93,8 +93,8 @@ class TestExpand(TestCase):
 
     @contextmanager
     def assertKeyExpandError(
-        self, type: type[KeyExpandError], key: str
+        self, typ: type[KeyExpandError], key: str
     ) -> Iterator:
-        with self.assertRaises(type) as ctx:
+        with self.assertRaises(typ) as ctx:
             yield ctx
         self.assertEqual(ctx.exception.key(), key)

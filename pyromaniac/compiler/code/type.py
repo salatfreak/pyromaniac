@@ -28,7 +28,7 @@ class Type:
     def create(cls, typ: object) -> 'Type':
         """Create type object of appropriate subclass.
 
-        :param type: type of check and coerce into
+        :param typ: type of check and coerce into
         :returns: type object of appropriate subclass
         """
         if typ is Any:

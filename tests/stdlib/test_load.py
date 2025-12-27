@@ -25,9 +25,9 @@ class TestLoad(TestCase):
     def test_toml(self):
         self.structured("toml")
 
-    def structured(self, type: str):
-        comp = f'std.load.{type}'
-        file = self.lib.view() / f"file.{type}"
+    def structured(self, typ: str):
+        comp = f'std.load.{typ}'
+        file = self.lib.view() / f"file.{typ}"
 
         with self.assertRaises(PythonRuntimeError):
             self.call(comp, file)

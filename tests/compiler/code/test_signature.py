@@ -236,28 +236,28 @@ class TestSignature(TestCase):
 
     # assertion helpers
     def assertCoercion(
-        self, type: str, val: Any, res: Any = ..., equality: bool = False
+        self, typ: str, val: Any, res: Any = ..., equality: bool = False
     ):
         if res is Ellipsis:
             res = val
-        sig = Signature.create(f"foo: {type}")
+        sig = Signature.create(f"foo: {typ}")
         if equality:
             self.assertEqual(sig.parse(val)['foo'], res)
         else:
             self.assertIs(sig.parse(val)['foo'], res)
 
     def assertNotCoercion(
-        self, type: str, val: Any, res: Any = ..., equality: bool = False
+        self, typ: str, val: Any, res: Any = ..., equality: bool = False
     ):
         if res is Ellipsis:
             res = val
-        sig = Signature.create(f"foo: {type}")
+        sig = Signature.create(f"foo: {typ}")
         if equality:
             self.assertNotEqual(sig.parse(val)['foo'], res)
         else:
             self.assertIsNot(sig.parse(val)['foo'], res)
 
-    def assertRaisesInvalidArgument(self, type: str, input: Any):
-        sig = Signature.create(f"foo: {type}")
+    def assertRaisesInvalidArgument(self, typ: str, input: Any):
+        sig = Signature.create(f"foo: {typ}")
         with self.assertRaises(InvalidArgumentError):
             sig.parse(input)
