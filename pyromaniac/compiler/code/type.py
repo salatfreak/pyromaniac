@@ -1,5 +1,5 @@
-from typing import Any, Self, NoReturn
-from types import NoneType, EllipsisType, GenericAlias, UnionType
+from typing import Any, NoReturn, cast
+from types import EllipsisType, GenericAlias, NoneType, UnionType
 from pathlib import PosixPath as Path
 
 from .errors import InvalidSignatureError, InvalidArgumentError
@@ -9,8 +9,8 @@ from ..url import URL
 class Type:
     """Type specification for runtime time checking and coercion."""
 
-    def __init__(self, type: object):
-        self.typ = type
+    def __init__(self, typ: type):
+        self.typ = typ
 
     def coerce(self, value: Any) -> Any:
         """Coerce value into type raising InvalidArgumentError when impossible.
@@ -21,43 +21,40 @@ class Type:
         return value if isinstance(value, self.typ) else self.throw(value)
 
     def throw(self, value: Any) -> NoReturn:
-        raise InvalidArgumentError.wrong_type(value, self.typ.__name__)
+        name = self.typ.__name__ if isinstance(self.typ, type) else str(self.typ)
+        raise InvalidArgumentError.wrong_type(value, name)
 
     @classmethod
-    def create(cls, type: object) -> Self:
+    def create(cls, typ: object) -> 'Type':
         """Create type object of appropriate subclass.
 
         :param type: type of check and coerce into
         :returns: type object of appropriate subclass
         """
-        if type is Any:
+        if typ is Any:
             return TypeAny()
-        elif type is None or type is NoneType:
-            return TypeNone()
-        elif type is Ellipsis or type is EllipsisType:
-            return TypeEllipsis()
-        elif type is bool:
-            return TypeBool()
-        elif type is str:
-            return TypeString()
-        elif type is int or type is float:
-            return TypeNumber(type)
-        elif type is Path:
-            return TypePath()
-        elif type is URL:
-            return TypeURL()
-        elif type is list:
-            return TypeGeneric.create(list[Any])
-        elif type is tuple:
-            return TypeGeneric.create(tuple[...])
-        elif type is dict:
-            return TypeGeneric.create(dict[Any, Any])
-        elif isinstance(type, GenericAlias):
-            return TypeGeneric.create(type)
-        elif isinstance(type, UnionType):
-            return TypeUnion(type)
+        elif typ is None or typ is NoneType:
+            return Type(NoneType)
+        elif typ is Ellipsis or typ is EllipsisType:
+            return Type(EllipsisType)
+        elif typ is int or typ is float:
+            return TypeNumber(typ)
+        elif typ is Path or typ is URL:
+            return TypeStringLike(typ)
+        elif typ is list:
+            return TypeGeneric.create_generic(cast(GenericAlias, list[Any]))
+        elif typ is tuple:
+            return TypeGeneric.create_generic(cast(GenericAlias, tuple[...]))
+        elif typ is dict:
+            return TypeGeneric.create_generic(cast(GenericAlias, dict[Any, Any]))
+        elif isinstance(typ, GenericAlias):
+            return TypeGeneric.create_generic(typ)
+        elif isinstance(typ, UnionType):
+            return TypeUnion(typ)
+        elif isinstance(typ, type):
+            return cls(typ)
         else:
-            return cls(type)
+            raise InvalidSignatureError.unsupported_type(str(typ))
 
 
 class TypeAny(Type):
@@ -68,27 +65,9 @@ class TypeAny(Type):
         return value
 
 
-class TypeNone(Type):
-    def __init__(self):
-        super().__init__(NoneType)
-
-
-class TypeEllipsis(Type):
-    def __init__(self):
-        super().__init__(EllipsisType)
-
-
-class TypeBool(Type):
-    def __init__(self):
-        super().__init__(bool)
-
-
-class TypeString(Type):
-    def __init__(self):
-        super().__init__(str)
-
-
 class TypeNumber(Type):
+    typ: type[int | float]
+
     def coerce(self, value: Any) -> int | float:
         match value:
             case bool():
@@ -100,7 +79,9 @@ class TypeNumber(Type):
 
 
 class TypeStringLike(Type):
-    def coerce(self, value: Any) -> Path:
+    typ: type[Path | URL]
+
+    def coerce(self, value: Any) -> Path | URL:
         match value:
             case str():
                 return self.typ(value)
@@ -108,35 +89,27 @@ class TypeStringLike(Type):
                 return super().coerce(value)
 
 
-class TypePath(TypeStringLike):
-    def __init__(self):
-        super().__init__(Path)
-
-
-class TypeURL(TypeStringLike):
-    def __init__(self):
-        super().__init__(URL)
-
-
 class TypeGeneric(Type):
+    typ: GenericAlias
     expected = -1
 
-    def __init__(self, type: GenericAlias):
-        if self.expected >= 0 and len(type.__args__) != self.expected:
-            raise InvalidSignatureError.unsupported_type(str(type))
-        super().__init__(type.__origin__)
-        self.subtypes = tuple(Type.create(t) for t in type.__args__)
+    def __init__(self, typ: GenericAlias):
+        assert isinstance(typ.__origin__, type)
+        if self.expected >= 0 and len(typ.__args__) != self.expected:
+            raise InvalidSignatureError.unsupported_type(str(typ))
+        super().__init__(typ.__origin__)
+        self.subtypes = tuple(Type.create(t) for t in typ.__args__)
 
     @classmethod
-    def create(cls, type: GenericAlias) -> Self:
-        if type.__origin__ is list:
-            return TypeList(type)
-        elif type.__origin__ is tuple:
-            return TypeTuple(type)
-        elif type.__origin__ is dict:
-            return TypeDict(type)
+    def create_generic(cls, typ: GenericAlias) -> 'TypeGeneric':
+        if typ.__origin__ is list:
+            return TypeList(typ)
+        elif typ.__origin__ is tuple:
+            return TypeTuple(typ)
+        elif typ.__origin__ is dict:
+            return TypeDict(typ)
         else:
-            raise InvalidSignatureError.unsupported_type(str(type))
+            raise InvalidSignatureError.unsupported_type(str(typ))
 
 
 class TypeList(TypeGeneric):
@@ -152,9 +125,9 @@ class TypeList(TypeGeneric):
 
 
 class TypeTuple(TypeGeneric):
-    def __init__(self, type: GenericAlias):
-        super().__init__(type)
-        if type.__args__ == (Ellipsis,):
+    def __init__(self, typ: GenericAlias):
+        super().__init__(typ)
+        if typ.__args__ == (Ellipsis,):
             self.subtypes = None
 
     def coerce(self, value: Any) -> tuple:
@@ -182,14 +155,14 @@ class TypeDict(TypeGeneric):
 
 
 class TypeUnion(Type):
-    def __init__(self, type: UnionType):
+    def __init__(self, typ: UnionType):
         super().__init__(type)
-        self.subtypes = tuple(Type.create(t) for t in type.__args__)
+        self.subtypes = tuple(Type.create(t) for t in typ.__args__)
 
     def coerce(self, value: Any) -> Any:
-        for type in self.subtypes:
+        for typ in self.subtypes:
             try:
-                return type.coerce(value)
+                return typ.coerce(value)
             except InvalidArgumentError:
                 pass
 
