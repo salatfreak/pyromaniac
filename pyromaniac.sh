@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # extract server parameters from arguments
 serve=false port=8000 cache=true debug=false
