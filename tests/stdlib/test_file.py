@@ -3,12 +3,16 @@ from pyromaniac.compiler.url import URL
 
 from .base import TestCase
 
+target = 'storage.files[]'
+
 
 class TestFile(TestCase):
     comp = 'std.file'
 
     def test_minimal(self):
-        self.assertEqual(self.call("/foo.txt"), {'path': Path("/foo.txt")})
+        self.assertEqual(self.call("/foo.txt"), {
+            'path': Path("/foo.txt"), '__for__': target,
+        })
 
     def test_path(self):
         self.assertEqual(self.call("/foo.txt", Path("bar.txt")), {
@@ -16,6 +20,7 @@ class TestFile(TestCase):
             'contents': {
                 'local': Path("bar.txt"),
             },
+            '__for__': target,
         })
 
     def test_url(self):
@@ -32,6 +37,7 @@ class TestFile(TestCase):
                         'value': "Basic secret",
                     }],
                 },
+                '__for__': target,
             },
         )
 
@@ -41,4 +47,5 @@ class TestFile(TestCase):
             'contents': {'inline': "bar"},
             'user': {'name': "core"},
             'group': {'name': "core"},
+            '__for__': target,
         })
