@@ -20,7 +20,7 @@ from pyromaniac.compiler.code.segment import segment
 ORDER = [
     'merge',
     'load', 'load.json', 'load.yaml', 'load.toml', 'magic',
-    'file', 'link', 'directory', 'directories', 'tree',
+    'file', 'link', 'directory', 'directories', 'tree', 'storage',
     'contents', 'contents.parse', 'ownership',
 ]
 STDLIB = Path("/", "usr", "local", "lib", "pyromaniac", "std")

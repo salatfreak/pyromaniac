@@ -250,6 +250,20 @@ If *mode* is True, file permissions will be copied from the original files.
 - Copy config directory to "core" user's home directory preserving permissions:
   `std.tree(".config", _/"config", "core", mode=True)`
 
+## Create storage fields for combining file system objects
+```python
+std.storage(
+    *objects: dict,  # file system objects to merge
+)
+```
+
+The result is intended to be added as the `storage` field.
+
+**Example**:
+- Combine a file with a file tree:
+  `std.storage(std.file('/var/file.txt'),
+  std.tree('config', _/'config', user='core'))`
+
 ## Create contents dict as required for files and in several other places
 ```python
 std.contents(
