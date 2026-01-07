@@ -77,7 +77,7 @@ Examples:
 
 Create a pretty ignition config for placing a file "/var/foo.txt":
 $ pyromaniac --pretty > main.ign \
-... <<< 'storage.files[0]: `file("/var/foo.txt", "bar")`'
+... <<< 'storage.files[0]: `std.file("/var/foo.txt", "bar")`'
 
 Create an ISO image for installation based on a configuration fetched over a
 mutually authenticated encrypted statically configured network connection:
