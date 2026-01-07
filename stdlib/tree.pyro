@@ -46,11 +46,17 @@ if not path.is_absolute() and isinstance(user, str):
 dirs, files, links = [], [], []
 for p in [local, *local.glob("**/*")]:
     if p.is_symlink():
-        links.append(node(p, target=p.readlink()))
+        links.append(node(p, target=p.readlink(), __for__='storage.links[]'))
     elif p.is_dir():
-        dirs.append(node(p))
+        dirs.append(node(p, __for__='storage.directories[]'))
     elif p.is_file():
-        files.append(node(p, contents=_.contents(p)))
+        tgt = 'storage.files[]'
+        files.append(node(p, contents=_.contents(p), __for__=tgt))
 
 # construct result
-{'directories': dirs, 'files': files, 'links': links}
+{
+    '__for__': 'storage',
+    'directories': dirs,
+    'files': files,
+    'links': links,
+}

@@ -36,4 +36,9 @@ if content is not None:
     fields['contents'] = _.contents(content, headers)
 
 # construct result
-{'path': path, **_.ownership(user, group), **fields}
+{
+    '__for__': 'storage.files[]',
+    'path': path,
+    **_.ownership(user, group),
+    **fields,
+}

@@ -20,12 +20,18 @@ they are rendered to a string using butane. Empty dicts are ignored. The
 
 ---
 
+target = 'ignition.config.merge[]'
 elements = []
 for config in configs:
     match config:
-        case str() | Path(): elements.append(_.contents(config))
-        case URL(): elements.append(_.contents(config, headers))
+        case str() | Path():
+            elements.append(_.contents(config, __for__=target))
+        case URL():
+            tgt = 'ignition.config.merge[]'
+            elements.append(_.contents(config, headers, __for__=target))
         case dict() if len(config) > 0:
-            elements.append(_.contents(butane(expand(config, True, True))))
+            elements.append(_.contents(
+                butane(expand(config, True, True)), __for__=target,
+            ))
 
 elements

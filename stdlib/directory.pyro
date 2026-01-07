@@ -30,4 +30,9 @@ if not path.is_absolute() and isinstance(user, str):
     path = Path(f"/home/{user}", path)
 
 # construct result
-{'path': path, **_.ownership(user, group), **fields}
+{
+    '__for__': 'storage.directories[]',
+    'path': path,
+    **_.ownership(user, group),
+    **fields,
+}
