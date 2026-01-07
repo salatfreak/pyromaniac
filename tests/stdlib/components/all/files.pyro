@@ -1,8 +1,10 @@
 ---
-storage = std.tree("/tree", _/"tree")
-storage['files'].append(std.file("/foo.txt", "foo", "core"))
-storage['directories'].extend(std.directories("/", "foo/bar"))
-storage['links'].append(std.link("/link.txt", "/foo.txt"))
+storage = std.storage(
+    std.tree("/tree", _/"tree"),
+    std.file("/foo.txt", "foo", "core"),
+    *std.directories("/", "foo/bar"),
+    std.link("/link.txt", "/foo.txt"),
+)
 ---
 
 storage: `storage`
