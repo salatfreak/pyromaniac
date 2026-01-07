@@ -1,0 +1,59 @@
+"""Create storage fields for combining file system objects.
+
+The result is intended to be added as the `storage` field.
+
+**Example**:
+- Combine a file with a file tree:
+  `std.storage(std.file('/var/file.txt'),
+  std.tree('config', _/'config', user='core'))`
+"""
+
+(
+    *objects: dict,  # file system objects to merge
+)
+
+---
+
+# embed obj in hierarchy according to key
+def hierarchy(key: str, obj) -> dict:
+    # parse target path
+    path = key.split('.')
+    append = path[-1].endswith("[]")
+    if append:
+        path[-1] = path[-1][:-2]
+
+    # construct hierarchy
+    result = {}
+    current = result
+    for i, n in enumerate(path):
+        current[n] = {} if i + 1 < len(path) else [obj] if append else obj
+        current = current[n]
+
+    return result
+
+# merge two potentially nested values recursively
+def merge(a, b):
+    if isinstance(a, dict) and isinstance(b, dict):
+        return {
+            k: merge(a[k], b[k]) if k in a and k in b else a.get(k, b.get(k))
+            for k in a.keys() | b.keys()
+        }
+    elif isinstance(a, list) and isinstance(b, list):
+        return a + b
+    elif isinstance(a, dict | list) or isinstance(b, dict | list):
+        raise TypeError("type mismatch in arguments to std.storage")
+    else:
+        return b
+
+# merge passed objects
+storage = {'__for__': 'storage'}
+for obj in objects:
+    # parse target path
+    current = hierarchy(obj.get('__for__', ''), obj)
+    if list(current.keys()) != ['storage']:
+        raise ValueError('missing __for__ starting with "storage" in std.storage argument')
+
+    # merge with previous
+    storage = merge(storage, current['storage'])
+
+storage
