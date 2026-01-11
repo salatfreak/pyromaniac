@@ -13,7 +13,9 @@ using the "\`" (backtick) as delimiter for expressions. *Jinja* will have
 access to *Any*, *Path*, *URL*, all imports, variables, functions, and classes
 from the *Python* section, as well as your component tree and the *_*
 (underscore). An extra `value is ellipsis` test is availlable in *Jinja*
-templates to check if a value is `...` (the `Ellipsis`).
+templates to check if a value is `...` (the `Ellipsis`). There is also a
+`shell` filter for escaping (lists of) shell arguments, as in
+`"find " + (["/usr", "-name", "$Recycle.Bin"] | shell)`.
 
 ## Serialization of Jinja Expressions
 Data from *Jinja* expressions will generally be *JSON* serialized before being
