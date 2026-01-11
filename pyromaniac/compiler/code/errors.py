@@ -110,8 +110,9 @@ class YamlTemplateError(YamlError):
 
     def message(self) -> str:
         err = self.__cause__
-        details = str(err) + f" in line {err.lineno}" if err.lineno else ""
-        return f"Error in jinja template: {details[:1].upper()}{details[1:]}"
+        details = f"{err.message} in line {err.lineno}" if err.lineno else ""
+        details = details[:1].upper() + details[1:]
+        return f"Syntax error in jinja template: {details}"
 
 
 class YamlExecutionError(YamlError):

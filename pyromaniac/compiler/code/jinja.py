@@ -3,10 +3,12 @@ from collections.abc import Iterable
 from datetime import date, datetime, time
 from pathlib import PosixPath as Path
 import re
-from json import dumps as json_dumps, JSONEncoder as JSONEncoderBase
+from json import dumps as json_dumps
 from jinja2 import Environment
 
 from ..url import URL
+from .json import JSONEncoder
+from .runext import RunExtension
 
 SAFE_SHELL_ARG_RE = re.compile(r'^[\w./:+,@=-]+$')
 
@@ -37,16 +39,6 @@ def ellipsis(val: Any) -> bool:
     return val is Ellipsis
 
 
-# JSON environments
-class JSONEncoder(JSONEncoderBase):
-    def default(self, o: Any) -> Any:
-        match o:
-            case Path() | URL():
-                return str(o)
-            case _:
-                return super().default(o)
-
-
 def json_finalize(obj: Any) -> str:
     match obj:
         case Raw(content):
@@ -62,7 +54,8 @@ default_env.tests['ellipsis'] = ellipsis
 
 # pyromaniac environment
 pyro_env = Environment(
-    variable_start_string="`", variable_end_string="`", finalize=json_finalize
+    variable_start_string="`", variable_end_string="`", finalize=json_finalize,
+    extensions=[RunExtension],
 )
 pyro_env.filters['raw'] = lambda c: Raw(c)
 pyro_env.filters['shell'] = shell
