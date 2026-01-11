@@ -73,7 +73,9 @@ this:
 `quadlet.pyro`
 ```python
 (user: str, name: str, ext: str = "container", **sections: dict[str, str])
+
 ---
+
 lines = []
 for section, fields in sections.items():
     lines.append(f"[{section.capitalize()}]")
@@ -87,15 +89,10 @@ std.file(f".config/containers/systemd/{name}.{ext}", "\n".join(lines), user)
 It could be used to add a file for the unit from above as follows:
 
 ```python
----
-unit = quadlet(
-    "myuser", "my-service",
-    unit={"description": "My Service"},
-    container={"image": "docker.io/my/image"},
-    service={"restart": "always"},
-    install={"wanted_by": "default.target"},
-)
----
-
-storage.files[0]: `unit`
+storage.files[0]: {% run _.quadlet "myuser", "my-service" %}
+  unit.description: My Service
+  container.image: docker.io/my/image
+  service.restart: always
+  install.wanted_by: default.target
+{% endrun %}
 ```

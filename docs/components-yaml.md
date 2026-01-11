@@ -25,3 +25,36 @@ produced by the *Python* section or by other components into your *YAML* code.
 
 Use the `raw` filter to insert raw strings into your document as in ``name:
 "`'Alice' | raw` Rodriguez"``.
+
+## Extension for Running Components/Functions
+Especially when nesting calls to components, embedded *Python* expressions in
+your *Jinja* code can become pretty hard to read. You can use *run* blocks to
+specify the parameters to a component or other function as *YAML* sequences or
+mappings. You simply write your parameter list or mapping as the body between a
+`{% run my_component %}` and an `{% endrun %}` block. In the opening block, you
+can add additional positional and keyword arguments, separated by commas, after
+the component/function name. They will be prepended to the ones specified in
+the *YAML* body.
+
+The following example creates a  [*std.merge*][merge] of two configurations
+specified as a *YAML* sequence. HTTP headers (which have no actual use in this
+example) are specified as keyword argument inside the *run* block. The first
+config is just a normal nested *YAML* structure. The second one uses another
+*run* block for the [*std.file*][file] component though. This time, the
+positional parameters are specified in the opening block, and the *YAML* body
+is used to add keyword arguments.
+
+```python
+ignition.config.merge: {% run std.merge headers={'Authorization': "..."} %}
+  - passwd.users[0]:
+      name: core
+      ssh_authorized_keys_local: [`_/"id_rsa.pub"`]
+  - storage.files[0]: {% run std.file "/etc/config.toml", URL("http://...") %}
+      user: core
+      mode: 0o755
+  {% endrun %}
+{% endrun %}
+```
+
+[file]: components-stdlib.html#create-file-fields-with-specified-content-and-file-ownership
+[merge]: components-stdlib.html#create-merge-fields-for-inline-local-andor-remote-configs
