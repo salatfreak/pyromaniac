@@ -1,3 +1,4 @@
+import traceback
 from pathlib import PosixPath as Path
 
 from .errors import PyromaniacError, MainComponentIOError
@@ -38,4 +39,7 @@ try:
         case 'serve':
             serve(remote, ignition, Path("."))
 except PyromaniacError as e:
-    exit(f"Error: {e}")
+    if args.verbose:
+        exit(traceback.format_exc())
+    else:
+        exit(f"Error: {e}")

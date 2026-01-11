@@ -115,6 +115,10 @@ parser.add_argument("--auth", help=(
     '"none" to disable. (default: "none" for HTTP, "auto" for HTTPS)'
 ))
 
+parser.add_argument("-v", "--verbose", action='store_true', help=(
+    "Print stack trace on error."
+))
+
 parser.add_argument("-h", "--help", action="help", help=(
     "Show this help message and exit."
 ))
