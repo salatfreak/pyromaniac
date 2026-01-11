@@ -20,19 +20,17 @@ If no positional parameters are passed to *Pyromaniac*, it will attempt to read
 the configuration from standard input. Otherwise, it will interpret the first
 positional parameter as the path to the main configuration component file.
 
-All further parameters will be used as string arguments to the main component.
-If the parameter count doesn't match the main component's signature,
-compilation will fail with an appropriate error message. It is recommended to
-rather put custom configuration into *TOML*, *YAML*, or *JSON* files and read
-them from inside your main component.
-
 Passing "." as the main component name will make *Pyromaniac* read the
 *main.pyro* file from the working directory. This is the recommended way for
 multi-component configurations.
 
-Following these conventions will allow you to always just run `pyromaniac . >
+If your main components don't expect any arguments (see [the signature
+section][main-args]), you will always be able to just run `pyromaniac . >
 config.ign` in your project's root directories without thinking twice about how
-to compile specific *Pyromaniac* projects.
+to compile specific *Pyromaniac* projects. This is usually the recommended
+approach for structuring your projects.
+
+[main-args]: components-signature.html#passing-arguments-to-the-main-component
 
 ## Filesystem Mounts
 The current working directory is usually mounted into the container, such that

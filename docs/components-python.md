@@ -52,7 +52,7 @@ possible.
 
 ## Referencing Components and Local Files
 You can reference directories and components by their name and execute them
-as if they were python functions. You can traverse the component tree using
+as if they were *Python* functions. You can traverse the component tree using
 dot notation. To execute the component *foo/bar/baz.pyro*, simply write
 `foo.bar.baz()`. If a directory contains a component named *main.pyro*, you may
 call it by referencing the directory itself, as long as no component with the

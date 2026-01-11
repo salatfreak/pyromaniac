@@ -52,17 +52,24 @@ specify any file or pipe to read it from. The convention, however, is to place
 it in a file named *main.pyro* in your repository's root directory.
 
 Even though excess positional command line parameters to *Pyromaniac* will
-be passed on to your main component, it is recommended to place your
-customizations in a configuration file instead, as described in the next
-section.
+be [passed on to your main component][main-args], it is usually recommended to
+place your customizations in a configuration file instead, as described in the
+next section.
 
-If you follow these conventions, you will be able to consistently just run
-`pyromaniac . > config.ign` in your project's root directories, instead of
-having to document project-specific build commands.
+There are some valid use-cases for main component arguments though. If you
+would like to configure a set of multiple hosts through your project, you could
+place host-specific configuration in files like *hosts/\<host>.toml* and
+require a `host: str` argument to decide which one to load. If you would like
+to be able to generate a slightly adjusted version of your server config for
+local testing, you could add an optional `testing: bool = False` argument. Your
+final *Pyromaniac* invocation could look like this: `pyromaniac . -- my-host
+--testing`.
 
 You have a lot of freedom in how your `main.pyro` produces its final result.
 Splitting your configurations up and organizing them in trees of components and
-libraries is where *Pyromaniac* shines, though.
+libraries is where *Pyromaniac* shines though.
+
+[main-args]: components-signature.html#passing-arguments-to-the-main-component
 
 ## Configuration
 *Pyromaniac* makes it very easy to build abstractions and keep your

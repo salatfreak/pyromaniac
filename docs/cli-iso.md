@@ -25,7 +25,7 @@ architecture other than *x86_64*. The list of supported architectures can be
 
 If you need static IP addressing in your live image or during installation, you
 can use the `--iso-net` parameter. It accepts a comma-separated list of
-*KEY=VALUE* pairs. The keys are the names of the fields to the *ip* kernel
+"\<key>=\<value>" pairs. The keys are the names of the fields to the *ip* kernel
 parameter as [described in the Linux kernel documentation][ip] but with the
 "-ip" suffixes removed. You may e.g. configure the IP address, netmask, gateway
 and *DNS* server by adding `--iso-net

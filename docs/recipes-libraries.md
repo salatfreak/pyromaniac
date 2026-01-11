@@ -17,9 +17,10 @@ All you need to do to create a library is initialize a separate repository
 
 The [Project Structure][structure] page's recommendations about version control
 and main components apply to libraries as well, except for the convention to
-refrain from taking positional and keyword arguments in your main component.
-The parameters defined in your main (and other) component's signatures should
-in fact be the only way to parameterize your library.
+use positional and keyword arguments sparingly in your project's main
+component. The parameters defined in your library's main (and other)
+component's signatures should in fact be the only way to parameterize your
+library.
 
 Projects incorporating your library can, of course, access all of its files and
 components. Depending on its purpose, it might make sense to design your

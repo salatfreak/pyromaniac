@@ -69,3 +69,43 @@ Strings will be coerced into *Path*s and *URL*s but not the other way around.
 Tuples and lists may be passed interchangeably.
 
 Other coercions will not take place.
+
+## Passing Arguments to the Main Component
+If your main component specifies a signature, you can pass arguments to it via
+the command line. The first positional parameter to *Pyromaniac* will always
+be the path to the main component. Any further positional parameters will
+be passed to the main component according to its signature. These parameters
+can themselves be either positional parameters or named in the long option
+style (`--<name>=<value>` or `--<name> <value>`). If an option name appears
+twice or more or the signature declares it as such, a list of values will be
+passed to your component. The usual coercion rules apply, but additionally,
+if the signature declares a primitive type (*bool*, *int*, or *float*),
+*Pyromaniac* will try to convert the argument accordingly. For passing named
+*bool* parameters, use either `--<name>=(true|false)` or the shorter form
+`--<name>`/`--no-<name>`.
+
+Let's consider a *main.pyro* component with the following signature.
+
+```python
+(
+    timeout: int,
+    host: str,
+    mod: list[str] = [],
+    debug: bool = False,
+)
+```
+
+You could execute `pyromaniac . -- --mod vpn 60 --mod health --debug --
+--my-host--` to populate the *mod* argument with the value `["vpn", "health"]`,
+*timeout* with `60`, *debug* with `True`, and *host* with `"--my-host--"`. Note
+that unlike in python function calls you can mix named and positional
+parameters as long as the positional parameters appear in the right order. Also
+note the `--` parameter being used twice: the first one to mark all following
+parameters as positional to *Pyromaniac* (and thus to be used as arguments to
+your component) and the second one to mark the last parameter as positional for
+the component itself.
+
+If the positional parameters don't match your main component's signature,
+compilation will fail with an appropriate error message. It is recommended to
+use arguments to main components sparingly and rather put custom configuration
+into *TOML*, *YAML*, or *JSON* files that are read from within your components.

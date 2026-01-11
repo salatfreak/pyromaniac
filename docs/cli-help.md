@@ -40,7 +40,7 @@ Options:
                        image for. (default: x86_64)
   --iso-net ISO_NET    Set static network configuration values for the ISOs
                        "ip=" kernel parameter as a comma-separated list of
-                       "KEY=VALUE" pairs. The keys correspond to fields in
+                       "<key>=<value>" pairs. The keys correspond to fields in
                        the kernel parameter without "-ip" suffixes. See the
                        example below.
   --iso-disk ISO_DISK  Make the installer automatically install Fedora CoreOS
