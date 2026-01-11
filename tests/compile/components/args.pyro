@@ -1,0 +1,10 @@
+(host: str, *components: str, debug: bool = False)
+
+---
+contents = "modules=" + ",".join(components)
+if debug: contents = contents.upper()
+---
+
+storage.files[0]:
+    path: `"/etc/" + host + ".conf"`
+    contents.inline: `contents`

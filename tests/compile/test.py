@@ -15,6 +15,14 @@ class TestCompile(TestCase):
         sys.path.insert(0, str(dir))
         chdir(dir)
 
+    def test_args(self):
+        result = self.compile(
+            "args", args=("zeus", "--debug", "--", "mod1", "--mod2"), parse_args=True,
+        )
+        file = result['storage']['files'][0]
+        self.assertEqual(file['path'], "/etc/zeus.conf")
+        self.assertIn("--MOD2", file['contents']['source'])
+
     def test_remote(self):
         remote = Remote.create(("http", "localhost", 8000), "secret")
         result = self.compile("remote", remote)
@@ -24,7 +32,7 @@ class TestCompile(TestCase):
 
     def test_complex(self):
         result = self.compile("main", args=("/file",))
-        self.assertEqual(len(result["ignition"]["config"]["merge"]), 2)
+        self.assertEqual(len(result['ignition']['config']['merge']), 2)
 
     def test_python_modules(self):
         result = self.compile("python")
@@ -33,7 +41,7 @@ class TestCompile(TestCase):
     def compile(
         self, path: str,
         remote: Remote = Remote.create(("http", "localhost", 8000)),
-        args: tuple = (), kwargs: dict[str, Any] = {},
+        args: tuple = (), kwargs: dict[str, Any] = {}, parse_args: bool = False,
     ) -> Any:
         source = Path(path).with_suffix(".pyro").read_text()
-        return json.loads(compile(source, remote, args, kwargs))
+        return json.loads(compile(source, remote, args, kwargs, parse_args))
