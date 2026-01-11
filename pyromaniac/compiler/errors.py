@@ -59,6 +59,20 @@ class CompilerError(PyromaniacError):
             return super().__str__()
 
 
+class CommandLineArgumentError(CompilerError):
+    """Error raised when command line option misses value.
+
+    :param name: command line option name
+    """
+
+    def __init__(self, name: str):
+        super().__init__()
+        self.name = name
+
+    def message(self) -> str:
+        return f'missing value for command line option "--{self.name}"'
+
+
 class NonExistentPathError(CompilerError, AttributeError):
     """Error raised when non-existent component path is accessed.
 

@@ -5,6 +5,7 @@ from pathlib import PosixPath as Path
 from tempfile import TemporaryDirectory
 
 from .. import paths
+from . import commandline
 from .butane import butane
 from .expand import expand
 from .component import Component
@@ -33,6 +34,7 @@ class Compiler:
     def compile(
         self, source: str, remote: 'Remote',
         args: tuple = tuple(), kwargs: dict[str, Any] = {},
+        parse_args: bool = False,
     ) -> str:
         """Compile config to ignition.
 
@@ -40,10 +42,14 @@ class Compiler:
         :param remote: remote object with address and authentication secret
         :param args: positional arguments to pass to the component
         :param kwargs: keyword arguments to pass to the component
+        :param parse_args: parse args as command line arguments
         :returns: compiled ignition config
         """
-        ctx = context(self.lib, self.lib.view(), remote=remote)
         comp = Component.create(source)
+        if parse_args:
+            args, cmdl_kwargs = commandline.parse(args, comp.sig)
+            kwargs = {**cmdl_kwargs, **kwargs}
+        ctx = context(self.lib, self.lib.view(), remote=remote)
         with python_context(self.lib.root):
             result = comp.execute(ctx, args, kwargs)
         return butane(expand(result, True, True))

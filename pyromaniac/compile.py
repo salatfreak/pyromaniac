@@ -8,6 +8,7 @@ from .compiler import Compiler
 def compile(
     source: str, remote: Remote,
     args: tuple = tuple(), kwargs: dict[str, Any] = {},
+    parse_args: bool = False,
 ) -> str:
     """Compile config to ingnition.
 
@@ -15,7 +16,8 @@ def compile(
     :param remote: remote object with address and authentication secret
     :param args: positional arguments to pass to the component
     :param kwargs: keyword arguments to pass to the component
+    :param parse_args: parse args as command line arguments
     :returns: compiled ignition config
     """
     compiler = Compiler.create(Path("."))
-    return compiler.compile(source, remote, args, kwargs)
+    return compiler.compile(source, remote, args, kwargs, parse_args)
