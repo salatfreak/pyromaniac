@@ -10,8 +10,8 @@ class TestLoad(TestCase):
         result = self.call('std.load', file)
         self.assertEqual(result, file.read_text())
 
-        result = self.call('std.load', file, name="Alice")
-        self.assertEqual(result.strip(), "Hello, Alice!")
+        result = self.call('std.load', file, name="Alice Li")
+        self.assertEqual(result.strip(), "Hello, 'Alice Li'!")
 
         result = self.call('std.load', file, foo="bar")
         self.assertEqual(result.strip(), "Hello, Bob!")
@@ -34,9 +34,11 @@ class TestLoad(TestCase):
 
         result = self.call(comp, file, name="Muhammad")
         self.assertEqual(result["name"], "Muhammad Li")
+        self.assertEqual(result["greet"], f"echo -n '{result['name']}'")
         self.assertEqual(result["hobbies"], ["programming"])
 
         hobby = ["eating", {"today": "potatoes"}]
         result = self.call(comp, file, name="Alice", hobby=hobby)
         self.assertEqual(result["name"], "Alice Li")
+        self.assertEqual(result["greet"], f"echo -n '{result['name']}'")
         self.assertEqual(result["hobbies"][0][1]["today"], "potatoes")

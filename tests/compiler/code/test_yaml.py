@@ -28,6 +28,16 @@ class TestYaml(TestCase):
             "foo-bar",
         )
 
+    def test_shell_filter(self):
+        self.assertEqual(
+            execute("""echo `"hello 'world'!" | shell | raw`"""),
+            r"echo 'hello '\''world'\''!'",
+        )
+        self.assertEqual(
+            execute('find `["/usr", "-name", "$Recycle.Bin"] | shell | raw`'),
+            r"find /usr -name '$Recycle.Bin'",
+        )
+
     def test_ellipsis_test(self):
         self.assertTrue(execute("`var is ellipsis`", {"var": ...}))
         self.assertFalse(execute("`var is ellipsis`", {"var": 42}))

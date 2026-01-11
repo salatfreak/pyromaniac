@@ -1,4 +1,5 @@
 name = "{{name | raw}} Li"
+greet = {{ ["echo", "-n", name + " Li"] | shell }}
 hobbies = [
   {{hobby | default("programming")}},
 ]
