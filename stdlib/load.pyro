@@ -2,6 +2,9 @@
 
 Jinja is only invoked if at least one variable is passed as keyword argument.
 
+You may use the *shell* filter to serialize (lists of) shell arguments, as in
+`{{ ["echo", "hello world"] | shell }}`.
+
 **Example:**
 - Load and render text file: `std.load(_/"file.txt", name="Alice")`
 """
@@ -16,7 +19,7 @@ Jinja is only invoked if at least one variable is passed as keyword argument.
 content = path.read_text()
 
 if vars != {}:
-	from jinja2 import Template
-	content = Template(content).render(vars)
+    from pyromaniac.compiler.code.jinja import default_env
+    content = default_env.from_string(content).render(vars)
 
 content

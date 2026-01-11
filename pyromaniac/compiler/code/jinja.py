@@ -1,13 +1,17 @@
 from typing import Any
+from collections.abc import Iterable
 from datetime import date, datetime, time
 from pathlib import PosixPath as Path
+import re
 from json import dumps as json_dumps, JSONEncoder as JSONEncoderBase
 from jinja2 import Environment
 
 from ..url import URL
 
+SAFE_SHELL_ARG_RE = re.compile(r'^[\w./:+,@=-]+$')
 
-# Raw object wrapper
+
+# raw object wrapper
 class Raw:
     __match_args__ = ("content",)
 
@@ -15,7 +19,20 @@ class Raw:
         self.content = content
 
 
-# Ellipsis test
+# shell escaping filter
+def shell(content: Any) -> str:
+    if isinstance(content, str | bytes) or not isinstance(content, Iterable):
+        content = [content]
+    return " ".join(escape_shell_arg(arg) for arg in content)
+
+
+def escape_shell_arg(arg: str):
+    if SAFE_SHELL_ARG_RE.fullmatch(arg):
+        return arg
+    return "'" + arg.replace("'", r"'\''") + "'"
+
+
+# ellipsis test
 def ellipsis(val: Any) -> bool:
     return val is Ellipsis
 
@@ -38,14 +55,23 @@ def json_finalize(obj: Any) -> str:
             return json_dumps(obj, cls=JSONEncoder)
 
 
+# default environment
+default_env = Environment()
+default_env.filters['shell'] = shell
+default_env.tests['ellipsis'] = ellipsis
+
+# pyromaniac environment
 pyro_env = Environment(
     variable_start_string="`", variable_end_string="`", finalize=json_finalize
 )
 pyro_env.filters['raw'] = lambda c: Raw(c)
+pyro_env.filters['shell'] = shell
 pyro_env.tests['ellipsis'] = ellipsis
 
+# JSON environment
 json_env = Environment(finalize=json_finalize)
 json_env.filters['raw'] = lambda c: Raw(c)
+json_env.filters['shell'] = shell
 json_env.tests['ellipsis'] = ellipsis
 
 
@@ -81,4 +107,5 @@ def toml_finalize(obj: Any) -> str:
 
 toml_env = Environment(finalize=toml_finalize)
 toml_env.filters['raw'] = lambda c: Raw(c)
+toml_env.filters['shell'] = shell
 toml_env.tests['ellipsis'] = ellipsis
