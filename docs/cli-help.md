@@ -10,7 +10,7 @@ This is the full help text of the pyromaniac program as produced by executing
 ```
 Usage: pyromaniac [-p] [-s] [--iso] [--iso-arch ISO_ARCH] [--iso-net ISO_NET]
                   [--iso-disk ISO_DISK] [--serve] [--address ADDRESS]
-                  [--auth AUTH] [-h]
+                  [--auth AUTH] [-v] [-h]
                   [input] [args ...]
 
 Compile a pyromaniac config into ignition format and output it as a string,
@@ -67,6 +67,7 @@ Options:
                        and a randomly generated but persistent salt. Use
                        "none" to disable. (default: "none" for HTTP, "auto"
                        for HTTPS)
+  -v, --verbose        Print stack trace on error.
   -h, --help           Show this help message and exit.
 
 Additionally, when generating an ISO you can specify flags to be passed on to
