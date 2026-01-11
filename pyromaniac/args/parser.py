@@ -76,7 +76,7 @@ parser.add_argument("--iso-arch", action=IsoStore, default="x86_64", help=(
 ))
 parser.add_argument("--iso-net", action=IsoStore, type=types.net, help=(
     'Set static network configuration values for the ISOs "ip=" kernel '
-    'parameter as a comma-separated list of "KEY=VALUE" pairs. The keys '
+    'parameter as a comma-separated list of "<key>=<value>" pairs. The keys '
     'correspond to fields in the kernel parameter without "-ip" suffixes. See '
     "the example below."
 ))

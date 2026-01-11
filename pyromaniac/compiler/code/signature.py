@@ -61,7 +61,7 @@ class Signature:
 
 
 # get expected type for parameter
-def get_type(param: inspect.Parameter) -> Type:
+def get_type(param: Parameter) -> Type:
     match param.kind, param.annotation, param.default:
         case Parameter.VAR_POSITIONAL, Parameter.empty, _:
             return Type.create(list)

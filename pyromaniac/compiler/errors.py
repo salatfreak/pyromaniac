@@ -129,7 +129,8 @@ class ButaneError(RenderError):
         self.code = code
 
     def message(self) -> str:
-        error = cast(re.Match, self.SURROUND_RE.fullmatch(self.error))[1].strip()
+        srnd_match = self.SURROUND_RE.fullmatch(self.error)
+        error = cast(re.Match, srnd_match)[1].strip()
         match = self.LINE_RE.fullmatch(error)
         if match:
             line = self.code.splitlines()[int(match[1]) - 1].strip()
