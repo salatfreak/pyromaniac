@@ -44,5 +44,5 @@ class TestCompiler(TestCase):
         args: tuple = (), kwargs: dict[str, Any] = {},
     ) -> dict:
         source = self.comps.joinpath(path).with_suffix(".pyro").read_text()
-        result = self.compiler.compile(source, remote, args, kwargs)
+        result = self.compiler.compile(source, remote, args=args, kwargs=kwargs)
         return json.loads(result)

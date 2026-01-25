@@ -1,0 +1,3 @@
+storage.files[0]:
+  path: "/etc/foo.txt"
+  contents.inline: `(_/"foo.txt").read_text().strip()`
