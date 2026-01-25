@@ -46,9 +46,10 @@ and *version* fields required by *Butane* will be added if the input is a dict
 with these fields missing.
 
 Lastly, the *GLOBAL* variable is a dict, shared by all components throughout
-the compilation of the configuration. Using global state is discouraged. Pass
-state around using component arguments and return values instead whenever
-possible.
+the compilation of the configuration. While this is not the purest approach to
+sharing information between components, it can be the simplest in some cases.
+Consider passing state around using component arguments and return values
+instead.
 
 ## Referencing Components and Local Files
 You can reference directories and components by their name and execute them
