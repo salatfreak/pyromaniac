@@ -324,4 +324,21 @@ setting the field in the result.
 **Examples:**
 - Set user and group name to "core": `std.ownership("core")`
 - Set only user ID to 1000: `std.ownership(1000, None)`
+
+## Create recursive merge of arbitrary python values
+```python
+std.py.merge(
+  base: Any,                  # base value to merge with
+  *values: Any,               # values to merge into base
+  merge_lists: bool = False,  # whether to merge lists
+)
+```
+
+For anything but dicts and lists the last value is taken. The same is true for
+lists, unless *merge_lists* is set to True. Dicts are merged into each other
+with these rules applied recursively to each member.
+
+**Example:**
+- Merge two dicts including a list: `std.py.merge({"a": {"b": 13, "c": 69}, "users":
+["root"]}, {"a": {"b": 42}, "users": ["core"]}, merge_lists=True)`
 {% endraw %}

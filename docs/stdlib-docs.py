@@ -21,7 +21,7 @@ ORDER = [
     'merge',
     'load', 'load.json', 'load.yaml', 'load.toml', 'magic',
     'file', 'link', 'directory', 'directories', 'tree', 'storage',
-    'contents', 'contents.parse', 'ownership',
+    'contents', 'contents.parse', 'ownership', 'python.merge',
 ]
 STDLIB = Path("/", "usr", "local", "lib", "pyromaniac", "std")
 
