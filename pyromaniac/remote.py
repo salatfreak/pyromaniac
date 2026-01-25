@@ -64,12 +64,12 @@ class Remote:
 
         :returns: pyromaniac config for creating the remote ISO
         """
-        result = {'ignition.config.merge[0].source': self.url / "config.ign"}
+        ign = {'config': {'merge': [{'source': self.url / "config.ign"}]}}
         if self.auth is not None:
-            result['ignition.config.merge[0].http_headers'] = [
+            ign['config']['merge'][0]['http_headers'] = [
                 {'name': k, 'value': v} for k, v in self.headers.items()
             ]
         if self.scheme == "https":
-            key = 'ignition.security.tls.certificate_authorities[0].inline'
-            result[key] = root()[0].read_text()
-        return result
+            certs = [{'inline': root()[0].read_text()}]
+            ign['security'] = {'tls': {'certificate_authorities': certs}}
+        return {'ignition': ign}
