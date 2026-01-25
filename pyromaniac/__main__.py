@@ -24,7 +24,13 @@ def ignition():
         except IOError as e:
             raise MainComponentIOError() from e
 
-    return compile(source, remote, tuple(args.args), parse_args=True)
+    # set library view path if component in subdirectory
+    pwd, dir_in = Path().absolute(), args.input.resolve().parent
+    in_sub_dir = not args.input.is_absolute() and dir_in.is_relative_to(pwd)
+    path = ".".join(dir_in.relative_to(pwd).parts) if in_sub_dir else ""
+
+    # compile source and return ignition
+    return compile(source, remote, path, tuple(args.args), parse_args=True)
 
 
 try:

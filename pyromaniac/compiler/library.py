@@ -53,12 +53,13 @@ class Library(Mapping):
 
         return self.cache[name]
 
-    def view(self) -> 'View':
-        """Get root view on this library.
+    def view(self, path: str = "") -> 'View':
+        """Get view on this library.
 
-        :returns: root view on this library
+        :param path: dot-separated view path
+        :returns: view on this library
         """
-        return View(self, "")
+        return View(self, path)
 
     def get_path(self, name: str) -> Path:
         """Get file system path for specified name under this library.
