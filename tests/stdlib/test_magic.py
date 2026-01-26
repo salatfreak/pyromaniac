@@ -27,3 +27,14 @@ class TestMagic(TestCase):
         self.assertEqual(wrapped[0].foo or "qux", "bar")
         self.assertEqual(wrapped[2], 42)
         self.assertEqual(wrapped[42].foo or 69, 69)
+
+    def test_contains(self):
+        wrapped = self.call({"foo": {"bar": [{"baz": 42}]}})
+        self.assertIn("foo", wrapped)
+        self.assertIn({"baz": 42}, wrapped.foo.bar)
+        self.assertIn("baz", wrapped.foo.bar[0])
+        self.assertNotIn("baz", wrapped)
+        self.assertNotIn("baz", wrapped.foo)
+        self.assertNotIn("baz", wrapped.foo.bar)
+        self.assertNotIn("baz", wrapped.foo.bar.void)
+        self.assertNotIn("baz", wrapped.foo.bar.void[69])
