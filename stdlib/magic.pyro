@@ -51,6 +51,9 @@ class Nothing:
     def __getattr__(self, name: str) -> 'Nothing':
         return self
 
+    def __contains__(self, _item: Any) -> bool:
+        return False
+
     def __bool__(self) -> bool:
         return False
 
