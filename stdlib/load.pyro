@@ -11,6 +11,7 @@ You may use the *shell* filter to serialize (lists of) shell arguments, as in
 
 (
     path: Path,   # path to file
+    /,
     **vars: Any,  # variables to pass to jinja renderer
 )
 
