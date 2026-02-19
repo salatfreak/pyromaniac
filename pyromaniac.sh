@@ -17,7 +17,7 @@ for (( i = 0; i < $#; ++i )); do
       ;;
     --no-cache ) cache=false; unset args[i];;
     --debug ) debug=true; unset args[i];;
-    * ) break;;
+    -* ) break;;
   esac
   [[ "${args[i]}" != '--' ]] || break
 done
