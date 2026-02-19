@@ -132,6 +132,15 @@ class TestView(TestCase):
         with self.assertRaises(NonExistentPathError):
             self.view.dir1._.bananenbrot
 
+    def test_getitem(self):
+        self.assertIsInstance(self.view["dir1"]["dir11"], View)
+        self.assertIsInstance(self.view["dir1"]["_"]["dir1"]["dir11"]["main"], View)
+
+        with self.assertRaises(NonExistentPathError):
+            self.view["bananenbrot"]["_"]["_"]
+        with self.assertRaises(NonExistentPathError):
+            self.view["dir1"]["bananenbrot"]
+
     @patch('pyromaniac.compiler.component.Component.execute')
     def test_call(self, execute: Mock):
         execute.return_value = "foo"
