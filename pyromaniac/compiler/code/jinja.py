@@ -25,7 +25,7 @@ class Raw:
 def shell(content: Any) -> str:
     if isinstance(content, str | bytes) or not isinstance(content, Iterable):
         content = [content]
-    return " ".join(escape_shell_arg(arg) for arg in content)
+    return " ".join(escape_shell_arg(str(arg)) for arg in content)
 
 
 def escape_shell_arg(arg: str):
