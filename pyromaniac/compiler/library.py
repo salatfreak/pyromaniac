@@ -128,6 +128,14 @@ class View:
 
         raise NonExistentPathError(name)
 
+    def __getitem__(self, key: str) -> Self:
+        """Get the view relative to this one at the given name."
+
+        :param key: relative name to view the library from
+        :returns: new view on the library as returned by __getattr__
+        """
+        return self.__getattr__(key)
+
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         """Try to call the viewed path in the library as a component.
 
