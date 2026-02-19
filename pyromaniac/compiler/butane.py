@@ -34,7 +34,7 @@ def butane(source: dict) -> str:
     if not isinstance(source, dict):
         raise NotADictError(source)
 
-    code = yaml.dump(source)
+    code = yaml.dump(source, sort_keys=False)
     res = subprocess.run(
         [paths.butane, "--files-dir", ".", *config],
         input=code, capture_output=True, text=True,
