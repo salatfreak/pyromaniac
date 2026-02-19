@@ -33,6 +33,7 @@ they are rendered to a string using butane. Empty dicts are ignored. The
 ```python
 std.load(
     path: Path,   # path to file
+    /,
     **vars: Any,  # variables to pass to jinja renderer
 )
 ```
@@ -49,6 +50,7 @@ You may use the *shell* filter to serialize (lists of) shell arguments, as in
 ```python
 std.load.json(
     path: Path,   # path to file
+    /,
     **vars: Any,  # variables to pass to jinja renderer
 )
 ```
@@ -69,6 +71,7 @@ use the *shell* filter to serialize (lists of) shell arguments, as in `{"code":
 ```python
 std.load.yaml(
     path: Path,   # path to file
+    /,
     **vars: Any,  # variables to pass to jinja renderer
 )
 ```
@@ -89,6 +92,7 @@ the *shell* filter to serialize (lists of) shell arguments, as in `code: {{
 ```python
 std.load.toml(
     path: Path,   # path to file
+    /,
     **vars: Any,  # variables to pass to jinja renderer
 )
 ```
