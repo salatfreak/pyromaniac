@@ -268,6 +268,11 @@ std.storage(
 
 The result is intended to be added as the `storage` field.
 
+Combines a list of storage objects based on their *__for__* field. The field is
+required and represents the path the object should be placed at in the *Butane*
+structure. The storage-specific standard library components return objects with
+the *__for__* field correctly set.
+
 **Example**:
 - Combine a file with a file tree:
   `std.storage(std.file('/var/file.txt'),
