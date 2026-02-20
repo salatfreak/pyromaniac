@@ -42,7 +42,7 @@ open the configured port on all interfaces independently of the hostname/IP
 address specified using the `--address` parameter. The purpose of the hostname
 in that parameter is only to generate a matching TLS certificate. You can
 change this by either running the container image manually or adapting the
-*Bash* script to only publish the port up to a specific network.
+*Bash* script to only publish the port to a specific network.
 
 When exposing the server to an untrusted network, it is always advisable to
 minimize the attack surface and restrict access as much as possible. Consider
