@@ -38,7 +38,16 @@ class TestYaml(TestCase):
             r"find /usr -name '$Recycle.Bin'",
         )
 
-    def test_ellipsis_test(self):
+    def test_type_tests(self):
+        self.assertTrue(execute("`var is series`", {"var": []}))
+        self.assertTrue(execute("`var is series`", {"var": ["foo", 69]}))
+        self.assertTrue(execute("`var is series`", {"var": ("foo", 69)}))
+        self.assertTrue(execute("`var is series`", {"var": (v for v in ["foo", 69])}))
+        self.assertFalse(execute("`var is series`", {"var": "foo"}))
+        self.assertFalse(execute("`var is series`", {"var": b"bar"}))
+        self.assertFalse(execute("`var is series`", {"var": {"foo": "bar"}}))
+        self.assertFalse(execute("`var is series`", {"var": None}))
+
         self.assertTrue(execute("`var is ellipsis`", {"var": ...}))
         self.assertFalse(execute("`var is ellipsis`", {"var": 42}))
         self.assertFalse(execute("`var is ellipsis`", {"var": None}))
