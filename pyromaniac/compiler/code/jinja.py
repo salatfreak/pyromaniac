@@ -1,5 +1,5 @@
 from typing import Any
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from datetime import date, datetime, time
 from pathlib import PosixPath as Path
 import re
@@ -13,7 +13,7 @@ from .runext import RunExtension
 SAFE_SHELL_ARG_RE = re.compile(r'^[\w./:+,@=-]+$')
 
 
-# raw object wrapper
+# extra filters
 class Raw:
     __match_args__ = ("content",)
 
@@ -21,8 +21,7 @@ class Raw:
         self.content = content
 
 
-# shell escaping filter
-def shell(content: Any) -> str:
+def filter_shell(content: Any) -> str:
     if isinstance(content, str | bytes) or not isinstance(content, Iterable):
         content = [content]
     return " ".join(escape_shell_arg(str(arg)) for arg in content)
@@ -34,11 +33,28 @@ def escape_shell_arg(arg: str):
     return "'" + arg.replace("'", r"'\''") + "'"
 
 
-# ellipsis test
-def ellipsis(val: Any) -> bool:
+filters = {"raw": Raw, "shell": filter_shell}
+
+
+# extra tests
+def test_series(val: Any) -> bool:
+    return isinstance(val, Iterable) and not isinstance(val, str | bytes | Mapping)
+
+
+def test_ellipsis(val: Any) -> bool:
     return val is Ellipsis
 
 
+tests = {"series": test_series, "ellipsis": test_ellipsis}
+
+
+# default environment
+default_env = Environment()
+default_env.filters.update({k: v for k, v in filters.items() if k != 'raw'})
+default_env.tests.update(tests)
+
+
+# JSON environment
 def json_finalize(obj: Any) -> str:
     match obj:
         case Raw(content):
@@ -47,25 +63,9 @@ def json_finalize(obj: Any) -> str:
             return json_dumps(obj, cls=JSONEncoder)
 
 
-# default environment
-default_env = Environment()
-default_env.filters['shell'] = shell
-default_env.tests['ellipsis'] = ellipsis
-
-# pyromaniac environment
-pyro_env = Environment(
-    variable_start_string="`", variable_end_string="`", finalize=json_finalize,
-    extensions=[RunExtension],
-)
-pyro_env.filters['raw'] = lambda c: Raw(c)
-pyro_env.filters['shell'] = shell
-pyro_env.tests['ellipsis'] = ellipsis
-
-# JSON environment
 json_env = Environment(finalize=json_finalize)
-json_env.filters['raw'] = lambda c: Raw(c)
-json_env.filters['shell'] = shell
-json_env.tests['ellipsis'] = ellipsis
+json_env.filters.update(filters)
+json_env.tests.update(tests)
 
 
 # TOML environment
@@ -99,6 +99,14 @@ def toml_finalize(obj: Any) -> str:
 
 
 toml_env = Environment(finalize=toml_finalize)
-toml_env.filters['raw'] = lambda c: Raw(c)
-toml_env.filters['shell'] = shell
-toml_env.tests['ellipsis'] = ellipsis
+toml_env.filters.update(filters)
+toml_env.tests.update(tests)
+
+
+# pyromaniac environment
+pyro_env = Environment(
+    variable_start_string="`", variable_end_string="`", finalize=json_finalize,
+    extensions=[RunExtension],
+)
+pyro_env.filters.update(filters)
+pyro_env.tests.update(tests)
