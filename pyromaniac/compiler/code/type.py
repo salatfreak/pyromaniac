@@ -44,7 +44,7 @@ class Type:
         elif typ is list:
             return TypeGeneric.create_generic(cast(GenericAlias, list[Any]))
         elif typ is tuple:
-            return TypeGeneric.create_generic(cast(GenericAlias, tuple[...]))
+            return TypeGeneric.create_generic(cast(GenericAlias, tuple[...]))  # type: ignore
         elif typ is dict:
             return TypeGeneric.create_generic(cast(GenericAlias, dict[Any, Any]))
         elif isinstance(typ, GenericAlias):
