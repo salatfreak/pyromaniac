@@ -33,18 +33,22 @@ class TestExpand(TestCase):
         }))
 
     def test_composite(self):
-        self.assertEqual(expand({
-            "foo.bar[2]": -1,
-            "foo": {"bar": [42], "bar[1]": 69},
-            "foo.baz": {"qux[0].quux.corge": "grault"},
+        result = expand({
             "waldo": "fred",
-        }), {
+            "foo.baz": {"qux[0].quux.corge": "grault"},
+            "foo.bar[2]": -1,
+            "foo": {"bas": 100, "bar[1]": 69, "bar": [42]},
+        })
+        self.assertEqual(result, {
             "foo": {
                 "bar": [42, 69, -1],
+                "bas": 100,
                 "baz": {"qux": [{"quux": {"corge": "grault"}}]},
             },
             "waldo": "fred",
         })
+        self.assertEqual(list(result.keys()), ["waldo", "foo"])
+        self.assertEqual(list(result["foo"].keys()), ["baz", "bar", "bas"])
 
     def test_clean(self):
         self.assertFalse(changed({"foo": {"bar": "baz", "qux": "quux"}}, True))
