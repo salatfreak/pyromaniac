@@ -1,6 +1,4 @@
 from typing import Any
-from itertools import groupby
-
 from .errors import KeyExpandError
 from .errors import DuplicateKeyError, MixedKeysError, MissingIndexError
 from . import keys
@@ -62,13 +60,17 @@ def collect(pairs: FlatType) -> Any:
         else:
             raise DuplicateKeyError()
 
-    # group pairs py first key part
-    try:
+    # sort if int keys and detect mixed key types
+    if all(isinstance(p[0][0], int) for p in pairs):
         pairs = sorted(pairs, key=lambda p: p[0][0])
-    except TypeError:
+    elif not all(isinstance(p[0][0], str) for p in pairs):
         raise MixedKeysError()
-    groups = groupby(pairs, key=lambda p: p[0][0])
-    groups = list((k, list(v)) for k, v in groups)
+
+    # group pairs by first key part without reordering
+    groups = {}
+    for pair in pairs:
+        groups[pair[0][0]] = [*groups.get(pair[0][0], []), pair]
+    groups = list(groups.items())
 
     # handle string keys
     if isinstance(groups[0][0], str):
