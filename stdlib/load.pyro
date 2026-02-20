@@ -3,7 +3,8 @@
 Jinja is only invoked if at least one variable is passed as keyword argument.
 
 You may use the *shell* filter to serialize (lists of) shell arguments, as in
-`{{ ["echo", "hello world"] | shell }}`.
+`{{ ["echo", "hello world"] | shell }}`. The extra *series* and *ellipsis*
+tests are also available.
 
 **Example:**
 - Load and render text file: `std.load(_/"file.txt", name="Alice")`

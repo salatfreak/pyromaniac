@@ -12,9 +12,10 @@ section that determines the component's result. It may evaluate to any valid
 using the "\`" (backtick) as delimiter for expressions. *Jinja* will have
 access to *Any*, *Path*, *URL*, all imports, variables, functions, and classes
 from the *Python* section, as well as your component tree and the *_*
-(underscore). An extra `value is ellipsis` test is availlable in *Jinja*
-templates to check if a value is `...` (the `Ellipsis`). There is also a
-`shell` filter for escaping (lists of) shell arguments, as in
+(underscore). The extra tests `value is series` and `value is ellipsis` are
+available in *Jinja* templates to check if a value is an iterable that is
+neither a string nor a mapping, or `...` (the `Ellipsis`) respectively. There
+is also a `shell` filter for escaping (lists of) shell arguments, as in
 `"find " + (["/usr", "-name", "$Recycle.Bin"] | shell)`.
 
 ## Serialization of Jinja Expressions

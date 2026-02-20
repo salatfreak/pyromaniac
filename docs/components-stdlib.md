@@ -41,7 +41,8 @@ std.load(
 Jinja is only invoked if at least one variable is passed as keyword argument.
 
 You may use the *shell* filter to serialize (lists of) shell arguments, as in
-`{{ ["echo", "hello world"] | shell }}`.
+`{{ ["echo", "hello world"] | shell }}`. The extra *series* and *ellipsis*
+tests are also available.
 
 **Example:**
 - Load and render text file: `std.load(_/"file.txt", name="Alice")`
@@ -62,7 +63,8 @@ You can therefore safely inject structured data into your JSON document without
 worrying about breaking JSON syntax. To insert raw strings into your document,
 use the *raw* filter as in `{"greeting": "Hello, {{ name | raw }}!"}`. You may
 use the *shell* filter to serialize (lists of) shell arguments, as in `{"code":
-{{ ["echo", "hello world"] | shell }}}`.
+{{ ["echo", "hello world"] | shell }}}`. The extra *series* and *ellipsis*
+tests are also available.
 
 **Example:**
 - Load and inject: `std.load.json(_/"file.json", name="Alice")`
@@ -83,7 +85,8 @@ You can therefore safely inject structured data into your YAML document without
 worrying about breaking YAML syntax. To insert raw strings into your document,
 use the *raw* filter as in `greeting: "Hello, {{ name | raw }}!"`. You may use
 the *shell* filter to serialize (lists of) shell arguments, as in `code: {{
-["echo", "hello world"] | shell }}`.
+["echo", "hello world"] | shell }}`. The extra *series* and *ellipsis* tests
+are also available.
 
 **Example:**
 - Load and inject: `std.load.yaml(_/"file.yml", name="Alice")`
@@ -104,7 +107,8 @@ You can therefore safely inject structured data into your TOML document without
 worrying about breaking TOML syntax. To insert raw strings into your document,
 use the *raw* filter as in `greeting = "Hello, {{ name | raw }}!"`. You may use
 the *shell* filter to serialize (lists of) shell arguments, as in `code = {{
-["echo", "hello world"] | shell }}`.
+["echo", "hello world"] | shell }}`. The extra *series* and *ellipsis* tests
+are also available.
 
 **Example:**
 - Load and inject: `std.load.toml(_/"file.toml", name="Alice")`
