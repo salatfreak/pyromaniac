@@ -29,10 +29,13 @@ reST-formatted docstring.
 Imports are ordered by their level of abstraction. A library that is or would
 be more likely to be used by another one is imported before it.
 
-Any *Python* code should pass [pycodestyle][pycodestyle] without warnings.
+Any *Python* code should pass [`ruff check`][ruff] and [`ty check`][ty] without
+warnings. Both of them support the *Language Server Protocol* and can be
+integrated into your *IDE*.
 
 [coreos-installer]: https://coreos.github.io/coreos-installer/
-[pycodestyle]: https://github.com/PyCQA/pycodestyle
+[ruff]: https://docs.astral.sh/ruff/
+[ty]: https://docs.astral.sh/ty/
 
 ## Version Control
 Commits and pull requests shall be performed against the [dev][dev] branch or
