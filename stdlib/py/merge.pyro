@@ -31,7 +31,7 @@ def merge(a, b) -> Any:
   return {
     key: merge(a[key], b[key]) if key in a.keys() & b.keys()
       else b.get(key, a.get(key))
-    for key in a.keys() | b.keys()
+    for key in [*a.keys(), *(k for k in b.keys() if k not in a.keys())]
   }
 
 # merge all values into base
