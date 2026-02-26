@@ -20,6 +20,8 @@ they are rendered to a string using butane. Empty dicts are ignored. The
 
 ---
 
+from pyromaniac import expand, butane
+
 target = 'ignition.config.merge[]'
 elements = []
 for config in configs:
