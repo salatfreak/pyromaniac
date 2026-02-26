@@ -97,7 +97,7 @@ class Segmenter:
                 balance -= 1
             elif self.tokens.match(t.ERRORTOKEN):
                 raise SignatureSyntaxError(self.tokens.get(0))
-            last = self.tokens.consume(1)
+            last = cast(Token, self.tokens.consume(1))
 
         return slice(start, last.stop - 1), last
 
