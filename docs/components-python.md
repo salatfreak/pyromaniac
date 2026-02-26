@@ -28,23 +28,6 @@ The context *Python* is executed in comes with *Any* from the *typing* module,
 *Path* for the *PosixPath* class of the *pathlib*, and the special *URL* class
 pre-imported, just like in the signature.
 
-It also contains the *butane* and *expand* functions for rendering
-configurations. This is what the *merge* component of the standard library uses
-to render sub-configurations into *Ignition* format and assemble the contents
-for the `ignition.config.merge` field. 
-
-The *butane* function simply takes a configuration as a dict, transforms it
-into *Ignition* and returns the result as a string.
-
-The *expand* function recursively performs expansion of composite keys in dicts
-and lists and leaves all other values as they are. Lists and dicts nested inside
-other data structures will not be modified. You can optionally pass a second
-and third parameter to control further modifications to the input. If the
-second parameter is `True`, keys starting with an underscore will recursively
-be filtered out of the result. If the third parameter is *True*, the *variant*
-and *version* fields required by *Butane* will be added if the input is a dict
-with these fields missing.
-
 Lastly, the *GLOBAL* variable is a dict, shared by all components throughout
 the compilation of the configuration. While this is not the purest approach to
 sharing information between components, it can be the simplest in some cases.
@@ -87,3 +70,22 @@ like you would from other *Python* modules.
 *Python* modules should be referenced relative to the current component's path
 for the same reason as components and local files. To import *pkg/mod.py* from
 the component *pkg/comp.pyro*, write `from . import mod`.
+
+## Manually Compiling Intermediary Butane
+You can import the *expand* and *butane* functions from the `pyromaniac`
+package for expanding composite keys and rendering intermediary butane
+configurations. This is what the *merge* component of the standard library uses
+to render sub-configurations into *Ignition* format and assemble the contents
+for the `ignition.config.merge` field.
+
+The *expand* function recursively performs expansion of composite keys in dicts
+and lists and leaves all other values as they are. Lists and dicts nested inside
+other data structures will not be modified. You can optionally pass a second
+and third parameter to control further modifications to the input. If the
+second parameter is `True`, keys starting with an underscore will recursively
+be filtered out of the result. If the third parameter is *True*, the *variant*
+and *version* fields required by *Butane* will be added if the input is a dict
+with these fields missing.
+
+The *butane* function simply takes a configuration as a dict, transforms it
+into *Ignition* and returns the result as a string.
