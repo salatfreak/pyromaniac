@@ -1,6 +1,8 @@
 (*configs: dict)
 
 ---
+from pyromaniac import expand, butane
+
 igns = [butane(expand(c, True, True)) for c in configs]
 ---
 
