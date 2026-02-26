@@ -21,11 +21,11 @@ The result is intended to be added as the `ignition.config.merge` field.
 
 For strings, paths, and URLs, the result of passing them to the *std.contents*
 component is added to the merge. For dicts, composite keys are expanded, and
-they are rendered to a string using butane. Empty dicts are ignored. The
+they are rendered to a string using Butane. Empty dicts are ignored. The
 *headers* dict is passed to the *contents* component only for URLs.
 
 **Example:**
-- Merge inline butane config with remote ignition file using authentication:
+- Merge inline Butane config with remote ignition file using authentication:
   `std.merge({'storage.files[0].path': "/var/file.txt"},
   URL("https://example.com/config.ign"), headers={"Authorization": "..."})`
 
@@ -314,8 +314,8 @@ std.contents.parse(
 ```
 
 Values starting with "/" or "./" will be returned as path objects. Values
-starting with one of butanes supported protocol names followed by "://" will be
-returned as URL objects. Everything else will be returned as is.
+starting with one of Butane's supported protocol names followed by "://" will
+be returned as URL objects. Everything else will be returned as is.
 
 **Examples**:
 - Inline content: `std.contents.parse("foo")`

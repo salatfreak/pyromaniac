@@ -73,7 +73,7 @@ the component *pkg/comp.pyro*, write `from . import mod`.
 
 ## Manually Compiling Intermediary Butane
 You can import the *expand* and *butane* functions from the `pyromaniac`
-package for expanding composite keys and rendering intermediary butane
+package for expanding composite keys and rendering intermediary *Butane*
 configurations. This is what the *merge* component of the standard library uses
 to render sub-configurations into *Ignition* format and assemble the contents
 for the `ignition.config.merge` field.

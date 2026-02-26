@@ -49,7 +49,7 @@ repository][repo] and executing `podman build -t pyromaniac .` in it.
 [repo]: https://github.com/salatfreak/pyromaniac
 
 ## Installing Pyromaniac Manually
-Make sure you have *pip3*, *butane*, and the *CoreOS Installer* installed on
+Make sure you have *pip3*, *butane*, and the *coreos-installer* installed on
 your system. You can then install the *Pyromaniac* *python* package manually by
 cloning the [GitHub repository][repo], adjusting the file system paths in
 *pyromaniac/paths.py*, and executing `pip3 install .`. The components in the
