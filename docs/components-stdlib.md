@@ -281,6 +281,9 @@ required and represents the path the object should be placed at in the *Butane*
 structure. The storage-specific standard library components return objects with
 the *__for__* field correctly set.
 
+If multiple entries with the same path exist in the *files*, *directories*, *links*, or *trees*
+list respectively, they will be merged into one entry per unique path.
+
 **Example**:
 - Combine a file with a file tree:
   `std.storage(std.file('/var/file.txt'),
