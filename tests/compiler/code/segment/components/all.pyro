@@ -1,12 +1,14 @@
 """doc string""" # this is the doc string
 
-# Now comes the signature
+# now comes the signature
 (name: str, age: int, *args: str, **kwargs: float) # this is the signature
 
 ---
 
-# here we use string interpolation to construct a message
-message = f"Hello {age} year old {name}!"
+# here we use string interpolation to construct a message in a broken up line
+message = f"Hello {age} " + \
+  \
+  f"year old {name}!"
 
 ---
 

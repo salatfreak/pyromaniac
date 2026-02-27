@@ -29,7 +29,7 @@ class TestSegment(TestCase):
         self.assertIsNotNone(python)
         self.assertIsNotNone(yaml)
         self.assertTrue(cast(str, python).splitlines()[8].startswith("message ="))
-        self.assertTrue(cast(str, yaml).splitlines()[13].startswith("storage.files"))
+        self.assertTrue(cast(str, yaml).splitlines()[15].startswith("storage.files"))
 
     def test_invalid_signature(self):
         with self.assertRaises(SignatureSyntaxError):
