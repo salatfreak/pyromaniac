@@ -7,6 +7,9 @@ required and represents the path the object should be placed at in the *Butane*
 structure. The storage-specific standard library components return objects with
 the *__for__* field correctly set.
 
+If multiple entries with the same path exist in the *files*, *directories*, *links*, or *trees*
+list respectively, they will be merged into one entry per unique path.
+
 **Example**:
 - Combine a file with a file tree:
   `std.storage(std.file('/var/file.txt'),
@@ -18,6 +21,9 @@ the *__for__* field correctly set.
 )
 
 ---
+
+MERGE = ['files', 'directories', 'links', 'trees']
+ATOMIC = ['contents', 'user', 'group']
 
 # embed obj in hierarchy according to key
 def hierarchy(key: str, obj) -> dict:
@@ -36,29 +42,51 @@ def hierarchy(key: str, obj) -> dict:
 
     return result
 
-# merge two potentially nested values recursively
-def merge(a, b):
-    if isinstance(a, dict) and isinstance(b, dict):
-        return {
-            k: merge(a[k], b[k]) if k in a and k in b else a.get(k, b.get(k))
-            for k in a.keys() | b.keys()
-        }
-    elif isinstance(a, list) and isinstance(b, list):
-        return a + b
-    elif isinstance(a, dict | list) or isinstance(b, dict | list):
-        raise TypeError("type mismatch in arguments to std.storage")
-    else:
-        return b
+# normalize object hierarchies
+objects = [hierarchy(obj.get('__for__', ''), obj) for obj in objects]
+if any(list(obj.keys()) != ['storage'] for obj in objects):
+  raise ValueError('missing __for__ starting with "storage" in std.storage argument')
 
 # merge passed objects
-storage = {'__for__': 'storage'}
-for obj in objects:
-    # parse target path
-    current = hierarchy(obj.get('__for__', ''), obj)
-    if list(current.keys()) != ['storage']:
-        raise ValueError('missing __for__ starting with "storage" in std.storage argument')
+storage = _.py.merge(
+  *(obj['storage'] for obj in objects),
+  {'__for__': "storage"},
+  merge_lists=True,
+)
 
-    # merge with previous
-    storage = merge(storage, current['storage'])
+# merge objects with identical paths
+for key in MERGE:
+  # get element list for key if present
+  elements = storage.get(key, None)
+  if not isinstance(elements, list): continue
+
+  # ensure all elements are dicts
+  if not all(isinstance(element, dict) for element in elements):
+    raise ValueError(f"found element in storage.{key} that's not a dictionary")
+
+  # group elements by path
+  groups = {}
+  for element in elements:
+    # get element path
+    path = element.get("path", "/" if key == 'trees' else None)
+    if path is None:
+      raise ValueError(f"missing path on an element of storage.{key}")
+
+    # insert element into group
+    groups[path] = [*groups.get(path, []), element]
+
+  # merge each group
+  elements.clear()
+  for group in groups.values():
+    merged = _.py.merge(*group, merge_lists=True)
+
+    # replace atomic properties with last specified value
+    for prop in ATOMIC:
+      last = next((element[prop] for element in reversed(group) if prop in element), None)
+      if last is not None:
+        merged[prop] = last
+
+    # add merged back into element list
+    elements.append(merged)
 
 storage
