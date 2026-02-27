@@ -1,5 +1,5 @@
 from collections.abc import Iterator
-from io import BytesIO
+from io import StringIO
 import tokenize as t
 
 from .token import Token
@@ -80,33 +80,30 @@ class Stream:
 
 # generate tokens with position in source code
 def generate(code: str) -> Iterator[Token]:
-    line_start = 0
-    end = 0
+    lines = code.splitlines(keepends=True)
+    current_line, line_start = 0, 0
     try:
-        for info in t.tokenize(BytesIO(code.encode()).readline):
-            # get token start and end
+        for info in t.generate_tokens(StringIO(code).readline):
+            # get token start
+            while current_line < info.start[0] - 1:
+                line_start += len(lines[current_line])
+                current_line += 1
             start = line_start + info.start[1]
-            if info.start[0] == info.end[0]:
-                slc = slice(start, line_start + info.end[1])
-            else:
-                slc = slice(start, start + len(info.string))
 
-            # keep track of start of line
-            match info.type:
-                case t.NL | t.NEWLINE:
-                    line_start = slc.stop
-                case t.STRING:
-                    line_start = slc.stop - info.end[1]
-            end = slc.stop
+            # get token end
+            while current_line < info.end[0] - 1:
+                line_start += len(lines[current_line])
+                current_line += 1
+            end = line_start + info.end[1]
 
             # yield token and position
-            yield Token(info, slc)
+            yield Token(info, slice(start, end))
     except t.TokenError:
         pass
 
     # Keep yielding error token on further reading
     message = 'invalid token'
     info = t.TokenInfo(t.ERRORTOKEN, message, info.start, info.start, message)
-    token = Token(info, slice(end, end))
+    token = Token(info, slice(len(code), len(code)))
     while True:
         yield token

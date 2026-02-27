@@ -6,7 +6,7 @@ from .token import Token
 from .stream import Stream
 
 # token types to ignore between meaningfull tokens
-TYPES = [t.NL, t.NEWLINE, t.COMMENT]
+IGNORE = [t.NL, t.NEWLINE, t.COMMENT]
 
 
 class Segmenter:
@@ -34,17 +34,11 @@ class Segmenter:
         # initialize result slices
         doc, sig, python, yaml = (None,) * 4
 
-        # consume encoding token
-        last = self.tokens.consume([t.ENCODING])
-        if last is None:
-            token = self.tokens.get(0)
-            raise UnexpectedTokenError(token, "at the beginning")
-
         # get doc string if present
-        last = self.tokens.consume(TYPES) or last
+        last = self.tokens.consume(IGNORE)
         if self.tokens.match(t.STRING):
             doc, last = self.read_doc()
-            last = self.tokens.consume(TYPES)
+            last = self.tokens.consume(IGNORE)
             if last is None:
                 token = self.tokens.get(0)
                 raise UnexpectedTokenError(token, "after the doc string")
@@ -52,7 +46,7 @@ class Segmenter:
         # get signature if present
         if self.tokens.match((t.OP, '(')):
             sig, last = self.read_signature()
-            last = self.tokens.consume(TYPES)
+            last = self.tokens.consume(IGNORE)
             if last is None:
                 token = self.tokens.get(0)
                 raise UnexpectedTokenError(token, "after the signature")
@@ -68,7 +62,8 @@ class Segmenter:
 
         # get yaml code if present
         if not end:
-            yaml = slice(last.stop, self.length)
+            start = last.stop if last is not None else 0
+            yaml = slice(start, self.length)
 
         # return slices
         return doc, sig, python, yaml
