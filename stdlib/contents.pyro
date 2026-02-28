@@ -13,9 +13,9 @@ and other fields.
 """
 
 (
-  content: str | Path | URL | dict,  # string, path, or URL source or a custom dict
-  headers: dict = {},                # map of request headers to add
-  **fields: Any,                     # additional fields to take over as they are
+    content: str | Path | URL | dict,  # string, path, or URL source or a custom dict
+    headers: dict = {},                # map of request headers to add
+    **fields: Any,                     # additional fields to take over as they are
 )
 
 ---

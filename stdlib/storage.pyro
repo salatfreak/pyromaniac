@@ -7,8 +7,9 @@ required and represents the path the object should be placed at in the *Butane*
 structure. The storage-specific standard library components return objects with
 the *__for__* field correctly set.
 
-If multiple entries with the same path exist in the *files*, *directories*, *links*, or *trees*
-list respectively, they will be merged into one entry per unique path.
+If multiple entries with the same path exist in the *files*, *directories*,
+*links*, or *trees* list respectively, they will be merged into one entry per
+unique path.
 
 **Example**:
 - Combine a file with a file tree:
@@ -45,48 +46,52 @@ def hierarchy(key: str, obj) -> dict:
 # normalize object hierarchies
 objects = [hierarchy(obj.get('__for__', ''), obj) for obj in objects]
 if any(list(obj.keys()) != ['storage'] for obj in objects):
-  raise ValueError('missing __for__ starting with "storage" in std.storage argument')
+    msg = 'missing __for__ starting with "storage" in std.storage argument'
+    raise ValueError(msg)
 
 # merge passed objects
 storage = _.py.merge(
-  *(obj['storage'] for obj in objects),
-  {'__for__': "storage"},
-  merge_lists=True,
+    *(obj['storage'] for obj in objects),
+    {'__for__': "storage"},
+    merge_lists=True,
 )
 
 # merge objects with identical paths
 for key in MERGE:
-  # get element list for key if present
-  elements = storage.get(key, None)
-  if not isinstance(elements, list): continue
+    # get element list for key if present
+    elements = storage.get(key, None)
+    if not isinstance(elements, list): continue
 
-  # ensure all elements are dicts
-  if not all(isinstance(element, dict) for element in elements):
-    raise ValueError(f"found element in storage.{key} that's not a dictionary")
+    # ensure all elements are dicts
+    if not all(isinstance(element, dict) for element in elements):
+        msg = f"found element in storage.{key} that's not a dictionary"
+        raise ValueError(msg)
 
-  # group elements by path
-  groups = {}
-  for element in elements:
-    # get element path
-    path = element.get("path", "/" if key == 'trees' else None)
-    if path is None:
-      raise ValueError(f"missing path on an element of storage.{key}")
+    # group elements by path
+    groups = {}
+    for element in elements:
+        # get element path
+        path = element.get("path", "/" if key == 'trees' else None)
+        if path is None:
+            raise ValueError(f"missing path on an element of storage.{key}")
 
-    # insert element into group
-    groups[path] = [*groups.get(path, []), element]
+        # insert element into group
+        groups[path] = [*groups.get(path, []), element]
 
-  # merge each group
-  elements.clear()
-  for group in groups.values():
-    merged = _.py.merge(*group, merge_lists=True)
+    # merge each group
+    elements.clear()
+    for group in groups.values():
+        merged = _.py.merge(*group, merge_lists=True)
 
-    # replace atomic properties with last specified value
-    for prop in ATOMIC:
-      last = next((element[prop] for element in reversed(group) if prop in element), None)
-      if last is not None:
-        merged[prop] = last
+        # replace atomic properties with last specified value
+        for prop in ATOMIC:
+            last = next((
+                element[prop] for element in reversed(group) if prop in element
+            ), None)
+            if last is not None:
+                merged[prop] = last
 
-    # add merged back into element list
-    elements.append(merged)
+        # add merged back into element list
+        elements.append(merged)
 
 storage

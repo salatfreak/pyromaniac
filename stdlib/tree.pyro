@@ -10,8 +10,8 @@ The *user* and *group* arguments are passed through the *std.ownership*
 component. See its documentation for further details.
 
 **Example:**
-- Copy config directory to "core" user's home directory making all directories read-only:
-  `std.tree(".config", _/"config", "core", dir_mode=0o555)`
+- Copy config directory to "core" user's home directory making all directories
+  read-only: `std.tree(".config", _/"config", "core", dir_mode=0o555)`
 """
 
 (
