@@ -10,33 +10,33 @@ with these rules applied recursively to each member.
 """
 
 (
-  base: Any,                  # base value to merge with
-  *values: Any,               # values to merge into base
-  merge_lists: bool = False,  # whether to merge lists
+    base: Any,                  # base value to merge with
+    *values: Any,               # values to merge into base
+    merge_lists: bool = False,  # whether to merge lists
 )
 
 ---
 
 # merge two dicts recursively
 def merge(a, b) -> Any:
-  # merge lists if enabled
-  if merge_lists and isinstance(a, list) and isinstance(b, list):
-    return a + b
+    # merge lists if enabled
+    if merge_lists and isinstance(a, list) and isinstance(b, list):
+        return a + b
 
-  # return b unless both are dicts
-  if not isinstance(a, dict) or not isinstance(b, dict):
-    return b
+    # return b unless both are dicts
+    if not isinstance(a, dict) or not isinstance(b, dict):
+        return b
 
-  # recursively merge dicts
-  return {
-    key: merge(a[key], b[key]) if key in a.keys() & b.keys()
-      else b.get(key, a.get(key))
-    for key in [*a.keys(), *(k for k in b.keys() if k not in a.keys())]
-  }
+    # recursively merge dicts
+    return {
+        key: merge(a[key], b[key]) if key in a.keys() & b.keys()
+            else b.get(key, a.get(key))
+        for key in [*a.keys(), *(k for k in b.keys() if k not in a.keys())]
+    }
 
 # merge all values into base
 result = base
 for v in values:
-  result = merge(result, v)
+    result = merge(result, v)
 
 result
