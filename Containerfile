@@ -1,5 +1,5 @@
 # get butane and coreos installer images
-FROM quay.io/coreos/butane:v0.25.1 AS butane
+FROM quay.io/coreos/butane:v0.27.0 AS butane
 FROM quay.io/coreos/coreos-installer:v0.25.0
 
 # copy butane executable
