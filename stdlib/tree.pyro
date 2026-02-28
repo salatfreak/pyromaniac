@@ -1,6 +1,6 @@
 """Add local directory tree with specified ownership.
 
-The result is intended to be added as the `storage` field.
+The result is intended to be added as an element to the `storage.trees` list.
 
 The *path* must be absolute unless the user name is specified, in which case
 relative paths will be interpreted relative to the user's default home
@@ -9,11 +9,9 @@ directory.
 The *user* and *group* arguments are passed through the *std.ownership*
 component. See its documentation for further details.
 
-If *mode* is True, file permissions will be copied from the original files.
-
 **Example:**
-- Copy config directory to "core" user's home directory preserving permissions:
-  `std.tree(".config", _/"config", "core", mode=True)`
+- Copy config directory to "core" user's home directory making all directories read-only:
+  `std.tree(".config", _/"config", "core", dir_mode=0o555)`
 """
 
 (
@@ -21,42 +19,20 @@ If *mode* is True, file permissions will be copied from the original files.
     local: Path,                    # local directory to copy files from
     user: int | str = None,         # user ID or name
     group: int | str | None = ...,  # group ID or name (defaults to the same as user)
-    mode: bool = False,             # whether to copy permission bits from the original files
-    overwrite: bool = False,        # whether to set the `overwrite` field on all nodes
+    **fields: Any,                  # additional fields to take over as they are
 )
 
 ---
-
-# node creation helper
-def node(local_path: Path, **custom):
-    return {
-        'path': path.joinpath(local_path.relative_to(local)),
-        **_.ownership(user, group),
-        **({'mode': local_path.lstat().st_mode % 0o10000} if mode else {}),
-        **({'overwrite': True} if overwrite else {}),
-        **custom,
-    }
-
 
 # interpret relative to home
 if not path.is_absolute() and isinstance(user, str):
     path = Path(f"/home/{user}", path)
 
-# assemble elements
-dirs, files, links = [], [], []
-for p in [local, *local.glob("**/*")]:
-    if p.is_symlink():
-        links.append(node(p, target=p.readlink(), __for__='storage.links[]'))
-    elif p.is_dir():
-        dirs.append(node(p, __for__='storage.directories[]'))
-    elif p.is_file():
-        tgt = 'storage.files[]'
-        files.append(node(p, contents=_.contents(p), __for__=tgt))
-
 # construct result
 {
-    '__for__': 'storage',
-    'directories': dirs,
-    'files': files,
-    'links': links,
+    '__for__': 'storage.trees[]',
+    'path': path,
+    'local': local,
+    **_.ownership(user, group),
+    **fields,
 }
