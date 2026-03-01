@@ -80,23 +80,11 @@ class Stream:
 
 # generate tokens with position in source code
 def generate(code: str) -> Iterator[Token]:
-    lines = code.splitlines(keepends=True)
-    current_line, line_start = 0, 0
+    starts = [0, *(i + 1 for i, c in enumerate(code) if c == '\n'), len(code)]
     try:
         for info in t.generate_tokens(StringIO(code).readline):
-            # get token start
-            while current_line < info.start[0] - 1:
-                line_start += len(lines[current_line])
-                current_line += 1
-            start = line_start + info.start[1]
-
-            # get token end
-            while current_line < info.end[0] - 1:
-                line_start += len(lines[current_line])
-                current_line += 1
-            end = line_start + info.end[1]
-
-            # yield token and position
+            start = starts[info.start[0] - 1] + info.start[1]
+            end = starts[info.end[0] - 1] + info.end[1]
             yield Token(info, slice(start, end))
     except t.TokenError:
         pass
