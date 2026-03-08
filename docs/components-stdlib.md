@@ -138,12 +138,13 @@ AttributeError because 42 has no attribute *bar*.
 ## Create file fields with specified content and file ownership
 ```python
 std.file(
-    path: Path,                               # path to create the file at in the final system
-    content: str | Path | URL | dict = None,  # string, path, or URL source or a custom dict
-    user: int | str = None,                   # user ID or name
-    group: int | str | None = ...,            # group ID or name (defaults to the same as user)
-    headers: dict = {},                       # map of request headers for URL contents
-    **fields: Any,                            # additional fields to take over as they are
+    path: Path,                                  # path to create the file at in the final system
+    content: str | Path | URL | dict = None,     # string, path, or URL source or a custom dict
+    user: int | str = None,                      # user ID or name
+    group: int | str | None = ...,               # group ID or name (defaults to the same as user)
+    headers: dict = {},                          # map of request headers for URL contents
+    append: list[str | Path | URL | dict] = [],  # list of contents to append
+    **fields: Any,                               # additional fields to take over as they are
 )
 ```
 
@@ -153,9 +154,10 @@ The *path* must be absolute unless the user name is specified, in which case
 relative paths will be interpreted relative to the user's default home
 directory.
 
-The *content* and *headers* arguments are passed through the *std.contents*
-component. The *user* and *group* arguments are passed through the
-*std.ownership* component. See their documentation for further details.
+The *content* argument and each element of the *append* list are passed through
+the *std.contents* component along with the *headers* argument. The *user* and
+*group* arguments are passed through the *std.ownership* component. See their
+documentation for further details.
 
 **Examples**:
 - Add inline file for root user: `std.file("/var/file.txt", "foo")`
@@ -301,8 +303,11 @@ std.contents(
 
 Will contain an "inline", "local", or "source" field depending on whether the
 *content* argument is a string, path, or URL. If *content* is a dict, all key
-value pairs from it will be copied into the result instead, overriding headers
-and other fields.
+value pairs from it will be copied into the result instead, overriding other
+fields.
+
+The *header* dict will be converted into a list and inserted as "http_headers"
+field, if the contents specify a remote source.
 
 **Examples**:
 - Specify contents inline: `std.contents("foo")`
