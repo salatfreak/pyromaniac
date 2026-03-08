@@ -8,7 +8,8 @@ This is the full help text of the pyromaniac program as produced by executing
 `pyromaniac --help`.
 
 ```
-Usage: pyromaniac [-p] [-s] [--iso] [--iso-arch ISO_ARCH] [--iso-net ISO_NET]
+Usage: pyromaniac [-p] [-s] [--iso] [--iso-arch ISO_ARCH]
+                  [--iso-stream {stable,testing,next}] [--iso-net ISO_NET]
                   [--iso-disk ISO_DISK] [--serve] [--address ADDRESS]
                   [--auth AUTH] [-v] [-h]
                   [input] [args ...]
@@ -26,49 +27,52 @@ Downloaded ISO images and encryption keys are stored in /data/cache and
 /data/secrets respectively and should be persisted as volumes.
 
 Positional:
-  input                Pyromaniac file or directory to compile. (default:
-                       standard input)
-  args                 Arguments to pass to the main component.
+  input                 Pyromaniac file or directory to compile. (default:
+                        standard input)
+  args                  Arguments to pass to the main component.
 
 Options:
-  -p, --pretty         Make butane produce pretty formatted JSON.
-  -s, --strict         Make butane fail on any warnings.
-  --iso                Generate an ISO live or installer image instead of an
-                       ignition config and write it to standard output. This
-                       is implied, if any --iso-* parameters are passed.
-  --iso-arch ISO_ARCH  Set the processor architecture to generate the ISO
-                       image for. (default: x86_64)
-  --iso-net ISO_NET    Set static network configuration values for the ISOs
-                       "ip=" kernel parameter as a comma-separated list of
-                       "<key>=<value>" pairs. The keys correspond to fields in
-                       the kernel parameter without "-ip" suffixes. See the
-                       example below.
-  --iso-disk ISO_DISK  Make the installer automatically install Fedora CoreOS
-                       to the specified disk and use the compiled ignition
-                       config for the target system instead of creating a
-                       live image from it.
-  --serve              Serve the compiled ignition config over HTTP(S)
-                       instead of writing it to standard out or generating an
-                       ISO image. Also serve secrets requested from
-                       "/+([a-z0-9-]).secret" by querying the user. These can
-                       be used in the config for requesting encryption keys
-                       to avoid storing those in plain text.
-  --address ADDRESS    Set the host and optionally the scheme and port the
-                       server is reachable at. The host can be an IPv4
-                       address, an IPv6 address in square brackets, or a
-                       domain name. These are used for generating
-                       certificates (in the case of HTTPS) and authentication
-                       credentials (if configured to be generated
-                       automatically) for a mutually secured connection.
-                       (default: http://127.0.0.1:8000/)
-  --auth AUTH          Set the credentials for HTTP(S) basic authentication
-                       in the format "USER:PASS". Use "auto" to generate
-                       credentials from a cryptographic hash of the address
-                       and a randomly generated but persistent salt. Use
-                       "none" to disable. (default: "none" for HTTP, "auto"
-                       for HTTPS)
-  -v, --verbose        Print stack trace on error.
-  -h, --help           Show this help message and exit.
+  -p, --pretty          Make butane produce pretty formatted JSON.
+  -s, --strict          Make butane fail on any warnings.
+  --iso                 Generate an ISO live or installer image instead of an
+                        ignition config and write it to standard output. This
+                        is implied, if any --iso-* parameters are passed.
+  --iso-arch ISO_ARCH   Set the processor architecture to generate the ISO
+                        image for. (default: x86_64)
+  --iso-stream {stable,testing,next}
+                        Set the update stream from which to download and
+                        customize the ISO image. (default: stable)
+  --iso-net ISO_NET     Set static network configuration values for the ISOs
+                        "ip=" kernel parameter as a comma-separated list of
+                        "<key>=<value>" pairs. The keys correspond to fields
+                        in the kernel parameter without "-ip" suffixes. See
+                        the example below.
+  --iso-disk ISO_DISK   Make the installer automatically install Fedora
+                        CoreOS to the specified disk and use the compiled
+                        ignition config for the target system instead of
+                        creating a live image from it.
+  --serve               Serve the compiled ignition config over HTTP(S)
+                        instead of writing it to standard out or generating
+                        an ISO image. Also serve secrets requested from
+                        "/+([a-z0-9-]).secret" by querying the user. These
+                        can be used in the config for requesting encryption
+                        keys to avoid storing those in plain text.
+  --address ADDRESS     Set the host and optionally the scheme and port the
+                        server is reachable at. The host can be an IPv4
+                        address, an IPv6 address in square brackets, or a
+                        domain name. These are used for generating
+                        certificates (in the case of HTTPS) and
+                        authentication credentials (if configured to be
+                        generated automatically) for a mutually secured
+                        connection. (default: http://127.0.0.1:8000/)
+  --auth AUTH           Set the credentials for HTTP(S) basic authentication
+                        in the format "USER:PASS". Use "auto" to generate
+                        credentials from a cryptographic hash of the address
+                        and a randomly generated but persistent salt. Use
+                        "none" to disable. (default: "none" for HTTP, "auto"
+                        for HTTPS)
+  -v, --verbose         Print stack trace on error.
+  -h, --help            Show this help message and exit.
 
 Additionally, when generating an ISO you can specify flags to be passed on to
 `coreos-installer iso customize` by prefixing them with "--iso-raw-" (e.g.,
@@ -89,5 +93,5 @@ $ pyromaniac --iso \
 ... <<< '`remote()`' > installer.iso
 
 Serve a config over a mutually authenticated encrypted network connection:
-$ pyromaniac --serve --address https://192.168.0.16:4433/ -i config.py
+$ pyromaniac --serve --address https://192.168.0.16:4433/ config.pyro
 ```
