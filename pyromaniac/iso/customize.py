@@ -6,7 +6,7 @@ from .errors import DownloadError, CustomizeError
 
 
 def customize(
-    ignition: str, arch: str, net: str | None, disk: str | None,
+    ignition: str, arch: str, stream: str, net: str | None, disk: str | None,
     installer_args: list[tuple],
 ):
     """Write ISO image with embedded ignition config to stdout.
@@ -16,26 +16,31 @@ def customize(
 
     :param ignition: ignition config to be embedded
     :param arch: processor architecture to create ISO image for
+    :param stream: update stream to download ISO image from
     :param net: optional value for adding "ip=" kernel argument
     :param disk: optional disk path for automatic installation
     :param installer_args: arguments to pass on to CoreOS Installer
     """
 
     # get base image
-    base = get_base_image(arch)
+    base = get_base_image(arch, stream)
 
     # customize image
     customize_base_image(base, ignition, net, disk, installer_args)
 
 
-def get_base_image(arch: str) -> Path:
+def get_base_image(arch: str, stream: str) -> Path:
     # make sure directory exists
-    paths.images.mkdir(parents=True, exist_ok=True)
+    path = paths.images / stream
+    path.mkdir(parents=True, exist_ok=True)
 
     # download image
     res = subprocess.run([
-        paths.installer, "download", "-f", "iso",
-        "--architecture", arch, "-C", paths.images,
+        paths.installer, "download",
+        "--format", "iso",
+        "--stream", stream,
+        "--architecture", arch,
+        "--directory", path,
     ], capture_output=True, text=True)
 
     if res.returncode != 0:
@@ -43,16 +48,16 @@ def get_base_image(arch: str) -> Path:
 
     # get image path
     image = Path(res.stdout.splitlines()[-1])
-    if not image.is_relative_to(paths.images) or image.suffix != ".iso":
+    if not image.is_relative_to(path) or image.suffix != ".iso":
         raise DownloadError(f"unexpected download output:\n{res.stdout}")
 
     # remove old image versions
     suffix = ".".join(image.name.split(".")[-2:])
-    for f in paths.images.glob("*.iso"):
+    for f in path.glob("*.iso"):
         if not f.name.endswith(suffix) or f.samefile(image):
             continue
         f.unlink()
-        f.with_name(f.name + ".sig").unlink()
+        f.with_name(f.name + ".sig").unlink(missing_ok=True)
 
     # return image path
     return image

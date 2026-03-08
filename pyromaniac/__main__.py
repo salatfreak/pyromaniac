@@ -39,7 +39,7 @@ try:
             print(ignition())
         case 'iso':
             customize(
-                ignition(), args.iso_arch, args.iso_net, args.iso_disk,
+                ignition(), args.iso_arch, args.iso_stream, args.iso_net, args.iso_disk,
                 args.installer,
             )
         case 'serve':
