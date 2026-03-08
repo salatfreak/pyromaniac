@@ -12,9 +12,9 @@ from .installer import generate
 
 parser = ArgumentParser(prog="pyromaniac", description=(
     "Compile a pyromaniac config into ignition format and output it as a "
-    "string, as an live or installer ISO image or over HTTP(S). Automatically "
+    "string, as a live or installer ISO image or over HTTP(S). Automatically "
     "generate TLS certificates and authentication credentials for secured "
-    "network based installations."
+    "network-based installations."
     "\n\n"
     "The pyromaniac configuration format is described in the official "
     "documentation:\n"
@@ -45,7 +45,7 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     "\n\n"
     "Serve a config over a mutually authenticated encrypted network "
     "connection:\n"
-    "$ pyromaniac --serve --address https://192.168.0.16:4433/ -i config.py"
+    "$ pyromaniac --serve --address https://192.168.0.16:4433/ config.pyro"
 ), formatter_class=Formatter, add_help=False)
 parser._positionals.title = "Positional"
 parser._optionals.title = "Options"
