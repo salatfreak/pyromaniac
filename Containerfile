@@ -12,7 +12,7 @@ RUN dnf install -y /usr/bin/pip3 && dnf clean all
 COPY pyproject.toml README.md LICENSE /src/
 RUN \
   install -D /dev/null /src/pyromaniac/__init__.py && \
-  pip install --no-cache-dir --editable /src
+  pip install --root-user-action=ignore --no-cache-dir --editable /src
 COPY pyromaniac /src/pyromaniac/
 COPY stdlib /usr/local/lib/pyromaniac/std
 
