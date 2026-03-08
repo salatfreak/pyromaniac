@@ -74,6 +74,14 @@ parser.add_argument("--iso-arch", action=IsoStore, default="x86_64", help=(
     "Set the processor architecture to generate the ISO image for. (default: "
     "%(default)s)"
 ))
+parser.add_argument(
+    "--iso-stream", action=IsoStore, default="stable",
+    choices=["stable", "testing", "next"],
+    help=(
+        "Set the update stream from which to download and customize the ISO image. "
+        "(default: %(default)s)"
+    ),
+)
 parser.add_argument("--iso-net", action=IsoStore, type=types.net, help=(
     'Set static network configuration values for the ISOs "ip=" kernel '
     'parameter as a comma-separated list of "<key>=<value>" pairs. The keys '
