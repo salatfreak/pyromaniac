@@ -13,6 +13,33 @@ class TestContents(TestCase):
         result = self.call('std.contents', {'inline': "foo"})
         self.assertEqual(result, {'inline': "foo"})
 
+    def test_headers(self):
+        path, url = Path("file.txt"), URL("https://example.com/")
+        self.assertEqual(
+            self.call('std.contents', "foo", headers={"bar": "baz"}),
+            {"inline": "foo"},
+        )
+        self.assertEqual(
+            self.call('std.contents', path, headers={"qux": "quux"}),
+            {"local": path},
+        )
+        self.assertEqual(
+            self.call('std.contents', url, headers={"corge": "waldo"}),
+            {"source": url, "http_headers": [{"name": "corge", "value": "waldo"}]},
+        )
+
+        result = self.call('std.contents',
+            {'inline': "foo", 'http_headers': [{'name': "bar", 'value': "baz"}]},
+            headers={"qux": "quux"},
+            http_headers=[{'name': "corge", 'value': "waldo"}],
+        )
+        self.assertEqual(set(result.keys()), {"inline", "http_headers"})
+        self.assertEqual(sorted(result['http_headers'], key=lambda h: h['name']), [
+            {'name': "bar", 'value': "baz"},
+            {'name': "corge", 'value': "waldo"},
+            {'name': "qux", 'value': "quux"}
+        ])
+
     def test_complex(self):
         result = self.call('std.contents', {
             'source': "https://example.com/",
