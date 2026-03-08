@@ -40,5 +40,6 @@ if $serve; then params+=(--publish "$port:8000"); fi
 exec podman run \
   --rm --interactive --security-opt 'label=disable' \
   --volume '.:/spec:ro' \
+  --userns 'keep-id:uid=1000,gid=1000' \
   "${params[@]}" \
   ghcr.io/salatfreak/pyromaniac:0.5.0 "${args[@]}"
