@@ -6,9 +6,10 @@ The *path* must be absolute unless the user name is specified, in which case
 relative paths will be interpreted relative to the user's default home
 directory.
 
-The *content* and *headers* arguments are passed through the *std.contents*
-component. The *user* and *group* arguments are passed through the
-*std.ownership* component. See their documentation for further details.
+The *content* argument and each element of the *append* list are passed through
+the *std.contents* component along with the *headers* argument. The *user* and
+*group* arguments are passed through the *std.ownership* component. See their
+documentation for further details.
 
 **Examples**:
 - Add inline file for root user: `std.file("/var/file.txt", "foo")`
@@ -17,12 +18,13 @@ component. The *user* and *group* arguments are passed through the
 """
 
 (
-    path: Path,                               # path to create the file at in the final system
-    content: str | Path | URL | dict = None,  # string, path, or URL source or a custom dict
-    user: int | str = None,                   # user ID or name
-    group: int | str | None = ...,            # group ID or name (defaults to the same as user)
-    headers: dict = {},                       # map of request headers for URL contents
-    **fields: Any,                            # additional fields to take over as they are
+    path: Path,                                  # path to create the file at in the final system
+    content: str | Path | URL | dict = None,     # string, path, or URL source or a custom dict
+    user: int | str = None,                      # user ID or name
+    group: int | str | None = ...,               # group ID or name (defaults to the same as user)
+    headers: dict = {},                          # map of request headers for URL contents
+    append: list[str | Path | URL | dict] = [],  # list of contents to append
+    **fields: Any,                               # additional fields to take over as they are
 )
 
 ---
@@ -34,6 +36,10 @@ if not path.is_absolute() and isinstance(user, str):
 # add contents
 if content is not None:
     fields['contents'] = _.contents(content, headers)
+
+# add contents to append
+if append != []:
+    fields['append'] = [_.contents(cnt, headers) for cnt in append]
 
 # construct result
 {
