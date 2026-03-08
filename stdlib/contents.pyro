@@ -2,8 +2,11 @@
 
 Will contain an "inline", "local", or "source" field depending on whether the
 *content* argument is a string, path, or URL. If *content* is a dict, all key
-value pairs from it will be copied into the result instead, overriding headers
-and other fields.
+value pairs from it will be copied into the result instead, overriding other
+fields.
+
+The *header* dict will be converted into a list and inserted as "http_headers"
+field, if the contents specify a remote source.
 
 **Examples**:
 - Specify contents inline: `std.contents("foo")`
@@ -35,8 +38,8 @@ match content:
     case URL(): fields['source'] = content
     case dict(): fields = {**fields, **content}
 
-# insert headers
-if header_list != []:
+# insert headers if remote content or some already present
+if {'source', 'http_headers'} & fields.keys() and header_list != []:
     fields['http_headers'] = header_list
 
 # return constructed fields
