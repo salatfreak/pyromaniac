@@ -49,3 +49,24 @@ class TestFile(TestCase):
             'group': {'name': "core"},
             '__for__': target,
         })
+
+    def test_append(self):
+        self.assertEqual(self.call(
+            "/foo.txt",
+            append=["bar", Path("bar.txt"), URL("https://example.com/")],
+            headers={"Authorization": "Basic secret"},
+        ), {
+            'path': Path("/foo.txt"),
+            'append': [
+                {'inline': "bar"},
+                {'local': Path("bar.txt")},
+                {
+                    'source': URL("https://example.com/"),
+                    'http_headers': [{
+                        'name': "Authorization",
+                        'value': "Basic secret",
+                    }],
+                },
+            ],
+            '__for__': target,
+        })
