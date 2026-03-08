@@ -12,8 +12,11 @@ class TestIso(TestCase):
     @patch('subprocess.run')
     def test_get_base_image(self, images: Path, run: Mock):
         # create files
-        old = images / "test-1.x86_64.iso"
-        iso = images / "test-2.x86_64.iso"
+        path = images / "stable"
+        old = path / "test-1.x86_64.iso"
+        iso = path / "test-2.x86_64.iso"
+
+        path.mkdir()
         old.write_text("old")
         old.with_suffix(".iso.sig").write_text("old")
         iso.write_text("new")
@@ -24,7 +27,7 @@ class TestIso(TestCase):
 
         # call function and check results
         with patch('pyromaniac.paths.images', images):
-            self.assertEqual(get_base_image("x86_64"), iso)
+            self.assertEqual(get_base_image("x86_64", "stable"), iso)
 
         # check subprocess function call
         args = run.call_args.args
@@ -33,7 +36,7 @@ class TestIso(TestCase):
         # check file existence
         self.assertTrue(iso.exists())
         iso.unlink()
-        self.assertFalse(any(images.iterdir()))
+        self.assertFalse(any(path.iterdir()))
 
     @patch('subprocess.run')
     def test_customize_base_image_min(self, run: Mock):
