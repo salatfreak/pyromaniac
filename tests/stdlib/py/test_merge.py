@@ -1,7 +1,7 @@
-from .base import TestCase
+from ..base import TestCase
 
 
-class TestPython(TestCase):
+class TestPyMerge(TestCase):
     comp = 'std.py.merge'
 
     def test_primitive(self):
