@@ -22,29 +22,11 @@ unique path.
 )
 
 ---
-
 MERGE = ['files', 'directories', 'links', 'trees']
 ATOMIC = ['contents', 'user', 'group']
 
-# embed obj in hierarchy according to key
-def hierarchy(key: str, obj) -> dict:
-    # parse target path
-    path = key.split('.')
-    append = path[-1].endswith("[]")
-    if append:
-        path[-1] = path[-1][:-2]
-
-    # construct hierarchy
-    result = {}
-    current = result
-    for i, n in enumerate(path):
-        current[n] = {} if i + 1 < len(path) else [obj] if append else obj
-        current = current[n]
-
-    return result
-
 # normalize object hierarchies
-objects = [hierarchy(obj.get('__for__', ''), obj) for obj in objects]
+objects = [_.py.hierarchy(obj.get('__for__', ''), obj) for obj in objects]
 if any(list(obj.keys()) != ['storage'] for obj in objects):
     msg = 'missing __for__ starting with "storage" in std.storage argument'
     raise ValueError(msg)
