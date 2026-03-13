@@ -35,7 +35,7 @@ def generate() -> Iterable[tuple[list[str], dict[str, Any]]]:
     """
     for name, arg_count in ARGS:
         args = [f"--iso-raw-{name}"]
-        kwargs = {'dest': 'installer', 'default': [], 'help': SUPPRESS}
+        kwargs: dict = {'dest': 'installer', 'default': [], 'help': SUPPRESS}
         match arg_count:
             case 0:
                 kwargs.update({'action': IsoAppendConst, 'const': (name,)})
