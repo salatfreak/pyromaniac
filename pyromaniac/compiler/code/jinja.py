@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, cast
 from collections.abc import Iterable, Mapping
 from datetime import date, datetime, time
 from pathlib import PosixPath as Path
@@ -51,7 +51,7 @@ tests = {"series": test_series, "ellipsis": test_ellipsis}
 # default environment
 default_env = Environment()
 default_env.filters.update({k: v for k, v in filters.items() if k != 'raw'})
-default_env.tests.update(tests)
+cast(dict, default_env.tests).update(tests)
 
 
 # JSON environment
@@ -65,7 +65,7 @@ def json_finalize(obj: Any) -> str:
 
 json_env = Environment(finalize=json_finalize)
 json_env.filters.update(filters)
-json_env.tests.update(tests)
+cast(dict, json_env.tests).update(tests)
 
 
 # TOML environment
@@ -100,7 +100,7 @@ def toml_finalize(obj: Any) -> str:
 
 toml_env = Environment(finalize=toml_finalize)
 toml_env.filters.update(filters)
-toml_env.tests.update(tests)
+cast(dict, toml_env.tests).update(tests)
 
 
 # pyromaniac environment
@@ -109,4 +109,4 @@ pyro_env = Environment(
     extensions=[RunExtension],
 )
 pyro_env.filters.update(filters)
-pyro_env.tests.update(tests)
+cast(dict, pyro_env.tests).update(tests)

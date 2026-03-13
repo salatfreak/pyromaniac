@@ -1,4 +1,4 @@
-from typing import Self
+from typing import Self, cast
 from base64 import b64encode
 
 from .server.auth import auto_auth
@@ -66,10 +66,10 @@ class Remote:
         """
         ign = {'config': {'merge': [{'source': self.url / "config.ign"}]}}
         if self.auth is not None:
-            ign['config']['merge'][0]['http_headers'] = [
+            cast(dict, ign['config']['merge'][0])['http_headers'] = [
                 {'name': k, 'value': v} for k, v in self.headers.items()
             ]
         if self.scheme == "https":
             certs = [{'inline': root()[0].read_text()}]
-            ign['security'] = {'tls': {'certificate_authorities': certs}}
+            cast(dict, ign)['security'] = {'tls': {'certificate_authorities': certs}}
         return {'ignition': ign}
