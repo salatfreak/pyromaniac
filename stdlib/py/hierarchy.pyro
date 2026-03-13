@@ -1,0 +1,29 @@
+"""Embed object in data structure according to specified path.
+
+The *path* represents the dot-separated path the object should be placed at in
+the resulting structure. If it ends with "[]", the object will be placed inside
+an array.
+
+**Example:**
+- Wrap an object as in `{"storage": {"files": [obj]}}`: 
+  `std.py.hierarchy("storage.files[]", obj)`
+"""
+
+(path: str, obj: Any)
+
+---
+
+# parse target path
+path = path.split('.')
+append = path[-1].endswith("[]")
+if append:
+    path[-1] = path[-1][:-2]
+
+# construct hierarchy
+result = {}
+current = result
+for i, n in enumerate(path):
+    current[n] = {} if i + 1 < len(path) else [obj] if append else obj
+    current = current[n]
+
+result
