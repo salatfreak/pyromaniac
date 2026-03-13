@@ -38,3 +38,18 @@ class TestMerge(TestCase):
             ],
             '__for__': target,
         }])
+
+    def test_for(self):
+        merge = self.call(Path("/var/foo.txt"), URL("https://bar.com/"))
+        result = self.call(
+            {'__for__': "storage.files[]", 'path': "/var/baz.txt"},
+            *merge,
+            {'systemd.units[0].name': "sshd.service"},
+        )
+        self.assertEqual(loads(result[0]['inline'])['storage'], {
+            'files': [{'path': "/var/baz.txt"}],
+        })
+        self.assertEqual(result[1:3], merge)
+        self.assertEqual(loads(result[3]['inline'])['systemd'], {
+            'units': [{'name': "sshd.service"}],
+        })
