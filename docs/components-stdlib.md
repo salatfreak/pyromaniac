@@ -20,9 +20,11 @@ std.merge(
 The result is intended to be added as the `ignition.config.merge` field.
 
 For strings, paths, and URLs, the result of passing them to the *std.contents*
-component is added to the merge. For dicts, composite keys are expanded, and
-they are rendered to a string using Butane. Empty dicts are ignored. The
-*headers* dict is passed to the *contents* component only for URLs.
+component is added to the merge. For dicts, they are rendered into a string
+using Butane after all composite keys are expanded. Empty dicts are skipped. If
+the dict has a "__for__" field, it will be embedded into the Butane hierarchy
+accordingly using the *std.py.hierarchy* component. The *headers* dict is
+passed to the *contents* component only for URLs.
 
 **Example:**
 - Merge inline Butane config with remote ignition file using authentication:
@@ -360,4 +362,19 @@ with these rules applied recursively to each member.
 **Example:**
 - Merge two dicts including a list: `std.py.merge({"a": {"b": 13, "c": 69}, "users":
 ["root"]}, {"a": {"b": 42}, "users": ["core"]}, merge_lists=True)`
+
+## Embed object in data structure according to specified path
+```python
+std.py.hierarchy(
+path: str, obj: Any
+)
+```
+
+The *path* represents the dot-separated path the object should be placed at in
+the resulting structure. If it ends with "[]", the object will be placed inside
+an array.
+
+**Example:**
+- Wrap an object as in `{"storage": {"files": [obj]}}`: 
+  `std.py.hierarchy("storage.files[]", obj)`
 {% endraw %}
