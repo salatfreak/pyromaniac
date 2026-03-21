@@ -30,9 +30,9 @@ class Signature:
         context: dict[str, Any] = {'Any': Any, 'Path': Path, 'URL': URL}
         try:
             exec(f"def func({code}): pass", context)
+            sig = inspect.signature(context['func'])
         except Exception as e:
             raise InvalidSignatureError() from e
-        sig = inspect.signature(context['func'])
         types = {n: get_type(p) for n, p in sig.parameters.items()}
         return cls(sig, types)
 
