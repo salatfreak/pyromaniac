@@ -24,7 +24,8 @@ class Server(HTTPServer):
 
         if scheme == 'https':
             context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-            context.load_cert_chain(*certs.server(host))
+            with certs.server(host) as cert_paths:
+                context.load_cert_chain(*cert_paths)
             self.socket = context.wrap_socket(self.socket, server_side=True)
 
         self.scheme = scheme
