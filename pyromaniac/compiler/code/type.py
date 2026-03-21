@@ -9,7 +9,7 @@ from ..url import URL
 class Type:
     """Type specification for runtime time checking and coercion."""
 
-    def __init__(self, typ: type):
+    def __init__(self, typ: type | UnionType):
         self.typ = typ
 
     def coerce(self, value: Any) -> Any:
@@ -156,7 +156,7 @@ class TypeDict(TypeGeneric):
 
 class TypeUnion(Type):
     def __init__(self, typ: UnionType):
-        super().__init__(type)
+        super().__init__(typ)
         self.subtypes = tuple(Type.create(t) for t in typ.__args__)
 
     def coerce(self, value: Any) -> Any:
