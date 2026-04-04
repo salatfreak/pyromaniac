@@ -23,7 +23,7 @@ parameterized components, or build and publish your own libraries with ease.
 
 [docs]: https://salatfreak.github.io/pyromaniac/
 
-# 💫 One Tool to Rule Them All 💫
+# 💫 One Tool to Rule Them All
 *Pyromaniac* combines the powers of [Butane][butane], the [CoreOS
 Installer][installer], and even comes with an *HTTP(S)* server for loading your
 configurations over the network, saving you the hassle of generating a new
@@ -58,7 +58,7 @@ Learn more in the [CLI Documentation][cli].
 [installer]: https://coreos.github.io/coreos-installer/
 [cli]: https://salatfreak.github.io/pyromaniac/cli.html
 
-# 🧁 Sugar, Parameterization, and Decomposition 🧁
+# 🧁 Sugar, Parameterization, and Decomposition
 *Pyromaniac* extends the *Butane* format with support for composite keys,
 [Jinja][jinja] templating using the "\`" (backtick) delimiter, and
 parameterized components for better clarity and maintainability.
@@ -101,7 +101,7 @@ Learn more in the [Component Documentation][components].
 [jinja]: https://jinja.palletsprojects.com/
 [components]: https://salatfreak.github.io/pyromaniac/components.html
 
-# 🐍 Arbitrary Python Code, Local Files, and More! 🐍
+# 🐍 Arbitrary Python Code, Local Files, and More!
 *Pyromaniac* allows you to include arbitrary *python* code into your
 configuration including the definition of functions and even classes, to make
 your components even more powerful. It also comes with a standard library of
