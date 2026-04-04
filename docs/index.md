@@ -29,8 +29,8 @@ Interface][cli] page. You can mostly use it as a drop-in replacement for
 *Butane*, but *Pyromaniac* doesn't support all of its command line options and
 has a couple of exciting additional features.
 
-You will write your configuration source code as *Pyromaniac* components. Don't
-worry: Your existing *Butane* configuration files are already valid
+You will write your configuration source code as *Pyromaniac* components. But
+fear not: Your existing *Butane* configuration files are already valid
 *Pyromaniac* components. The [Components][components] page is all about the
 syntax and built-in functions that *Pyromaniac* has to offer.
 
