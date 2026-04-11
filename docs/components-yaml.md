@@ -32,10 +32,10 @@ Especially when nesting calls to components, embedded *Python* expressions in
 your *Jinja* code can become pretty hard to read. You can use *run* blocks to
 specify the parameters to a component or other function as *YAML* sequences or
 mappings. You simply write your parameter list or mapping as the body between a
-`{% run my_component %}` and an `{% endrun %}` block. In the opening block, you
-can add additional positional and keyword arguments, separated by commas, after
-the component/function name. They will be prepended to the ones specified in
-the *YAML* body.
+{% raw %}`{% run my_component %}` and an `{% endrun %}`{% endraw %} block. In
+the opening block, you can add additional positional and keyword arguments,
+separated by commas, after the component/function name. They will be prepended
+to the ones specified in the *YAML* body.
 
 The following example creates a  [*std.merge*][merge] of two configurations
 specified as a *YAML* sequence. HTTP headers (which have no actual use in this
@@ -45,6 +45,7 @@ config is just a normal nested *YAML* structure. The second one uses another
 positional parameters are specified in the opening block, and the *YAML* body
 is used to add keyword arguments.
 
+{% raw %}
 ```python
 ignition.config.merge: {% run std.merge headers={'Authorization': "..."} %}
   - passwd.users[0]:
@@ -56,6 +57,7 @@ ignition.config.merge: {% run std.merge headers={'Authorization': "..."} %}
   {% endrun %}
 {% endrun %}
 ```
+{% endraw %}
 
 [file]: components-stdlib.html#create-file-fields-with-specified-content-and-file-ownership
 [merge]: components-stdlib.html#create-merge-fields-for-inline-local-andor-remote-configs

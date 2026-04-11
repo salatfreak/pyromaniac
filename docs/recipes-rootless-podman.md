@@ -88,6 +88,7 @@ std.file(f".config/containers/systemd/{name}.{ext}", "\n".join(lines), user)
 
 It could be used to add a file for the unit from above as follows:
 
+{% raw %}
 ```python
 storage.files[0]: {% run _.quadlet "myuser", "my-service" %}
   unit.description: My Service
@@ -96,3 +97,4 @@ storage.files[0]: {% run _.quadlet "myuser", "my-service" %}
   install.wanted_by: default.target
 {% endrun %}
 ```
+{% endraw %}
