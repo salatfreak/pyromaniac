@@ -11,6 +11,11 @@ You can even nest libraries as deeply as you like.
 You won't have to learn a new build system or package manager, because
 you can simply employ *Git* submodules for this.
 
+A comprehensive collection of components providing solutions to many common
+problems can be found in the [Pyromaniac Basics Library][pyromaniac-lib].
+
+[pyromaniac-lib]: https://github.com/salatfreak/pyromaniac-lib
+
 ## Creating a Library
 All you need to do to create a library is initialize a separate repository
 (`git init`) and populate it with your source files.

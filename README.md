@@ -18,10 +18,12 @@ parameterized components, or build and publish your own libraries with ease.
 
 > [!TIP]
 > You can learn all about *Pyromaniac* in [the documentation][docs] or keep
-> reading this document to get an overview of some of *Pyromaniacs* main
-> features.
+> reading this document to get an overview of some of *Pyromaniac*'s main
+> features. You can also check out our [example deployment][example] to see
+> *Pyromaniac* in action.
 
 [docs]: https://salatfreak.github.io/pyromaniac/
+[example]: https://github.com/salatfreak/pyromaniac-example
 
 # 💫 One Tool to Rule Them All
 *Pyromaniac* combines the powers of [Butane][butane], the [CoreOS

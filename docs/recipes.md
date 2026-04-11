@@ -13,5 +13,9 @@ Libraries][libraries] are of special importance. Reading them before starting
 any larger *Pyromaniac* project might provide some valuable insights about how
 to model your code base.
 
+To see a full deployment that you can also use as a template for your own
+projects, check out our [example deployment][example].
+
 [structure]: recipes-structure.html
 [libraries]: recipes-libraries.html
+[example]: https://github.com/salatfreak/pyromaniac-example
