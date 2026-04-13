@@ -369,7 +369,8 @@ with these rules applied recursively to each member.
 ## Embed object in data structure according to specified path
 ```python
 std.py.hierarchy(
-path: str, obj: Any
+    path: str,  # path to embed object at
+    obj: Any,   # object to embed
 )
 ```
 

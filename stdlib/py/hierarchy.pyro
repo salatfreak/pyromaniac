@@ -9,7 +9,10 @@ an array.
   `std.py.hierarchy("storage.files[]", obj)`
 """
 
-(path: str, obj: Any)
+(
+    path: str,  # path to embed object at
+    obj: Any,   # object to embed
+)
 
 ---
 
