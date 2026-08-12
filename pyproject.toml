@@ -1,7 +1,7 @@
 [project]
 name = "pyromaniac"
 version = "0.6.0"
-description = "Obsessed with creating Ignition"
+description = "Framework and Toolkit for Modular Fedora CoreOS Configurations"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "salatfreak" }]
