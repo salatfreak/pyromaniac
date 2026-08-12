@@ -10,7 +10,7 @@ from pyromaniac.compiler.butane import butane, configure
 @patch('sys.stderr', Mock())
 class TestButane(TestCase):
     def test_configure(self):
-        config = {'foo': "bar", 'variant': "fcos", 'version': "1.6.0"}
+        config = {'foo': "bar", 'variant': "fcos", 'version': "1.7.0"}
         self.assertEqual(len(butane(config).splitlines()), 1)
         configure(["--pretty"])
         self.assertGreater(len(butane(config).splitlines()), 1)
@@ -19,12 +19,12 @@ class TestButane(TestCase):
             butane(config)
 
     def test_butane(self):
-        config = {'variant': "fcos", 'version': "1.6.0"}
+        config = {'variant': "fcos", 'version': "1.7.0"}
         self.assertIn("version", json.loads(butane(config))["ignition"])
 
     def test_path(self):
         config = {
-            'variant': "fcos", 'version': "1.6.0",
+            'variant': "fcos", 'version': "1.7.0",
             'storage': {'files': [{'path': Path("/foo/bar")}]},
         }
         ignition = json.loads(butane(config))
