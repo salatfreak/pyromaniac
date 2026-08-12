@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, cast
 from inspect import Parameter
 from contextlib import suppress
 
@@ -37,6 +37,7 @@ def parse(
         args[i] = convert_to_type(value, typ)
 
     # convert keyword arguments
+    kwargs = cast(dict[str, Any], kwargs)
     kw_types = {
         n: signature.types[n] for n, p in signature.sig.parameters.items()
         if p.kind in (Parameter.POSITIONAL_OR_KEYWORD, Parameter.KEYWORD_ONLY)
@@ -95,15 +96,15 @@ def parse_options(
 # convert argument to specified type or return it as is
 def convert_to_type(value: str, typ: Type) -> Any:
     match typ:
-        case Type(typ=typ) if typ is bool:
+        case Type(typ=t) if t is bool:
             if value.lower() == "true":
                 return True
             elif value.lower() == "false":
                 return False
-        case TypeNumber(typ=typ) if typ is int:
+        case TypeNumber(typ=t) if t is int:
             with suppress(ValueError):
                 return int(value)
-        case TypeNumber(typ=typ) if typ is float:
+        case TypeNumber(typ=t) if t is float:
             with suppress(ValueError):
                 return float(value)
 
