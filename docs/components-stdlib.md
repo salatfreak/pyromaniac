@@ -251,12 +251,11 @@ std.tree(
     local: Path,                    # local directory to copy files from
     user: int | str = None,         # user ID or name
     group: int | str | None = ...,  # group ID or name (defaults to the same as user)
-    mode: bool = False,             # whether to copy permission bits from the original files
-    overwrite: bool = False,        # whether to set the `overwrite` field on all nodes
+    **fields: Any,                  # additional fields to take over as they are
 )
 ```
 
-The result is intended to be added as the `storage` field.
+The result is intended to be added as an element to the `storage.trees` list.
 
 The *path* must be absolute unless the user name is specified, in which case
 relative paths will be interpreted relative to the user's default home
@@ -265,11 +264,9 @@ directory.
 The *user* and *group* arguments are passed through the *std.ownership*
 component. See its documentation for further details.
 
-If *mode* is True, file permissions will be copied from the original files.
-
 **Example:**
-- Copy config directory to "core" user's home directory preserving permissions:
-  `std.tree(".config", _/"config", "core", mode=True)`
+- Copy config directory to "core" user's home directory making all directories
+  read-only: `std.tree(".config", _/"config", "core", dir_mode=0o555)`
 
 ## Create storage fields for combining file system objects
 ```python
