@@ -46,7 +46,7 @@ parser = ArgumentParser(prog="pyromaniac", description=(
     "Serve a config over a mutually authenticated encrypted network "
     "connection:\n"
     "$ pyromaniac --serve --address https://192.168.0.16:4433/ config.pyro"
-), formatter_class=Formatter, add_help=False)
+), formatter_class=Formatter, allow_abbrev=False, add_help=False)
 parser._positionals.title = "Positional"
 parser._optionals.title = "Options"
 
