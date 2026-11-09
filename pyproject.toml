@@ -18,7 +18,7 @@ packages = ["pyromaniac"]
 
 [tool.ruff]
 target-version = "py312"
-lint = { select = ["F", "E", "W"], preview = true }
+lint = { select = ["F", "E", "W"] }
 
 [tool.ty.environment]
 python-version = "3.12"
