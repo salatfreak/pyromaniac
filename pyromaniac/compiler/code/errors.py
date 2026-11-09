@@ -92,10 +92,10 @@ class PythonSyntaxError(PythonError):
 
 class PythonRuntimeError(PythonError):
     """Error raised when component python code raises error at runtime."""
-    __cause__: BaseException
 
     def message(self) -> str:
         err = self.__cause__
+        assert err is not None
         trace = format_exception(type(err), err, err.__traceback__)
         return "".join(trace[2:]).rstrip()
 
@@ -106,10 +106,10 @@ class YamlError(CodeError):
 
 class YamlTemplateError(YamlError):
     """Error raised when jinja template is invalid."""
-    __cause__: TemplateSyntaxError
 
     def message(self) -> str:
         err = self.__cause__
+        assert isinstance(err, TemplateSyntaxError)
         details = f"{err.message} in line {err.lineno}" if err.lineno else ""
         details = details[:1].upper() + details[1:]
         return f"Syntax error in jinja template: {details}"
@@ -117,10 +117,10 @@ class YamlTemplateError(YamlError):
 
 class YamlExecutionError(YamlError):
     """Error raised when rendering jinja template raises error."""
-    __cause__: BaseException
 
     def message(self) -> str:
         err = self.__cause__
+        assert err is not None
         trace = format_exception(type(err), err, err.__traceback__)
         return "".join(trace[4:]).rstrip()
 

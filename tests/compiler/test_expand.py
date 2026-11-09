@@ -1,5 +1,5 @@
 from typing import Any
-from collections.abc import Iterator
+from collections.abc import Generator
 from unittest import TestCase
 from contextlib import contextmanager
 
@@ -98,7 +98,7 @@ class TestExpand(TestCase):
     @contextmanager
     def assertKeyExpandError(
         self, typ: type[KeyExpandError], key: str
-    ) -> Iterator:
+    ) -> Generator:
         with self.assertRaises(typ) as ctx:
             yield ctx
         self.assertEqual(ctx.exception.key(), key)

@@ -1,4 +1,4 @@
-from collections.abc import Iterator
+from collections.abc import Generator
 from contextlib import contextmanager
 from pathlib import PosixPath as Path
 from tempfile import NamedTemporaryFile
@@ -54,7 +54,7 @@ def root() -> tuple[Path, Path]:
 
 
 @contextmanager
-def server(host: str) -> Iterator[tuple[Path, Path]]:
+def server(host: str) -> Generator[tuple[Path, Path]]:
     """Generate a certificate for the given host and provide it through context manager.
 
     :param host: ip address or host name to certify
